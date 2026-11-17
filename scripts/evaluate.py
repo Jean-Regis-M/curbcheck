@@ -2,6 +2,7 @@
 Compares (A) abstaining on item confidence vs (B) abstaining on city-verdict probability mass.
 Writes eval/results.json and eval/far_vs_coverage.png. Run: python scripts/evaluate.py"""
 import json
+import os
 import sys
 from collections import Counter
 from pathlib import Path
@@ -26,7 +27,7 @@ TARGETS = [0.5, 0.7, 0.9]
 
 def load():
     rows = json.loads((ROOT / "data/raw/taco/crops.json").read_text("utf-8"))
-    X = np.load(ROOT / "data/cache/taco_clip_b32.npy")
+    X = np.load(ROOT / "data/cache" / os.environ.get("CURBCHECK_FEATURES", "taco_clip_b32.npy"))
     counts = Counter(r["item"] for r in rows)
     classes = sorted(k for k, v in counts.items() if v >= MIN_CROPS)
     keep = [i for i, r in enumerate(rows) if r["item"] in classes]

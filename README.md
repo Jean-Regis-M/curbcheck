@@ -2,6 +2,8 @@
 
 # CurbCheck
 
+**Try it:** https://jean-regis-m.github.io/curbcheck/ (runs entirely in your browser; first load downloads a ~90 MB model, then it is cached) · **Demo video:** https://youtu.be/8sTgR-G_Jro · [Technical report (PDF)](docs/report/report.pdf)
+
 Can this item go in my curbside recycling bin, **in my city**? CurbCheck identifies an item from a photo, looks up the
 city's published rules, and answers **accept**, **reject** or **not sure**. A wrong "accept" contaminates a whole load,
 so it abstains instead of guessing. Research prototype for Arbiter Hacks V1 (Theme Track: Rethinking Waste).
@@ -85,6 +87,14 @@ forced to choose, about half of them. Training on RealWaste taught it to say "re
 recyclables depending on the dataset. Neither head is good enough for deployment; closing this gap needs real
 item-level labels, not weak material labels.
 
+### The hosted demo uses a separate, browser-native model
+GitHub Pages cannot run the Python server, so the hosted demo runs OpenAI CLIP ViT-B/32 (int8 ONNX) with transformers.js
+in the visitor's browser. Its image features differ from the PyTorch ones (mean cosine similarity 0.83, measured), so it
+has its own head, trained and thresholded on browser-computed features of the same TACO split (`models/head_web.npz`,
+`eval/fixed_threshold_web.json`). On the TACO test split (306 crops, Seattle): false-accept 17.1% forced vs 3.9% abstaining at
+65.7% coverage, with 11.7% of recyclables wrongly rejected (PyTorch v1: 13.8% vs 3.3% at 69.6%, 10.4%). It was not re-run on
+TrashNet or RealWaste, so the unseen-dataset results below apply to the PyTorch heads only.
+
 ### What did not work
 We hypothesised that abstaining on the probability of the *city verdict* would beat abstaining on *item confidence*.
 It did not: the two perform about the same (zero-shot: worse). The benefit comes from abstention itself and from tying answers to city rules.
@@ -96,7 +106,7 @@ It did not: the two perform about the same (zero-shot: worse). The benefit comes
 - Three cities only. Where a city page is silent on an item the rule is marked conditional (never auto-answered); that is a gap in the page, not a statement of the city's actual rule.
 - Not a substitute for your city's official guidance.
 
-## Run it
+## Run it locally (PyTorch model and API)
 `ash
 python -m venv .venv
 .venv/Scripts/python -m pip install -e ".[dev]" open_clip_torch torch torchvision scikit-learn matplotlib requests --extra-index-url https://download.pytorch.org/whl/cpu
@@ -114,3 +124,8 @@ python scripts/eval_realwaste.py
 `
 
 See docs/ARCHITECTURE.md and docs/DATA.md (data sources, licences, unresolved conflicts). Code is MIT licensed; datasets keep their own licences.
+
+## Hosted demo build
+`python scripts/build_site.py` assembles `_site/` (UI, in-browser engine, head weights, city rules); `.github/workflows/pages.yml` publishes it.
+To refresh the browser head: serve `_site`, run `scripts/extract_browser_features.py taco OUT.json`, save the features as `data/cache/taco_web_q8.npy`, then
+`CURBCHECK_FEATURES=taco_web_q8.npy CURBCHECK_HEAD=head_web python scripts/train_head.py`.

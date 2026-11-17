@@ -3,75 +3,104 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CurbCheck</title>
+<title>CurbCheck: can this go in your city's recycling bin?</title>
+<meta name="description" content="Rules-grounded curbside recycling checks with calibrated abstention. Research prototype for Arbiter Hacks V1.">
 <style>
 :root{--bg:#f6f4ee;--ink:#1d2a24;--mute:#64706a;--card:#fff;--line:#dcd8cc;--accept:#1f7a4d;--reject:#b3402f;--unsure:#a86a00;--accent:#1d2a24}
 @media (prefers-color-scheme:dark){:root{--bg:#121714;--ink:#e9efe9;--mute:#98a59d;--card:#1a211d;--line:#2c3630;--accept:#4fc08a;--reject:#ee7d6b;--unsure:#e5a33a;--accent:#e9efe9}}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,Segoe UI,sans-serif}
-main{max-width:880px;margin:0 auto;padding:32px 16px 64px}
-h1{font-size:28px;margin:0 0 4px;letter-spacing:-.02em}.sub{color:var(--mute);margin:0 0 24px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:700px){.grid{grid-template-columns:1fr}}
+main{max-width:940px;margin:0 auto;padding:28px 16px 56px}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+h1{font-size:30px;margin:0 0 4px;letter-spacing:-.02em}.sub{color:var(--mute);margin:0 0 20px;max-width:640px}
+.badge{font-size:12px;border:1px solid var(--line);border-radius:99px;padding:3px 10px;color:var(--mute);background:var(--card)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:760px){.grid{grid-template-columns:1fr}}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
 label{font-size:13px;color:var(--mute);display:block;margin-bottom:6px}
 select,button{font:inherit;border-radius:8px;border:1px solid var(--line);padding:10px 12px;background:var(--card);color:var(--ink);width:100%}
 button.primary{background:var(--accent);color:var(--bg);border-color:var(--accent);cursor:pointer;margin-top:12px}
 button:disabled{opacity:.5;cursor:not-allowed}
-#drop{border:2px dashed var(--line);border-radius:10px;min-height:220px;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--mute);cursor:pointer;overflow:hidden;margin-bottom:12px}
-#drop.over{border-color:var(--accent)}#preview{max-width:100%;max-height:300px;display:none}
+#drop{border:2px dashed var(--line);border-radius:10px;min-height:200px;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--mute);cursor:pointer;overflow:hidden;margin-bottom:10px;padding:8px}
+#drop.over{border-color:var(--accent)}#preview{max-width:100%;max-height:280px;display:none;border-radius:6px}
+.samples{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:4px}.samples span{font-size:12px;color:var(--mute)}
+.samples img{width:54px;height:54px;object-fit:cover;border-radius:8px;border:2px solid var(--line);cursor:pointer}.samples img:hover,.samples img:focus{border-color:var(--accent)}
 .verdict{font-size:32px;font-weight:700;letter-spacing:-.02em;margin:0}
 .accept{color:var(--accept)}.reject{color:var(--reject)}.not_sure{color:var(--unsure)}
 .bar{height:10px;border-radius:5px;background:var(--line);overflow:hidden;display:flex;margin:12px 0 4px}
 .bar span{display:block;height:100%}.b-a{background:var(--accept)}.b-r{background:var(--reject)}.b-c{background:var(--unsure)}
 .legend{font-size:12px;color:var(--mute)}table{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}
-td{padding:6px 4px;border-top:1px solid var(--line);vertical-align:top}.pill{font-size:12px;padding:1px 8px;border-radius:99px;border:1px solid currentColor}
-.small{font-size:13px;color:var(--mute)}a{color:inherit}#err{color:var(--reject);margin-top:8px;min-height:1em}
+td{padding:6px 4px;border-top:1px solid var(--line);vertical-align:top}.pill{font-size:12px;padding:1px 8px;border-radius:99px;border:1px solid currentColor;white-space:nowrap}
+.small{font-size:13px;color:var(--mute)}a{color:inherit}#err{color:var(--reject);margin-top:8px;min-height:1em;font-size:14px}
+#status{font-size:12px;color:var(--mute);margin:6px 0 0}.prog{height:4px;background:var(--line);border-radius:2px;overflow:hidden;margin-top:4px;display:none}.prog i{display:block;height:100%;width:0;background:var(--accent)}
+h2{font-size:14px;margin:16px 0 0;color:var(--mute);font-weight:600}
+footer{margin-top:24px;font-size:13px;color:var(--mute)}
 </style>
 </head>
 <body>
 <main>
-<h1>CurbCheck</h1>
-<p class="sub">Can this go in your curbside recycling bin? It checks your city's published rules and says "not sure" when it should.</p>
+<header><div><h1>CurbCheck</h1>
+<p class="sub">Can this go in your curbside recycling bin? It checks your city's published rules, and says "not sure" when it should. A wrong "recycle" contaminates a whole load.</p></div>
+<span class="badge" id="mode">starting…</span></header>
 <div class="grid">
 <section class="card">
-<label for="city">Your city</label><select id="city"></select>
+<label for="city">Your city</label><select id="city" aria-label="City"></select>
 <p class="small" id="program"></p>
 <div id="drop" tabindex="0" role="button" aria-label="Choose or drop a photo of one item">
 <span id="hint">Drop a photo of one item here, or click to choose or take one</span><img id="preview" alt="Selected item">
 </div>
 <input id="file" type="file" accept="image/jpeg,image/png,image/webp" capture="environment" hidden>
+<div class="samples" id="samples"><span>No photo handy? Try:</span></div>
 <button class="primary" id="go" disabled>Check this item</button>
+<p id="status"></p><div class="prog" id="prog"><i></i></div>
 <div id="err" role="alert"></div>
 </section>
-<section class="card" id="result" aria-live="polite"><p class="small">Results appear here. This is a research prototype trained on outdoor litter photos; always confirm with your city.</p></section>
+<section class="card" id="result" aria-live="polite"><p class="small">Results appear here. Research prototype trained on outdoor litter photos, so expect mistakes on household items; always confirm with your city. Each answer shows the rule it used and links to the city's own page.</p></section>
 </div>
+<footer>Sample photos: TrashNet (Thung &amp; Yang, MIT licence). <a href="https://github.com/Jean-Regis-M/curbcheck" target="_blank" rel="noopener">Source, results and limitations on GitHub</a>.</footer>
 </main>
 <script>
-const $=id=>document.getElementById(id);let file=null;
+const $=id=>document.getElementById(id);let file=null,cities=[],engine=null,api=false;
 const LABEL={accept:"Recycle it",reject:"Not recyclable here",not_sure:"Not sure"};
-fetch("/api/cities").then(r=>r.json()).then(cs=>{window.CITIES=cs;$("city").innerHTML=cs.map(c=>`<option value="${c.id}">${c.city}</option>`).join("");showProgram()});
-function showProgram(){const c=(window.CITIES||[]).find(x=>x.id==$("city").value);$("program").textContent=c?c.program+" · rules read "+c.sources[0].retrieved:""}
-$("city").onchange=showProgram;
-function pick(f){if(!f)return;file=f;const u=URL.createObjectURL(f);$("preview").src=u;$("preview").style.display="block";$("hint").style.display="none";$("go").disabled=false;$("err").textContent=""}
+const SAMPLES=[["glass20","Glass bottle"],["cardboard30","Cardboard"],["metal10","Metal"],["paper40","Paper"],["trash12","Trash"]];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function showProgram(){const c=cities.find(x=>x.id==$("city").value);$("program").textContent=c?c.program+" · rules read "+c.sources[0].retrieved:""}
+async function init(){
+ try{const r=await fetch("api/health");api=r.ok&&(await r.json()).status==="ok"}catch(e){}
+ const base=api?"static/samples/":"samples/";
+ $("samples").insertAdjacentHTML("beforeend",SAMPLES.map(([n,t])=>`<img src="${base}${n}.jpg" alt="${t}" title="${t}" tabindex="0" data-n="${n}">`).join(""));
+ $("samples").onclick=async e=>{const n=e.target.dataset&&e.target.dataset.n;if(!n)return;const b=await (await fetch(base+n+".jpg")).blob();pick(new File([b],n+".jpg",{type:"image/jpeg"}))};
+ if(api){cities=await (await fetch("api/cities")).json();$("mode").textContent="server model"}
+ else{
+  $("mode").textContent="in-browser model";$("status").textContent="Loading the image model (about 90 MB, cached after the first visit)…";$("prog").style.display="block";
+  engine=await import("./engine.js");
+  try{await engine.load(p=>{$("prog").firstChild.style.width=Math.round(p.progress||0)+"%"});cities=await engine.listCities();$("status").textContent="Model ready. Your photo never leaves this device.";$("prog").style.display="none"}
+  catch(e){$("status").textContent="";$("err").textContent="Could not load the model: "+e.message+". Check your connection and reload.";return}
+ }
+ $("city").innerHTML=cities.map(c=>`<option value="${c.id}">${esc(c.city)}</option>`).join("");showProgram();$("city").onchange=showProgram;$("go").disabled=!file;
+ if(file)run();
+}
+function pick(f){if(!f)return;file=f;$("preview").src=URL.createObjectURL(f);$("preview").style.display="block";$("hint").style.display="none";$("go").disabled=!cities.length;$("err").textContent="";if(cities.length)run()}
+async function apiCheck(f,city){const fd=new FormData();fd.append("image",f);fd.append("city",city);const r=await fetch("api/check",{method:"POST",body:fd});const j=await r.json();if(!r.ok)throw new Error(j.detail||"Request failed");return j}
+const check=(f,c)=>api?apiCheck(f,c):engine.check(f,c);
+async function run(){
+ $("go").disabled=true;$("go").textContent="Checking…";$("err").textContent="";
+ try{const sel=$("city").value;const main=await check(file,sel);const others=await Promise.all(cities.filter(c=>c.id!==sel).map(async c=>[c,await check(file,c.id)]));render(main,others)}
+ catch(e){$("err").textContent=e.message}
+ finally{$("go").disabled=false;$("go").textContent="Check this item"}}
+$("go").onclick=run;
 $("drop").onclick=()=>$("file").click();$("drop").onkeydown=e=>{if(e.key==="Enter"||e.key===" ")$("file").click()};
 $("file").onchange=e=>pick(e.target.files[0]);
 $("drop").ondragover=e=>{e.preventDefault();$("drop").classList.add("over")};$("drop").ondragleave=()=>$("drop").classList.remove("over");
 $("drop").ondrop=e=>{e.preventDefault();$("drop").classList.remove("over");pick(e.dataTransfer.files[0])};
-function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
-$("go").onclick=async()=>{
- $("go").disabled=true;$("go").textContent="Checking…";$("err").textContent="";
- const fd=new FormData();fd.append("image",file);fd.append("city",$("city").value);
- try{const r=await fetch("/api/check",{method:"POST",body:fd});const j=await r.json();
-  if(!r.ok)throw new Error(j.detail||"Request failed");render(j)}
- catch(e){$("err").textContent=e.message}
- finally{$("go").disabled=false;$("go").textContent="Check this item"}};
-function render(j){
+function render(j,others){
  const pa=j.p_accept*100,pr=j.p_reject*100,pc=j.p_conditional*100;
- const why=j.verdict==="not_sure"?"The model is not confident enough, or your city's rule for this item is conditional. Check the official page.":"";
+ const why=j.verdict==="not_sure"?"Not confident enough, or this city's rule for the item is conditional. Check the official page.":"";
+ const cmp=others.length?`<h2>Same photo, other cities</h2><table>${others.map(([c,o])=>`<tr><td>${esc(c.city)}</td><td><span class="pill ${o.verdict}">${LABEL[o.verdict]}</span></td></tr>`).join("")}</table>`:"";
  $("result").innerHTML=`<p class="small" style="margin:0">${esc(j.city)}</p><p class="verdict ${j.verdict}">${LABEL[j.verdict]}</p><p class="small">${why}</p>
  <div class="bar" role="img" aria-label="accept ${pa.toFixed(0)}%, reject ${pr.toFixed(0)}%, conditional ${pc.toFixed(0)}%"><span class="b-a" style="width:${pa}%"></span><span class="b-c" style="width:${pc}%"></span><span class="b-r" style="width:${pr}%"></span></div>
  <div class="legend">Probability by city rule: accept ${pa.toFixed(0)}% · conditional ${pc.toFixed(0)}% · reject ${pr.toFixed(0)}%. Answers only at ≥ ${(j.threshold*100).toFixed(0)}%.</div>
- <table>${j.top_items.map(t=>`<tr><td>${esc(t.label)}<br><span class="small">${esc(t.note)}</span></td><td>${(t.p*100).toFixed(0)}%</td><td><span class="pill ${t.rule==="accept"?"accept":t.rule==="reject"?"reject":"not_sure"}">${esc(t.rule)}</span></td></tr>`).join("")}</table>
+ <table>${j.top_items.map(t=>`<tr><td>${esc(t.label)}<br><span class="small">${esc(t.note)}</span></td><td>${(t.p*100).toFixed(0)}%</td><td><span class="pill ${t.rule==="accept"?"accept":t.rule==="reject"?"reject":"not_sure"}">${esc(t.rule)}</span></td></tr>`).join("")}</table>${cmp}
  <p class="small">Rule source: <a href="${esc(j.source_url)}" target="_blank" rel="noopener">${esc(j.source_url)}</a></p><p class="small">${esc(j.disclaimer)}</p>`}
+init();
 </script>
 </body>
 </html>
