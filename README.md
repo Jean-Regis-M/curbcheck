@@ -1,131 +1,236 @@
-﻿![CurbCheck](docs/img/banner.png)
+﻿<div align="center">
 
-# CurbCheck
+![CurbCheck](docs/img/banner.png)
 
-**Try it:** https://jean-regis-m.github.io/curbcheck/ (runs entirely in your browser; first load downloads a ~90 MB model, then it is cached) · **Demo video:** https://youtu.be/8sTgR-G_Jro · [Technical report (PDF)](docs/report/report.pdf)
+[![CI](https://github.com/Jean-Regis-M/curbcheck/actions/workflows/ci.yml/badge.svg)](https://github.com/Jean-Regis-M/curbcheck/actions/workflows/ci.yml)
+[![Live demo](https://img.shields.io/badge/live%20demo-GitHub%20Pages-1f7a4d)](https://jean-regis-m.github.io/curbcheck/)
+[![Video](https://img.shields.io/badge/demo%20video-2%3A11-b3402f)](https://youtu.be/8sTgR-G_Jro)
+[![License: MIT](https://img.shields.io/badge/license-MIT-lightgrey)](LICENSE)
 
-Can this item go in my curbside recycling bin, **in my city**? CurbCheck identifies an item from a photo, looks up the
-city's published rules, and answers **accept**, **reject** or **not sure**. A wrong "accept" contaminates a whole load,
-so it abstains instead of guessing. Research prototype for Arbiter Hacks V1 (Theme Track: Rethinking Waste).
+**A recycling checker that knows your city's rules, and says "not sure" instead of guessing.**
 
-## What is implemented
-- Rules engine: per-city JSON tables where every rule cites an official page and retrieval date (Seattle, Washington DC, New York City).
-- Image model: OpenCLIP ViT-B/32 (CPU) plus a linear head trained on TACO litter crops and RealWaste landfill photos, 14 item types.
-- Abstention: temperature-scaled probabilities are summed per city verdict; the tool answers only above a threshold chosen on a validation split.
-- FastAPI service (/api/check, /api/cities) and a single-page web UI.
-- Tests (pytest), lint (
-uff), reproducible data and evaluation scripts.
+[Try it in your browser](https://jean-regis-m.github.io/curbcheck/) ·
+[Watch the 2 minute demo](https://youtu.be/8sTgR-G_Jro) ·
+[Read the technical report (PDF)](docs/report/report.pdf)
 
-## Screenshots
-All captured from the running app (`scripts/capture_screenshots.py`). Photos are TrashNet (MIT) and one TACO crop.
+*Arbiter Hacks V1, Theme Track: Rethinking Waste*
+
+</div>
+
+---
+
+## The one idea
+
+Put one wrong item in a recycling bin and a whole load can be spoiled. The expensive mistake is therefore the **false accept**: telling someone "recycle it" about something their city will not take.
+
+Most "is this recyclable?" tools give one national yes or no. But the answer is local. These are real differences between the three cities CurbCheck covers, each read from the city's own page:
+
+| Item | Seattle | Washington DC | New York City |
+|---|---|---|---|
+| Milk or juice carton | page does not name it | accepted | accepted |
+| Greasy pizza box | goes to compost, not recycling | page is silent | page is silent |
+| Aluminum foil | accepted | page is silent | accepted |
+| Plastic tub | accepted | accepted | ice cream tubs excluded |
+| Foam, plastic bags | garbage | not accepted | not accepted |
+
+CurbCheck turns that into a tool with two rules:
+
+1. **The answer comes from the city's published rule, and shows its source.** Every rule in the repository carries the URL of the official page and the date it was read.
+2. **It only answers when it is confident enough.** Otherwise it says *not sure*, and so does it when the city's page is silent about the item.
+
+That second rule is the product. On held-out photos it cuts false accepts by roughly three quarters while still answering about 70% of the time. It does not make the model smarter. It makes the model's mistakes rarer where they hurt most.
+
+## See it work
 
 | | |
 |---|---|
-| ![Home](docs/img/01-home.png) **Home.** Pick a city, add a photo. | ![Accept](docs/img/02-accept-seattle.png) **Accept.** A glass bottle in Seattle, with the matching rule and its source link. |
-| ![Not sure](docs/img/03-not-sure-seattle.png) **Abstention.** Cardboard at 65% accept mass is below the 71% threshold, so the answer is "not sure". | ![Reject](docs/img/04-reject-seattle.png) **Reject.** Trash is not recyclable in Seattle. |
-| ![Seattle carton](docs/img/05-carton-seattle.png) **Same photo, Seattle.** The city page does not name cartons, so the rule is conditional: "not sure". | ![DC carton](docs/img/06-carton-washington-dc.png) **Same photo, Washington DC.** DC lists cartons, so the answer is "recycle it". |
+| ![Home](docs/img/01-home.png) **Pick a city, add a photo.** Nothing is uploaded when you use the hosted demo. | ![Accept](docs/img/02-accept-seattle.png) **A confident answer.** A glass bottle in Seattle: recycle it, with the matching rule and its source link. |
+| ![Not sure](docs/img/03-not-sure-seattle.png) **A deliberate "not sure".** Cardboard scores 65% accept, below the 71% bar, so it declines. | ![Reject](docs/img/04-reject-seattle.png) **A clear no.** Trash is not recyclable in Seattle. |
+| ![Seattle carton](docs/img/05-carton-seattle.png) **Same photo, Seattle.** The city's page does not name cartons, so the rule is *conditional* and the answer is "not sure". | ![DC carton](docs/img/06-carton-washington-dc.png) **Same photo, Washington DC.** DC lists cartons, so the answer is "recycle it". |
+
+The hosted demo also shows the verdict in every other city for the same photo, so the local difference is visible without switching.
+
+## The evidence, including what went wrong
+
+Every number below comes from a script in this repository and a JSON file you can open. Small test sets mean wide error bars; they are stated, not hidden.
+
+**Headline result.** Held-out TACO test, 306 item crops, split by source photo so the same photo never appears in training and testing. The abstention threshold was chosen on a separate validation split. ([`eval/fixed_threshold.json`](eval/fixed_threshold.json))
+
+| City | False-accept rate, forced yes/no | False-accept rate, with abstention | Share of questions answered |
+|---|---|---|---|
+| Seattle | 13.8% | **3.3%** | 69.6% |
+| Washington DC | 12.2% | **3.2%** | 68.6% |
+
+*False accept: the tool said "recycle it" and the city's rule for the true item is not "accept" (a conditional rule counts as not accept).*
+
+**A dataset the shipped model never saw.** TrashNet, 2,045 studio photos, only 137 of them non-recyclable. ([`eval/trashnet.json`](eval/trashnet.json))
+
+| City | Non-recyclables wrongly accepted | 95% interval | Recyclables wrongly rejected | Answered |
+|---|---|---|---|---|
+| Seattle | 5.8% | 2.2 to 9.4 | 9.1% | 70% |
+| Washington DC | 7.3% | 3.1 to 11.7 | 9.1% | 73% |
+| New York City | 3.6% | 0.7 to 7.2 | 9.1% | 61% |
+
+**Three things I tried that did not hold up.** I kept them in because they changed what I shipped.
+
+| What I tried | What happened | What I did |
+|---|---|---|
+| Abstain on the probability of the city's *verdict* instead of on item confidence, expecting a gain. | About the same with the trained model, worse with zero-shot features. ([`eval/results.json`](eval/results.json)) | Dropped the claim that this is the contribution. The gain comes from abstention itself and from tying answers to city rules. |
+| Add RealWaste landfill photos (model "v2"). | Missed recyclables on held-out RealWaste fell from 29.8% to 2.2%. But that is adaptation, not generalisation. On unseen TrashNet v2 accepted 12.4% of non-recyclables against 5.8% for v1. ([`eval/v2.json`](eval/v2.json)) | Shipped v1. Kept v2 in the repository. Contamination is the costlier error. |
+| Run the same model in the browser for the hosted demo. | The browser pipeline's image features matched PyTorch's at only 0.83 cosine similarity. My first port disagreed with the Python model on 13 of 60 test images. | Retrained the classifier on features computed by the browser pipeline itself, and report its own numbers below. |
+
+**The hosted demo uses its own head.** On the TACO test split, Seattle: false accepts 17.1% forced, 3.9% with abstention, 65.7% answered, 11.7% of recyclables wrongly rejected. This is slightly weaker than the PyTorch model (3.3%, 69.6%, 10.4%). It was *not* re-run on TrashNet or RealWaste. ([`eval/fixed_threshold_web.json`](eval/fixed_threshold_web.json))
 
 ## How it works
+
 ```mermaid
 flowchart LR
-  A[Photo] --> B[OpenCLIP ViT-B/32 on CPU]
-  B --> C[Linear head: item probabilities]
-  C --> D[Sum probability per city verdict]
-  R[(City rules JSON, each rule cites a page and date)] --> D
-  D --> E{Verdict mass above threshold?}
-  E -- yes --> F[accept or reject, with cited rule]
+  A[Photo] --> B[OpenCLIP ViT-B/32<br/>runs on CPU]
+  B --> C[Linear head<br/>item probabilities]
+  C --> D[Add up probability<br/>per city verdict]
+  R[(City rules JSON<br/>each rule cites a page and date)] --> D
+  D --> E{Does one verdict<br/>reach the threshold?}
+  E -- yes --> F[accept or reject,<br/>with the cited rule]
   E -- no --> G[not sure]
 ```
 
-## API
-`GET /api/cities`, `GET /api/health`, `POST /api/check` (multipart: `image` JPEG/PNG/WebP up to 5 MB, `city`).
-Returns the verdict, per-verdict probabilities, top 3 items with their rules, and the rule source URL.
+**Rules.** Each city is a JSON file over a 16-item taxonomy. A rule is `accept`, `reject` or `conditional`. *Conditional* means the city's page does not cover the item; the system will never auto-answer it. Tables are validated by pydantic: every item must be covered and every rule must cite a source. ([`data/rules/`](data/rules), [`src/curbcheck/rules.py`](src/curbcheck/rules.py))
 
-## Measured results
-Two heads are in the repo. **v1 is shipped** (`models/head.npz`, identical to `models/head_v1.npz`); v2 is `models/head_v2.npz`. See the TrashNet result below for why.
-"False accept" = told "recycle it" when the city's rule for the true item is not "accept" (conditional counts).
-"Missed recyclable" = a genuinely accepted item told "not recyclable". Thresholds were chosen on validation data only.
+```json
+"milk_carton": { "verdict": "accept",
+                 "note": "Milk, juice and soup cartons are accepted",
+                 "source": 0 }
+```
 
-**v1: trained on TACO only** (TACO test n=306, split by source photo; eval/fixed_threshold.json)
+**Decision.** The classifier gives a probability for each item. Items are grouped by what *this city* says about them, and the probabilities in each group are added up. The tool answers `accept` or `reject` only if one group's total reaches the threshold; otherwise `not sure`. Because the threshold applies to the city's verdict and not to a single item, three similar metal items that disagree with each other still produce a confident "accept". ([`src/curbcheck/decision.py`](src/curbcheck/decision.py))
 
-| City | False-accept, forced yes/no | False-accept, abstaining | Coverage |
-|---|---|---|---|
-| Seattle | 13.8% | 3.3% | 69.6% |
-| Washington DC | 12.2% | 3.2% | 68.6% |
+**Model.** OpenAI CLIP ViT-B/32 through OpenCLIP, plus a logistic-regression head trained on 13 item classes from TACO crops. Probabilities are temperature-scaled on a validation split. On a laptop CPU with no GPU, inference took about 92 ms per image.
 
-v1 on RealWaste, which it had never seen (eval/realwaste.json, 1,200 images): false accepts 0.8 to 1.2%, **but 30% of
-recyclable items were told "not recyclable"** (forced yes/no: 51 to 57%).
+## Judging criteria, answered one by one
 
-**v2: adds RealWaste material labels** (weak labels: cardboard, paper, glass, food, other; metal resolved by v1; plastic excluded).
-RealWaste was split 50/25/25 by image; v2 never saw the test part (n=960, eval/v2.json).
+This is the Theme Track rubric from the [Devpost rules](https://arbiter-hacks-v1.devpost.com/rules), with the evidence for each criterion and the gap I would point to myself.
 
-| Held-out set | Model | False-accept | Missed recyclable | Coverage |
-|---|---|---|---|---|
-| RealWaste test | v1 | 1.4% | 29.8% | 70% |
-| RealWaste test | v2 | 1.7% (95% CI 0.7 to 3.0) | 2.2% (1.1 to 3.5) | 82% |
-| TACO test | v1 | 3.3% | 10.4% | 70% |
-| TACO test | v2 | 2.0% (0 to 4.4) | 1.9% (0 to 4.4) | 39% |
+### Impact on the waste problem (35)
+- **Central, not bolted on.** The whole product is the contamination decision at the bin. Remove the recycling rules and nothing is left.
+- **Measured, within limits.** False accepts fall from 13.8% to 3.3% (Seattle) at 70% coverage on held-out data, and 3.6% to 7.3% on an unseen dataset.
+- **How I would measure whether it worked in the real world.** Pick two comparable buildings or routes. Give one the tool and keep one as control. Run bin audits before and after, weighing non-recyclables found in the recycling stream. The target metric is contamination by weight, with the tool's false-accept rate as the leading indicator. **I have not run this.** I make no claim about tonnes diverted or money saved.
+- **Gap.** Three cities, curbside only, no household-photo data.
 
-(Seattle shown; DC and NYC are within a point or two, see eval/v2.json.)
+### Technical execution (25)
+- **Quality.** 16 automated tests (rules validation, decision logic, API behaviour including bad uploads), linted with ruff, run on every push by [CI](https://github.com/Jean-Regis-M/curbcheck/actions). A fresh clone installs, passes the tests and builds the site.
+- **Difficulty.** A rules-grounded decision layer, a three-dataset evaluation split by source photo, two model variants compared on unseen data, and a browser-native port whose feature mismatch I diagnosed and corrected by retraining on the browser's own features.
+- **Reproducible.** Every number regenerates from the scripts in [`scripts/`](scripts). Datasets are downloaded by script and never committed.
+- **Gap.** Small test sets, wide intervals, and a classifier trained on litter photos, not household items.
 
-**How to read the v2 numbers honestly.** The RealWaste gain is adaptation to that dataset, not generalisation: v2 saw other
-RealWaste photos, so this is no longer an unseen-dataset result. On TACO, v2 abstains much more often (39% vs 70%
-coverage) because its threshold was chosen on a validation pool dominated by easier RealWaste images, and its forced
-yes/no false-accept rate on TACO is worse (17% vs 14%). The TrashNet test below was run for exactly this reason and does not support v2.
+### Feasibility (20)
+- **Runs cheaply.** CPU only. About 92 ms per image on a laptop. The hosted demo needs no server at all: the model runs in the visitor's browser and the photo stays on their device.
+- **Rules are data, not code.** Adding a city means adding one JSON file with cited sources; the validator rejects incomplete tables.
+- **What blocks real deployment, stated plainly.** (1) Item-level labelled household photos. Current error rates, especially the 9% to 30% of recyclables wrongly rejected, are too high to ship. (2) Keeping rules current as cities change them. (3) Image dataset licences are unresolved (see [Data](#data-and-licences)).
 
-**Unseen-dataset test on TrashNet** (studio photos, MIT licence, 2,045 images: cardboard, glass, metal, paper accepted;
-only 137 "trash" images as non-recyclable; plastic excluded; eval/trashnet.json). Seattle shown, DC and NYC are similar.
+### Presentation and demo clarity (20)
+- A 2 minute 11 second [video](https://youtu.be/8sTgR-G_Jro) recorded from the real running app, including the failure case and the trade-off. Narration is a synthetic voice.
+- A live demo a judge can try in one click, with sample photos if none are handy.
+- This README, a [3 page technical report](docs/report/report.pdf), and every claim linked to its evidence file.
 
-| Head | False-accept (abstaining) | Forced yes/no | Missed recyclable | Coverage |
-|---|---|---|---|---|
-| v1 | 5.8% (95% CI 2.2 to 9.4) | 20.4% | 9.1% | 70% |
-| v2 | 12.4% (7.1 to 17.6) | 51.8% | 0.2% | 77% |
+## Questions I would ask if I were judging this
 
-On data neither head has seen, v2 is the less safe one: it accepts about one in eight non-recyclable items and, when
-forced to choose, about half of them. Training on RealWaste taught it to say "recyclable" too readily. Because a false accept
-(contamination) is the costlier mistake, **v1 is the default**. The trade is real: v1 wrongly rejects roughly 9% to 30% of
-recyclables depending on the dataset. Neither head is good enough for deployment; closing this gap needs real
-item-level labels, not weak material labels.
+**Why not just ask a large language model?** Its answer would not cite the city's page, could not be checked against a rule table, and would not be measurable the way a false-accept rate is. A model can still be wrong here; the point is that this one's wrongness is bounded and visible.
 
-### The hosted demo uses a separate, browser-native model
-GitHub Pages cannot run the Python server, so the hosted demo runs OpenAI CLIP ViT-B/32 (int8 ONNX) with transformers.js
-in the visitor's browser. Its image features differ from the PyTorch ones (mean cosine similarity 0.83, measured), so it
-has its own head, trained and thresholded on browser-computed features of the same TACO split (`models/head_web.npz`,
-`eval/fixed_threshold_web.json`). On the TACO test split (306 crops, Seattle): false-accept 17.1% forced vs 3.9% abstaining at
-65.7% coverage, with 11.7% of recyclables wrongly rejected (PyTorch v1: 13.8% vs 3.3% at 69.6%, 10.4%). It was not re-run on
-TrashNet or RealWaste, so the unseen-dataset results below apply to the PyTorch heads only.
+**Is 3.3% good?** It is a result on a small litter dataset, and on an unseen dataset it rises to between 3.6% and 7.3%. It is a clear improvement over forcing an answer (about 12% to 20% depending on the dataset), not a deployable error rate.
 
-### What did not work
-We hypothesised that abstaining on the probability of the *city verdict* would beat abstaining on *item confidence*.
-It did not: the two perform about the same (zero-shot: worse). The benefit comes from abstention itself and from tying answers to city rules.
+**Why does it decline so often?** About 30% of questions get "not sure". That is the price of the lower false-accept rate, and it is adjustable: the threshold is a single number chosen on validation data.
 
-## Limitations (read before trusting it)
-- Trained on TACO (outdoor litter) and RealWaste (landfill, material-level labels). TACO test set is small (306 crops, wide intervals). No fully unseen dataset test for v2 and no household photos.
-- Batteries and greasy pizza boxes had too few examples (2 and 3) so the model cannot predict them, although the rules tables include them. Food waste comes only from RealWaste's weak labels.
-- 330 TACO annotations were dropped because photo orientation disagreed with the annotation.
-- Three cities only. Where a city page is silent on an item the rule is marked conditional (never auto-answered); that is a gap in the page, not a statement of the city's actual rule.
-- Not a substitute for your city's official guidance.
+**How do you know the rules are right?** I read each city's official page on 2026-11-17 and recorded the URL and date with every rule. Where a page was silent I wrote *conditional* rather than guessing. A rule can still be misread or go out of date, which is why each answer links to its source.
 
-## Run it locally (PyTorch model and API)
-`ash
+**What did you get wrong along the way?** The three experiments in the table above. They stay in the README because a prototype that hides its failures cannot be trusted.
+
+## Run it yourself
+
+The hosted demo needs nothing. To run the full Python model and API locally:
+
+```bash
+git clone https://github.com/Jean-Regis-M/curbcheck.git
+cd curbcheck
 python -m venv .venv
-.venv/Scripts/python -m pip install -e ".[dev]" open_clip_torch torch torchvision scikit-learn matplotlib requests --extra-index-url https://download.pytorch.org/whl/cpu
+.venv/Scripts/python -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+.venv/Scripts/python -m pip install -e ".[dev]" open_clip_torch
 .venv/Scripts/python -m pytest
-.venv/Scripts/python -m uvicorn curbcheck.api:app --port 8000   # open http://localhost:8000
-`
-(On macOS/Linux use .venv/bin/python.) The first request downloads the OpenAI CLIP weights.
+.venv/Scripts/python -m uvicorn curbcheck.api:app --port 8000
+```
 
-Reproduce the evaluation (downloads TACO images from the dataset's own host; images are never committed):
-`ash
-python scripts/prepare_taco.py && python scripts/extract_features.py && python scripts/evaluate.py && python scripts/train_head.py   # v1
-python scripts/extract_realwaste.py && python scripts/train_v2.py   # v2 (writes models/head_v2.npz; copy to models/head.npz to ship)
-# RealWaste check needs pyarrow and the two parquet shards from the HuggingFace mirror shahzaibvohra/realwaste placed in data/raw/realwaste/ as p0.parquet and p1.parquet
-python scripts/eval_realwaste.py
-`
+On macOS or Linux use `.venv/bin/python`. Open `http://localhost:8000`. The first request downloads the OpenAI CLIP weights.
 
-See docs/ARCHITECTURE.md and docs/DATA.md (data sources, licences, unresolved conflicts). Code is MIT licensed; datasets keep their own licences.
+To rebuild the evaluation (the scripts download the datasets themselves; images are never committed):
 
-## Hosted demo build
-`python scripts/build_site.py` assembles `_site/` (UI, in-browser engine, head weights, city rules); `.github/workflows/pages.yml` publishes it.
-To refresh the browser head: serve `_site`, run `scripts/extract_browser_features.py taco OUT.json`, save the features as `data/cache/taco_web_q8.npy`, then
-`CURBCHECK_FEATURES=taco_web_q8.npy CURBCHECK_HEAD=head_web python scripts/train_head.py`.
+```bash
+pip install scikit-learn matplotlib requests pyarrow
+python scripts/prepare_taco.py && python scripts/extract_features.py
+python scripts/evaluate.py && python scripts/train_head.py
+```
+
+The RealWaste and TrashNet checks and the browser head have their own scripts, listed below.
+
+API: `GET /api/health`, `GET /api/cities`, `POST /api/check` (multipart `image` as JPEG, PNG or WebP up to 5 MB, and `city`). It returns the verdict, the probability per verdict, the top three items with their rules, and the source URL.
+
+## Repository map
+
+| Path | What it is |
+|---|---|
+| [`src/curbcheck/`](src/curbcheck) | Rules validation, decision logic, model wrapper, FastAPI service |
+| [`data/rules/`](data/rules) | Seattle, Washington DC and New York City rule tables with sources |
+| [`web/`](web) | The single page UI and the in-browser engine used by the hosted demo |
+| [`scripts/`](scripts) | Data preparation, training, evaluation, site build, screenshots |
+| [`eval/`](eval) | Every result as JSON, plus the false-accept versus coverage chart |
+| [`models/`](models) | Trained classifier heads: `head.npz` (shipped, same as `head_v1`), `head_v2`, `head_web` |
+| [`tests/`](tests) | 16 tests |
+| [`docs/`](docs) | Architecture, data licences, screenshots, the LaTeX report |
+
+Evaluation scripts: `eval_realwaste.py`, `eval_trashnet.py` and `train_v2.py` reproduce the unseen-data and v2 results; `extract_browser_features.py` and `build_site.py` build the hosted demo.
+
+## Security and privacy
+
+- **The hosted demo stores nothing and sends nothing.** The model runs in your browser; the only network traffic is downloading the model and page.
+- **The API validates every upload.** It checks the content type, caps uploads at 5 MB, sets Pillow's pixel limit (25 megapixels) as a decompression-bomb guard, rejects unreadable files, and keeps uploads in memory instead of writing them to disk.
+- **Not done.** The API has no authentication and no rate limiting, so it is not meant to be exposed publicly as is. I have not had it independently security reviewed.
+- **No secrets** are in the repository, and personal research notes are kept out of it.
+
+## Data and licences
+
+| Source | Used for | Licence status |
+|---|---|---|
+| [TACO](https://github.com/pedropro/TACO) (Proença and Simões, 2020) | Training and the main test split | Code is MIT. Images are Flickr photos under their own free licences. Not redistributed. |
+| [TrashNet](https://github.com/garythung/trashnet) (Thung and Yang) | Unseen-data test and sample photos | Repository licence is MIT. |
+| [RealWaste](https://archive.ics.uci.edu/dataset/908/realwaste) (Single, Iranmanesh and Raad, 2023) | Second model and stress test | **Conflict:** CC BY 4.0 on UCI, CC BY-NC-SA 4.0 on IEEE DataPort. Treated as non-commercial research use. |
+| City recycling pages | Rule tables | Facts read from official pages, each cited with a retrieval date. |
+| The Recycling Partnership database | Not used | No download or reuse terms found. |
+
+Full notes in [`docs/DATA.md`](docs/DATA.md). CLIP: Radford et al., 2021, through [OpenCLIP](https://github.com/mlfoundations/open_clip); the browser build uses [transformers.js](https://github.com/huggingface/transformers.js).
+
+## Limitations, in one place
+
+- Trained on litter and landfill photos, not household items. Expect mistakes on real kitchen waste.
+- Small test sets. Only 137 non-recyclable images in TrashNet, 306 crops in the main test.
+- Batteries and greasy pizza boxes had too few examples to learn; the city tables still cover them.
+- Three cities. *Conditional* reflects what the page says, not necessarily the city's real rule.
+- 330 TACO annotations were dropped because photo orientation disagreed with the annotation.
+- Wrongly rejecting recyclables (9% to 30% depending on dataset) is too high for deployment.
+- No measurement of real-world contamination. No claim of environmental or financial impact.
+
+## What comes next
+
+1. Collect and label household photos at the item level. This is the real fix for the missed-recyclable rate.
+2. Add machine-readable rules for more cities and a check that flags when a source page changes.
+3. Re-run the browser head on the unseen datasets and keep both models in sync.
+4. Pilot with a municipality or sorting facility, with bin audits, before any impact claim.
+
+## How this was built
+
+I built CurbCheck for Arbiter Hacks V1 with AI coding assistance (Claude Code). The AI wrote and ran code and scripts under my direction; the numbers in this README come from those scripts, and I kept the failed experiments in the repository. If a number here cannot be regenerated from [`scripts/`](scripts) and [`eval/`](eval), treat that as a bug and open an issue.
+
+## About the builder
+
+I am Jean Francois Regis Mukiza, a student at Fırat University working on cybersecurity and secure AI. I approached this like a security problem: define the failure that matters (a false accept), measure it on data the model has not seen, and publish the negative results.
+
+## Licence
+
+Code: [MIT](LICENSE). Datasets keep their own licences.
