@@ -3,7 +3,7 @@ name = "curbcheck"
 version = "0.1.0"
 description = "Rules-grounded curbside recycling checker with calibrated abstention"
 requires-python = ">=3.10"
-dependencies = ["fastapi", "uvicorn", "pydantic>=2", "pillow", "numpy", "python-multipart"]
+dependencies = ["fastapi", "uvicorn", "pydantic>=2", "pillow", "numpy", "scipy", "python-multipart"]
 
 [project.optional-dependencies]
 dev = ["pytest", "ruff", "httpx"]
