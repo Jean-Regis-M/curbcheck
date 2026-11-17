@@ -1,0 +1,96 @@
+{
+  "city": "New York, NY",
+  "program": "DSNY curbside (metal/glass/plastic/cartons + mixed paper)",
+  "sources": [
+    {
+      "url": "https://www.nyc.gov/site/dsny/collection/get-rid-of/metal-glass-plastic-cartons.page",
+      "retrieved": "2026-11-17"
+    },
+    {
+      "url": "https://www.nyc.gov/site/dsny/collection/residents/recycling.page",
+      "retrieved": "2026-11-17"
+    }
+  ],
+  "rules": {
+    "aluminum_can": {
+      "verdict": "accept",
+      "note": "You can recycle all kinds of metal",
+      "source": 0
+    },
+    "steel_can": {
+      "verdict": "accept",
+      "note": "You can recycle all kinds of metal",
+      "source": 0
+    },
+    "glass_bottle_jar": {
+      "verdict": "accept",
+      "note": "Glass bottles and jars; not drinking glasses or windows",
+      "source": 0
+    },
+    "plastic_bottle": {
+      "verdict": "accept",
+      "note": "Rigid plastics: food and drink containers, caps and lids",
+      "source": 0
+    },
+    "plastic_tub": {
+      "verdict": "conditional",
+      "note": "Rigid food containers are accepted but ice cream tubs are not",
+      "source": 0
+    },
+    "plastic_bag_film": {
+      "verdict": "reject",
+      "note": "Soft plastics (bags, wraps, snack wrappers) are not accepted",
+      "source": 0
+    },
+    "cardboard_box": {
+      "verdict": "accept",
+      "note": "Mixed paper and cardboard stream",
+      "source": 1
+    },
+    "pizza_box_greasy": {
+      "verdict": "conditional",
+      "note": "Not covered by the pages read",
+      "source": 1
+    },
+    "paper_clean": {
+      "verdict": "accept",
+      "note": "Mixed paper and cardboard stream",
+      "source": 1
+    },
+    "paper_cup": {
+      "verdict": "conditional",
+      "note": "Not covered by the pages read",
+      "source": 1
+    },
+    "milk_carton": {
+      "verdict": "accept",
+      "note": "Milk, soup and juice cartons go with metal, glass, plastic",
+      "source": 0
+    },
+    "foam": {
+      "verdict": "reject",
+      "note": "Foam products (Styrofoam, packing peanuts) are not accepted",
+      "source": 0
+    },
+    "aluminum_foil": {
+      "verdict": "accept",
+      "note": "Aluminum foil and trays are accepted",
+      "source": 0
+    },
+    "food_waste": {
+      "verdict": "reject",
+      "note": "Not recycling; NYC handles food scraps in a separate organics program",
+      "source": 0
+    },
+    "battery": {
+      "verdict": "reject",
+      "note": "Lithium-ion and other non-alkaline batteries must be disposed of separately",
+      "source": 0
+    },
+    "other_trash": {
+      "verdict": "reject",
+      "note": "Trash",
+      "source": 0
+    }
+  }
+}

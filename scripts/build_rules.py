@@ -52,12 +52,41 @@ DC = {
     },
 }
 
+NYC = {
+    "city": "New York, NY", "program": "DSNY curbside (metal/glass/plastic/cartons + mixed paper)",
+    "sources": [
+        {"url": "https://www.nyc.gov/site/dsny/collection/get-rid-of/metal-glass-plastic-cartons.page", "retrieved": D},
+        {"url": "https://www.nyc.gov/site/dsny/collection/residents/recycling.page", "retrieved": D},
+    ],
+    "rules": {
+        "aluminum_can": ("accept", "You can recycle all kinds of metal"),
+        "steel_can": ("accept", "You can recycle all kinds of metal"),
+        "glass_bottle_jar": ("accept", "Glass bottles and jars; not drinking glasses or windows"),
+        "plastic_bottle": ("accept", "Rigid plastics: food and drink containers, caps and lids"),
+        "plastic_tub": ("conditional", "Rigid food containers are accepted but ice cream tubs are not", 0),
+        "plastic_bag_film": ("reject", "Soft plastics (bags, wraps, snack wrappers) are not accepted"),
+        "cardboard_box": ("accept", "Mixed paper and cardboard stream", 1),
+        "pizza_box_greasy": ("conditional", "Not covered by the pages read", 1),
+        "paper_clean": ("accept", "Mixed paper and cardboard stream", 1),
+        "paper_cup": ("conditional", "Not covered by the pages read", 1),
+        "milk_carton": ("accept", "Milk, soup and juice cartons go with metal, glass, plastic"),
+        "foam": ("reject", "Foam products (Styrofoam, packing peanuts) are not accepted"),
+        "aluminum_foil": ("accept", "Aluminum foil and trays are accepted"),
+        "food_waste": ("reject", "Not recycling; NYC handles food scraps in a separate organics program"),
+        "battery": ("reject", "Lithium-ion and other non-alkaline batteries must be disposed of separately"),
+        "other_trash": ("reject", "Trash"),
+    },
+}
+
+
 def emit(cid, d):
     d = dict(d)
-    d["rules"] = {k: {"verdict": v[0], "note": v[1], "source": 0} for k, v in d["rules"].items()}
+    d["rules"] = {k: {"verdict": v[0], "note": v[1], "source": v[2] if len(v) > 2 else 0}
+                  for k, v in d["rules"].items()}
     (OUT / f"{cid}.json").write_text(json.dumps(d, indent=2), encoding="utf-8")
 
 if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
     emit("seattle", SEATTLE)
     emit("washington_dc", DC)
+    emit("new_york", NYC)
