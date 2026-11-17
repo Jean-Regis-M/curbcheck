@@ -13,7 +13,7 @@ so it abstains instead of guessing. Research prototype for Arbiter Hacks V1 (The
 uff), reproducible data and evaluation scripts.
 
 ## Measured results
-Two heads are in the repo. **v2 is shipped** (`models/head.npz`); v1 (`models/head_v1.npz`) is kept for reproducibility.
+Two heads are in the repo. **v1 is shipped** (`models/head.npz`, identical to `models/head_v1.npz`); v2 is `models/head_v2.npz`. See the TrashNet result below for why.
 "False accept" = told "recycle it" when the city's rule for the true item is not "accept" (conditional counts).
 "Missed recyclable" = a genuinely accepted item told "not recyclable". Thresholds were chosen on validation data only.
 
@@ -39,10 +39,24 @@ RealWaste was split 50/25/25 by image; v2 never saw the test part (n=960, eval/v
 
 (Seattle shown; DC and NYC are within a point or two, see eval/v2.json.)
 
-**How to read this honestly.** The RealWaste gain is adaptation to that dataset, not generalisation: v2 saw other
+**How to read the v2 numbers honestly.** The RealWaste gain is adaptation to that dataset, not generalisation: v2 saw other
 RealWaste photos, so this is no longer an unseen-dataset result. On TACO, v2 abstains much more often (39% vs 70%
 coverage) because its threshold was chosen on a validation pool dominated by easier RealWaste images, and its forced
-yes/no false-accept rate on TACO is worse (17% vs 14%). A fully unseen third dataset (e.g. TrashNet) is still needed.
+yes/no false-accept rate on TACO is worse (17% vs 14%). The TrashNet test below was run for exactly this reason and does not support v2.
+
+**Unseen-dataset test on TrashNet** (studio photos, MIT licence, 2,045 images: cardboard, glass, metal, paper accepted;
+only 137 "trash" images as non-recyclable; plastic excluded; eval/trashnet.json). Seattle shown, DC and NYC are similar.
+
+| Head | False-accept (abstaining) | Forced yes/no | Missed recyclable | Coverage |
+|---|---|---|---|---|
+| v1 | 5.8% (95% CI 2.2 to 9.4) | 20.4% | 9.1% | 70% |
+| v2 | 12.4% (7.1 to 17.6) | 51.8% | 0.2% | 77% |
+
+On data neither head has seen, v2 is the less safe one: it accepts about one in eight non-recyclable items and, when
+forced to choose, about half of them. Training on RealWaste taught it to say "recyclable" too readily. Because a false accept
+(contamination) is the costlier mistake, **v1 is the default**. The trade is real: v1 wrongly rejects roughly 9% to 30% of
+recyclables depending on the dataset. Neither head is good enough for deployment; closing this gap needs real
+item-level labels, not weak material labels.
 
 ### What did not work
 We hypothesised that abstaining on the probability of the *city verdict* would beat abstaining on *item confidence*.
