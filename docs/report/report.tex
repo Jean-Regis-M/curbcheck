@@ -1,0 +1,113 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{microtype}
+\hypersetup{colorlinks=true,urlcolor=blue!50!black,linkcolor=black}
+\title{CurbCheck: Rules-Grounded Curbside Recycling Checks\\with Calibrated Abstention}
+\author{Arbiter Hacks V1, Theme Track: Rethinking Waste}
+\date{November 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+A wrong ``recycle'' answer can contaminate a whole collection load, and what counts as recyclable differs by city.
+CurbCheck identifies an item from a photo, looks it up in a city-specific rules table whose entries cite an official page,
+and answers \emph{accept}, \emph{reject} or \emph{not sure}. It abstains unless the probability mass of one city verdict
+clears a threshold chosen on validation data. On held-out litter photos abstention reduces the false-accept rate from
+13.8\% to 3.3\% at 70\% coverage (Seattle). On an unseen dataset the shipped model accepts 5.8\% of non-recyclables and
+wrongly rejects 9.1\% of recyclables. We report these results, a hypothesis that failed, and a second model that was
+less safe on unseen data. The system is a research prototype and is not ready for deployment.
+\end{abstract}
+
+\section{Problem}
+Recycling rules are set locally. Seattle's guidance sends food-soiled pizza boxes to compost and bags and foam to garbage;
+Washington DC lists milk cartons and rejects foam; New York City accepts all metal including foil and rejects soft plastics.
+A national yes/no answer is therefore wrong for some users. The costlier error is a false accept: a non-recyclable item
+that enters the recycling stream. We treat that as the primary risk.
+
+\section{Method}
+\paragraph{Rules.} Each city has a JSON table over a 16-item taxonomy. Every rule has a verdict (accept, reject, conditional),
+a note and an index into a list of sources (URL and retrieval date, 2026-11-17). A rule is \emph{conditional} when the
+official page does not cover the item; conditional items are never answered automatically. Tables are validated for
+completeness and citation by pydantic and covered by tests.
+
+\paragraph{Classifier.} Images are encoded with OpenCLIP ViT-B/32 (OpenAI weights) on CPU. A logistic-regression head is
+trained on 13 item classes from TACO crops (items with at least 25 crops). Logits are temperature-scaled on a validation split.
+
+\paragraph{Decision.} Item probabilities are summed by the city's verdict for each item. The system answers accept or reject
+only if that verdict's mass reaches a threshold chosen on validation data (target 70\% coverage); otherwise it answers
+\emph{not sure}. Figure~\ref{fig:ui} shows the same photo producing different answers in two cities.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=.48\linewidth]{../img/05-carton-seattle.png}\hfill
+\includegraphics[width=.48\linewidth]{../img/06-carton-washington-dc.png}
+\caption{The same carton photo in Seattle (``not sure'': the page does not name cartons) and Washington DC (``recycle it'').
+Screenshots of the running application.}\label{fig:ui}
+\end{figure}
+
+\section{Data and protocol}
+TACO (1{,}563 usable crops after dropping classes under 25 examples and 330 annotations with orientation mismatch) is split by
+source photo into train, validation and test (306 test crops). TrashNet (2{,}045 images, MIT licence) is used as an unseen test:
+cardboard, glass, metal and paper count as accept; the 137 ``trash'' images count as non-accept; plastic is excluded because its
+verdict depends on the item. A \emph{false accept} is an accept when the city's rule for the true item is not accept;
+a \emph{missed recyclable} is a reject for an accepted item. Dataset licences and unresolved conflicts are in \texttt{docs/DATA.md}.
+
+\section{Results}
+\begin{table}[ht]
+\centering
+\caption{Held-out TACO test, Seattle (v1). Threshold chosen on validation only.}
+\begin{tabular}{lrr}
+\toprule
+& False-accept rate & Coverage\\
+\midrule
+Forced yes/no & 13.8\% & 100\%\\
+Abstaining & 3.3\% & 69.6\%\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Unseen TrashNet (Seattle). 95\% bootstrap intervals in brackets; only 137 non-recyclable images.}
+\begin{tabular}{lrrrr}
+\toprule
+Head & False accept & Forced false accept & Missed recyclable & Coverage\\
+\midrule
+v1 (shipped) & 5.8\% [2.2, 9.4] & 20.4\% & 9.1\% & 70\%\\
+v2 (+RealWaste) & 12.4\% [7.1, 17.6] & 51.8\% & 0.2\% & 77\%\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{What did not work.} We expected abstaining on city-verdict mass to beat abstaining on item confidence. The two
+performed about the same with the trained head and the verdict method was worse with zero-shot features (Figure~\ref{fig:curve}).
+
+\paragraph{A better-looking model that was worse.} Adding RealWaste material labels (v2) cut missed recyclables on held-out
+RealWaste photos from 29.8\% to 2.2\%, but that gain reflects adaptation to RealWaste. On unseen TrashNet v2 was
+less safe, so v1 is the default and both are in the repository.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=.8\linewidth]{../../eval/far_vs_coverage.png}
+\caption{False-accept rate versus coverage on TACO test for item-confidence abstention (A) and verdict-mass abstention (B).}\label{fig:curve}
+\end{figure}
+
+\section{Limitations}
+Test sets are small and intervals wide. Training data is outdoor litter and landfill photos, not household items.
+Batteries and greasy pizza boxes had too few examples to learn. Three cities only; where a city page is silent we say
+``conditional'', which reflects the page and not necessarily the city's actual rule. Labels for the second dataset are weak
+and material-level. Missed-recyclable rates of 9\% to 30\% are too high for deployment. No real-world contamination reduction
+was measured and none is claimed.
+
+\section{Next steps}
+Collect item-level labelled household photos; add machine-readable rules for more cities; evaluate on a fully held-out household
+set; pilot with a municipality or sorting facility before making any impact claim.
+
+\section*{Reproducibility}
+Code, scripts, evaluation outputs (\texttt{eval/*.json}) and instructions: see the repository README.
+\end{document}
