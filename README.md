@@ -1,4 +1,6 @@
-﻿# CurbCheck
+﻿![CurbCheck](docs/img/banner.png)
+
+# CurbCheck
 
 Can this item go in my curbside recycling bin, **in my city**? CurbCheck identifies an item from a photo, looks up the
 city's published rules, and answers **accept**, **reject** or **not sure**. A wrong "accept" contaminates a whole load,
@@ -11,6 +13,31 @@ so it abstains instead of guessing. Research prototype for Arbiter Hacks V1 (The
 - FastAPI service (/api/check, /api/cities) and a single-page web UI.
 - Tests (pytest), lint (
 uff), reproducible data and evaluation scripts.
+
+## Screenshots
+All captured from the running app (`scripts/capture_screenshots.py`). Photos are TrashNet (MIT) and one TACO crop.
+
+| | |
+|---|---|
+| ![Home](docs/img/01-home.png) **Home.** Pick a city, add a photo. | ![Accept](docs/img/02-accept-seattle.png) **Accept.** A glass bottle in Seattle, with the matching rule and its source link. |
+| ![Not sure](docs/img/03-not-sure-seattle.png) **Abstention.** Cardboard at 65% accept mass is below the 71% threshold, so the answer is "not sure". | ![Reject](docs/img/04-reject-seattle.png) **Reject.** Trash is not recyclable in Seattle. |
+| ![Seattle carton](docs/img/05-carton-seattle.png) **Same photo, Seattle.** The city page does not name cartons, so the rule is conditional: "not sure". | ![DC carton](docs/img/06-carton-washington-dc.png) **Same photo, Washington DC.** DC lists cartons, so the answer is "recycle it". |
+
+## How it works
+```mermaid
+flowchart LR
+  A[Photo] --> B[OpenCLIP ViT-B/32 on CPU]
+  B --> C[Linear head: item probabilities]
+  C --> D[Sum probability per city verdict]
+  R[(City rules JSON, each rule cites a page and date)] --> D
+  D --> E{Verdict mass above threshold?}
+  E -- yes --> F[accept or reject, with cited rule]
+  E -- no --> G[not sure]
+```
+
+## API
+`GET /api/cities`, `GET /api/health`, `POST /api/check` (multipart: `image` JPEG/PNG/WebP up to 5 MB, `city`).
+Returns the verdict, per-verdict probabilities, top 3 items with their rules, and the rule source URL.
 
 ## Measured results
 Two heads are in the repo. **v1 is shipped** (`models/head.npz`, identical to `models/head_v1.npz`); v2 is `models/head_v2.npz`. See the TrashNet result below for why.
