@@ -4,13 +4,13 @@
 
 [![CI](https://github.com/Jean-Regis-M/curbcheck/actions/workflows/ci.yml/badge.svg)](https://github.com/Jean-Regis-M/curbcheck/actions/workflows/ci.yml)
 [![Live demo](https://img.shields.io/badge/live%20demo-GitHub%20Pages-1f7a4d)](https://jean-regis-m.github.io/curbcheck/)
-[![Video](https://img.shields.io/badge/demo%20video-2%3A11-b3402f)](https://youtu.be/8sTgR-G_Jro)
+[![Video](https://img.shields.io/badge/demo%20video-2%3A24-b3402f)](https://youtu.be/UxmwYp9BlHo)
 [![License: MIT](https://img.shields.io/badge/license-MIT-lightgrey)](LICENSE)
 
 **A recycling checker that knows your city's rules, and says "not sure" instead of guessing.**
 
 [Try it in your browser](https://jean-regis-m.github.io/curbcheck/) ·
-[Watch the 2 minute demo](https://youtu.be/8sTgR-G_Jro) ·
+[Watch the 2 minute 24 second demo](https://youtu.be/UxmwYp9BlHo) ·
 [Read the technical report (PDF)](docs/report/report.pdf)
 
 *Arbiter Hacks V1, Theme Track: Rethinking Waste*
@@ -45,10 +45,10 @@ The second rule is the product. On held-out photos it cuts false accepts by 72% 
 | | |
 |---|---|
 | ![Home](docs/img/01-home.png) **Pick a city, add a photo.** Nothing is uploaded when you use the hosted demo. | ![Accept](docs/img/02-accept-seattle.png) **A confident answer.** A glass bottle in Seattle: recycle it, with the matching rule and its source link. |
-| ![Not sure](docs/img/03-not-sure-seattle.png) **A deliberate "not sure".** Cardboard scores 65% accept, below the bar, so it declines. | ![Reject](docs/img/04-reject-seattle.png) **A clear no.** Trash is not recyclable in Seattle. |
+| ![Not sure](docs/img/03-not-sure-seattle.png) **A deliberate "not sure".** A dented can splits the model across several items (52% accept), below the 74% bar, so it declines. | ![Reject](docs/img/04-reject-seattle.png) **A clear no.** Trash is not recyclable in Seattle. |
 | ![Seattle carton](docs/img/05-carton-seattle.png) **Same photo, Seattle.** The page does not name cartons, so the rule is *conditional*: "not sure". | ![DC carton](docs/img/06-carton-washington-dc.png) **Same photo, Washington DC.** DC lists cartons: "recycle it". |
 
-The hosted demo also shows the verdict in every other city for the same photo. (Screenshots were taken with the first version of the model; the numbers below are for the current one.)
+The hosted demo also shows the verdict in every other city for the same photo.
 
 ## The evidence, including what went wrong
 
@@ -158,7 +158,7 @@ The Theme Track rubric from the [Devpost rules](https://arbiter-hacks-v1.devpost
 - **What blocks real deployment, plainly.** (1) Item-level labelled household photos. The 8% to 35% of recyclables wrongly rejected is too high to ship. (2) Batteries, greasy paper and food waste are not recognised. (3) Keeping rules current. (4) Image dataset licences are unresolved (see [Data](#data-and-licences)).
 
 ### Presentation and demo clarity (20)
-- A 2 minute 11 second [video](https://youtu.be/8sTgR-G_Jro) recorded from the real running app, including the failure case. It was recorded before the review fixes, so its numbers are slightly different from the current ones; the narration is a synthetic voice.
+- A 2 minute 24 second [video](https://youtu.be/UxmwYp9BlHo) recorded from the real running app after the review fixes, including a "not sure" case and the measured trade-offs. The narration is a synthetic voice.
 - A live demo a judge can try in one click, with sample photos.
 - This README, a [3 page report](docs/report/report.pdf), and every claim linked to its evidence file.
 
@@ -245,7 +245,6 @@ Los Angeles and Chicago were researched and left out because their official page
 - Seven cities. *Conditional* reflects what the page says, not necessarily the city's real rule. NYC's quotes could only be checked by hand.
 - 330 TACO annotations were dropped because photo orientation disagreed with the annotation.
 - Wrongly rejecting recyclables (8% to 35% depending on dataset) is too high for deployment.
-- The demo video predates the encoder fix and shows the earlier numbers.
 - No measurement of real-world contamination. No claim of environmental or financial impact.
 
 ## What comes next

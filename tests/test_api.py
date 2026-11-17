@@ -96,3 +96,10 @@ def test_rate_limit_applies_per_client(client):
 def test_answer_lists_what_the_model_cannot_recognise(client):
     api._hits.clear()
     assert "batteries" in post(client).json()["not_recognised"]
+
+
+def test_one_request_returns_the_verdict_for_every_city(client):
+    api._hits.clear()
+    j = post(client).json()
+    assert set(j["all_cities"]) == set(api.list_cities())
+    assert all(v in ("accept", "reject", "not_sure") for v in j["all_cities"].values())

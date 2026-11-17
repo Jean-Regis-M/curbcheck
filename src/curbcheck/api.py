@@ -103,6 +103,7 @@ def check(image: UploadFile = File(...), city: str = Form(...), clf: Classifier 
         "top_items": [{"item": k, "label": ITEMS[k], "p": round(v, 4), "rule": rules.rules[k].verdict,
                        "note": rules.rules[k].note} for k, v in top],
         "source_url": d.source_url,
+        "all_cities": {cid: decide(probs, load_city(cid), threshold=clf.threshold).verdict for cid in list_cities()},
         "not_recognised": UNRECOGNISED,
         "disclaimer": "Model trained on outdoor litter photos; abstains when unsure. Check your city's official page.",
     }

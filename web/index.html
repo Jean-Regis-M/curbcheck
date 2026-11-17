@@ -83,7 +83,7 @@ async function apiCheck(f,city){const fd=new FormData();fd.append("image",f);fd.
 const check=(f,c)=>api?apiCheck(f,c):engine.check(f,c);
 async function run(){
  $("go").disabled=true;$("go").textContent="Checking…";$("err").textContent="";
- try{const sel=$("city").value;const main=await check(file,sel);const others=await Promise.all(cities.filter(c=>c.id!==sel).map(async c=>[c,await check(file,c.id)]));render(main,others)}
+ try{const sel=$("city").value;const main=await check(file,sel);const others=main.all_cities?cities.filter(c=>c.id!==sel).map(c=>[c,{verdict:main.all_cities[c.id]}]):await Promise.all(cities.filter(c=>c.id!==sel).map(async c=>[c,await check(file,c.id)]));render(main,others)}
  catch(e){$("err").textContent=e.message}
  finally{$("go").disabled=false;$("go").textContent="Check this item"}}
 $("go").onclick=run;
