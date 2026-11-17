@@ -1,5 +1,5 @@
 """Train the shipped classifier head and choose the abstention threshold on the validation split only.
-Writes models/head.npz and eval/fixed_threshold.json (test metrics at the pre-chosen threshold)."""
+Writes models/head_v1.npz and eval/fixed_threshold.json (test metrics at the pre-chosen threshold)."""
 import json
 import sys
 from pathlib import Path
@@ -34,7 +34,7 @@ def main():
         confs.append(conf[va])
     pooled = np.concatenate(confs)
     thr = float(np.quantile(pooled, 1 - TARGET_VAL_COVERAGE))
-    np.savez(ROOT / "models/head.npz", W=clf.coef_, b=clf.intercept_, T=T, threshold=thr,
+    np.savez(ROOT / "models/head_v1.npz", W=clf.coef_, b=clf.intercept_, T=T, threshold=thr,
              classes=np.array(classes), seed=SEED)
     out = {"threshold_chosen_on_val": thr, "temperature": T, "test": {}}
     for cid in CITIES:

@@ -1,4 +1,4 @@
-"""Cross-dataset stress test on RealWaste (landfill photos, never seen in training) at the FIXED threshold
+"""v1 cross-dataset stress test on RealWaste (landfill photos, never seen by the v1 head) at the FIXED threshold
 chosen on TACO validation. Ground truth is only defined where all cities agree at material level:
 Cardboard/Glass/Metal/Paper -> accept; Food Organics/Misc Trash/Textile/Vegetation -> not accept.
 Plastic is excluded (bottles accepted, bags rejected, so a material label gives no verdict).
@@ -31,7 +31,7 @@ def main():
     for shard in sorted((ROOT / "data/raw/realwaste").glob("p*.parquet")):
         for rec in pq.read_table(shard, columns=["image"]).column("image").to_pylist():
             items.append((re.sub(r"_\d+\.\w+$", "", rec["path"]), rec["bytes"]))
-    clf = ClipHeadClassifier()
+    clf = ClipHeadClassifier(ROOT / "models/head_v1.npz")
     rng = np.random.default_rng(0)
     probs, truth, cls = [], [], []
     for cname in sorted(ACCEPT | NOT_ACCEPT):
