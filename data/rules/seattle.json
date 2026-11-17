@@ -11,82 +11,98 @@
     "aluminum_can": {
       "verdict": "accept",
       "note": "Metal cans: aluminum cans",
-      "source": 0
+      "source": 0,
+      "quote": "Metal cans and scrap: aluminum cans, steel cans and clean foil trays"
     },
     "steel_can": {
       "verdict": "accept",
       "note": "Metal cans: steel cans",
-      "source": 0
+      "source": 0,
+      "quote": "Metal cans and scrap: aluminum cans, steel cans and clean foil trays"
     },
     "glass_bottle_jar": {
       "verdict": "accept",
       "note": "Glass bottles and jars; no drink glasses or window glass",
-      "source": 0
+      "source": 0,
+      "quote": "Glass bottles and jars: no drink glasses or window glass"
     },
     "plastic_bottle": {
       "verdict": "accept",
       "note": "Plastic containers, bottles, jugs and tubs",
-      "source": 0
+      "source": 0,
+      "quote": "Plastic containers, bottles, jug and tubs: milk jugs, plastic soap bottles, yogurt and sauce tubs"
     },
     "plastic_tub": {
       "verdict": "accept",
       "note": "Yogurt and sauce tubs; dirty food containers go in garbage",
-      "source": 0
+      "source": 0,
+      "quote": "Plastic containers, bottles, jug and tubs: milk jugs, plastic soap bottles, yogurt and sauce tubs"
     },
     "plastic_bag_film": {
       "verdict": "reject",
       "note": "Plastic bags, wraps and wrappers go in garbage",
-      "source": 0
+      "source": 0,
+      "quote": "Plastics bags, wraps & wrappers"
     },
     "cardboard_box": {
       "verdict": "accept",
       "note": "Flatten cardboard; labels and tape are okay",
-      "source": 0
+      "source": 0,
+      "quote": "Cardboard: flatten cardboard so it takes up less room. Labels and tape are okay"
     },
     "pizza_box_greasy": {
       "verdict": "reject",
       "note": "Food-soiled pizza boxes go in compost, not recycling",
-      "source": 0
+      "source": 0,
+      "quote": "Food soiled and shredded paper: pizza boxes, napkins, paper towels, greasy food wrappers, and dirty plain paper plates"
     },
     "paper_clean": {
       "verdict": "accept",
       "note": "Newspaper, magazines, paperboard, office paper",
-      "source": 0
+      "source": 0,
+      "quote": "Paper: newspaper, magazines, paperboard cereal boxes, and office paper"
     },
     "paper_cup": {
       "verdict": "conditional",
       "note": "Page does not list coated paper cups; check the Where Does It Go tool",
-      "source": 0
+      "source": 0,
+      "quote": ""
     },
     "milk_carton": {
       "verdict": "conditional",
       "note": "Cartons not named on this page; check the Where Does It Go tool",
-      "source": 0
+      "source": 0,
+      "quote": ""
     },
     "foam": {
       "verdict": "reject",
       "note": "Foam trays, instant food containers and blocks go in garbage",
-      "source": 0
+      "source": 0,
+      "quote": "Foam: trays, instant food container, and foam blocks"
     },
     "aluminum_foil": {
       "verdict": "accept",
       "note": "Clean foil trays are accepted; clean foil only",
-      "source": 0
+      "source": 0,
+      "quote": "Metal cans and scrap: aluminum cans, steel cans and clean foil trays"
     },
     "food_waste": {
       "verdict": "reject",
       "note": "Food scraps go in compost",
-      "source": 0
+      "source": 0,
+      "quote": "All food scraps and waste: if at one point you could have eaten it, it's compostable"
     },
     "battery": {
       "verdict": "reject",
       "note": "Batteries need special collection",
-      "source": 0
+      "source": 0,
+      "quote": "Batteries & Fluorescent Light Bulbs"
     },
     "other_trash": {
       "verdict": "reject",
       "note": "Garbage",
-      "source": 0
+      "source": 0,
+      "quote": "Other garbage: broken dishes, hoses, dryer lint, loose bottle caps, kitchen grease"
     }
   }
 }

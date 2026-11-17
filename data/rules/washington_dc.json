@@ -11,82 +11,98 @@
     "aluminum_can": {
       "verdict": "accept",
       "note": "Steel and aluminum bottles, cans, containers; clean and empty",
-      "source": 0
+      "source": 0,
+      "quote": "Steel & Aluminum Bottles/Cans/Containers"
     },
     "steel_can": {
       "verdict": "accept",
       "note": "Steel and aluminum bottles, cans, containers; no paint cans",
-      "source": 0
+      "source": 0,
+      "quote": "Steel & Aluminum Bottles/Cans/Containers"
     },
     "glass_bottle_jar": {
       "verdict": "accept",
       "note": "Glass bottles and jars; no ceramics",
-      "source": 0
+      "source": 0,
+      "quote": "Bottles & Jars (all items clean & empty) *No Ceramics"
     },
     "plastic_bottle": {
       "verdict": "accept",
       "note": "Plastic bottles and lids; clean and empty",
-      "source": 0
+      "source": 0,
+      "quote": "Cups & Containers Bottles & Lids Bulky Items (all items clean & empty)"
     },
     "plastic_tub": {
       "verdict": "accept",
       "note": "Plastic cups and containers; clean and empty",
-      "source": 0
+      "source": 0,
+      "quote": "Cups & Containers Bottles & Lids Bulky Items (all items clean & empty)"
     },
     "plastic_bag_film": {
       "verdict": "reject",
       "note": "Plastic bags, wraps and film of any kind are not accepted",
-      "source": 0
+      "source": 0,
+      "quote": "Plastic bags, wraps, and film of any color, size or shape are no longer accepted"
     },
     "cardboard_box": {
       "verdict": "accept",
       "note": "Flattened cardboard; empty and flatten boxes",
-      "source": 0
+      "source": 0,
+      "quote": "Flattened Cardboard"
     },
     "pizza_box_greasy": {
       "verdict": "conditional",
       "note": "Page does not state a rule for greasy pizza boxes",
-      "source": 0
+      "source": 0,
+      "quote": ""
     },
     "paper_clean": {
       "verdict": "accept",
       "note": "Newspaper, magazines, junk mail, office paper; no tissues",
-      "source": 0
+      "source": 0,
+      "quote": "Newspaper / Magazines"
     },
     "paper_cup": {
       "verdict": "conditional",
       "note": "Page lists paper 'cups and containers' without describing coatings",
-      "source": 0
+      "source": 0,
+      "quote": ""
     },
     "milk_carton": {
       "verdict": "accept",
       "note": "Milk, juice and soup cartons are accepted",
-      "source": 0
+      "source": 0,
+      "quote": "Milk, Juice, & Soup Cartons"
     },
     "foam": {
       "verdict": "reject",
       "note": "No foam polystyrene",
-      "source": 0
+      "source": 0,
+      "quote": "*No Foam Polystyrene"
     },
     "aluminum_foil": {
       "verdict": "conditional",
       "note": "Page lists aluminum containers but not foil specifically",
-      "source": 0
+      "source": 0,
+      "quote": ""
     },
     "food_waste": {
       "verdict": "reject",
       "note": "Not a recyclable; keep out of the recycling bin",
-      "source": 0
+      "source": 0,
+      "quote": ""
     },
     "battery": {
       "verdict": "reject",
       "note": "Batteries and electronics are kept out of recycling",
-      "source": 0
+      "source": 0,
+      "quote": "Keep out: Plastic bags, clothing, tanglers (cables & cords), electronics & batteries."
     },
     "other_trash": {
       "verdict": "reject",
       "note": "Not accepted",
-      "source": 0
+      "source": 0,
+      "quote": ""
     }
   }
 }

@@ -20,6 +20,7 @@ class Rule(BaseModel):
     verdict: str
     note: str = ""
     source: int  # index into CityRules.sources
+    quote: str = ""  # verbatim text from the source page that supports the verdict (empty when the page is silent)
 
     @field_validator("verdict")
     @classmethod

@@ -15,82 +15,98 @@
     "aluminum_can": {
       "verdict": "accept",
       "note": "You can recycle all kinds of metal",
-      "source": 0
+      "source": 0,
+      "quote": "You can recycle all kinds of metal."
     },
     "steel_can": {
       "verdict": "accept",
       "note": "You can recycle all kinds of metal",
-      "source": 0
+      "source": 0,
+      "quote": "You can recycle all kinds of metal."
     },
     "glass_bottle_jar": {
       "verdict": "accept",
       "note": "Glass bottles and jars; not drinking glasses or windows",
-      "source": 0
+      "source": 0,
+      "quote": "You can recycle glass bottles and jars."
     },
     "plastic_bottle": {
       "verdict": "accept",
       "note": "Rigid plastics: food and drink containers, caps and lids",
-      "source": 0
+      "source": 0,
+      "quote": "You can recycle most rigid plastics"
     },
     "plastic_tub": {
       "verdict": "conditional",
       "note": "Rigid food containers are accepted but ice cream tubs are not",
-      "source": 0
+      "source": 0,
+      "quote": "Ice cream tubs Markers and crayons"
     },
     "plastic_bag_film": {
       "verdict": "reject",
       "note": "Soft plastics (bags, wraps, snack wrappers) are not accepted",
-      "source": 0
+      "source": 0,
+      "quote": "Soft plastics (plastic bags, bubble wrap, plastic mailing envelopes, candy and snack wrappers)"
     },
     "cardboard_box": {
       "verdict": "accept",
       "note": "Mixed paper and cardboard stream",
-      "source": 1
+      "source": 1,
+      "quote": "Mixed paper and cardboard"
     },
     "pizza_box_greasy": {
       "verdict": "conditional",
       "note": "Not covered by the pages read",
-      "source": 1
+      "source": 1,
+      "quote": ""
     },
     "paper_clean": {
       "verdict": "accept",
       "note": "Mixed paper and cardboard stream",
-      "source": 1
+      "source": 1,
+      "quote": "Mixed paper and cardboard"
     },
     "paper_cup": {
       "verdict": "conditional",
       "note": "Not covered by the pages read",
-      "source": 1
+      "source": 1,
+      "quote": ""
     },
     "milk_carton": {
       "verdict": "accept",
       "note": "Milk, soup and juice cartons go with metal, glass, plastic",
-      "source": 0
+      "source": 0,
+      "quote": "You can recycle beverage and liquid food cartons like milk and soup cartons and juice boxes."
     },
     "foam": {
       "verdict": "reject",
       "note": "Foam products (Styrofoam, packing peanuts) are not accepted",
-      "source": 0
+      "source": 0,
+      "quote": "Foam products (Styrofoam, packing peanuts)"
     },
     "aluminum_foil": {
       "verdict": "accept",
       "note": "Aluminum foil and trays are accepted",
-      "source": 0
+      "source": 0,
+      "quote": "This includes aluminum foil and trays"
     },
     "food_waste": {
       "verdict": "reject",
       "note": "Not recycling; NYC handles food scraps in a separate organics program",
-      "source": 0
+      "source": 0,
+      "quote": ""
     },
     "battery": {
       "verdict": "reject",
       "note": "Lithium-ion and other non-alkaline batteries must be disposed of separately",
-      "source": 0
+      "source": 0,
+      "quote": "Lithium-ion and other non-alkaline batteries"
     },
     "other_trash": {
       "verdict": "reject",
       "note": "Trash",
-      "source": 0
+      "source": 0,
+      "quote": "Most items that cannot be recycled can be thrown in the trash."
     }
   }
 }

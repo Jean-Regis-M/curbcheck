@@ -79,11 +79,63 @@ NYC = {
 }
 
 
+# Verbatim text from each source page (whitespace and quote style are normalised by scripts/verify_rules.py).
+# Empty = the page is silent; the rule then rests on the page not listing the item.
+QUOTES = {
+    "seattle": {
+        "aluminum_can": "Metal cans and scrap: aluminum cans, steel cans and clean foil trays",
+        "steel_can": "Metal cans and scrap: aluminum cans, steel cans and clean foil trays",
+        "glass_bottle_jar": "Glass bottles and jars: no drink glasses or window glass",
+        "plastic_bottle": "Plastic containers, bottles, jug and tubs: milk jugs, plastic soap bottles, yogurt and sauce tubs",
+        "plastic_tub": "Plastic containers, bottles, jug and tubs: milk jugs, plastic soap bottles, yogurt and sauce tubs",
+        "plastic_bag_film": "Plastics bags, wraps & wrappers",
+        "cardboard_box": "Cardboard: flatten cardboard so it takes up less room. Labels and tape are okay",
+        "pizza_box_greasy": "Food soiled and shredded paper: pizza boxes, napkins, paper towels, greasy food wrappers, and dirty plain paper plates",
+        "paper_clean": "Paper: newspaper, magazines, paperboard cereal boxes, and office paper",
+        "foam": "Foam: trays, instant food container, and foam blocks",
+        "aluminum_foil": "Metal cans and scrap: aluminum cans, steel cans and clean foil trays",
+        "food_waste": "All food scraps and waste: if at one point you could have eaten it, it's compostable",
+        "battery": "Batteries & Fluorescent Light Bulbs",
+        "other_trash": "Other garbage: broken dishes, hoses, dryer lint, loose bottle caps, kitchen grease",
+    },
+    "washington_dc": {
+        "aluminum_can": "Steel & Aluminum Bottles/Cans/Containers",
+        "steel_can": "Steel & Aluminum Bottles/Cans/Containers",
+        "glass_bottle_jar": "Bottles & Jars (all items clean & empty) *No Ceramics",
+        "plastic_bottle": "Cups & Containers Bottles & Lids Bulky Items (all items clean & empty)",
+        "plastic_tub": "Cups & Containers Bottles & Lids Bulky Items (all items clean & empty)",
+        "plastic_bag_film": "Plastic bags, wraps, and film of any color, size or shape are no longer accepted",
+        "cardboard_box": "Flattened Cardboard",
+        "paper_clean": "Newspaper / Magazines",
+        "milk_carton": "Milk, Juice, & Soup Cartons",
+        "foam": "*No Foam Polystyrene",
+        "battery": "Keep out: Plastic bags, clothing, tanglers (cables & cords), electronics & batteries.",
+    },
+    "new_york": {
+        "aluminum_can": "You can recycle all kinds of metal.",
+        "steel_can": "You can recycle all kinds of metal.",
+        "glass_bottle_jar": "You can recycle glass bottles and jars.",
+        "plastic_bottle": "You can recycle most rigid plastics",
+        "plastic_tub": "Ice cream tubs Markers and crayons",
+        "plastic_bag_film": "Soft plastics (plastic bags, bubble wrap, plastic mailing envelopes, candy and snack wrappers)",
+        "cardboard_box": "Mixed paper and cardboard",
+        "paper_clean": "Mixed paper and cardboard",
+        "milk_carton": "You can recycle beverage and liquid food cartons like milk and soup cartons and juice boxes.",
+        "foam": "Foam products (Styrofoam, packing peanuts)",
+        "aluminum_foil": "This includes aluminum foil and trays",
+        "battery": "Lithium-ion and other non-alkaline batteries",
+        "other_trash": "Most items that cannot be recycled can be thrown in the trash.",
+    },
+}
+
+
 def emit(cid, d):
     d = dict(d)
-    d["rules"] = {k: {"verdict": v[0], "note": v[1], "source": v[2] if len(v) > 2 else 0}
+    q = QUOTES.get(cid, {})
+    d["rules"] = {k: {"verdict": v[0], "note": v[1], "source": v[2] if len(v) > 2 else 0, "quote": q.get(k, "")}
                   for k, v in d["rules"].items()}
     (OUT / f"{cid}.json").write_text(json.dumps(d, indent=2), encoding="utf-8")
+
 
 if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
