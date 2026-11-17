@@ -6,8 +6,6 @@ import sys
 from html.parser import HTMLParser
 from pathlib import Path
 
-import requests
-
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from curbcheck.rules import list_cities, load_city
 
@@ -51,6 +49,8 @@ def _browser_text(url: str) -> str:
 
 
 def page_text(url: str) -> str:
+    import requests  # imported lazily so the unit tests do not need network libraries
+
     r = requests.get(url, headers=UA, timeout=40)
     if r.status_code == 403:
         return _browser_text(url)
