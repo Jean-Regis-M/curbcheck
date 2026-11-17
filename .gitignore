@@ -1,0 +1,15 @@
+﻿__pycache__/
+*.pyc
+.venv/
+.env
+*.env
+node_modules/
+data/raw/
+data/cache/
+models/*.onnx
+models/*.pt
+.pytest_cache/
+.ruff_cache/
+dist/
+*.log
+private/
