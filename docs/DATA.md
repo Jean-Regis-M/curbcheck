@@ -13,3 +13,6 @@
 - RealWaste: CC BY 4.0 per UCI (archive.ics.uci.edu/dataset/908), but IEEE DataPort says CC BY-NC-SA 4.0. Conflict, so treat as non-commercial research use until resolved.`n- TrashNet: licence not verified (check the GitHub LICENSE file).
 Policy: the repo ships download scripts and checksums, never the images.
 
+
+## Used for evaluation only
+- RealWaste via HuggingFace mirror shahzaibvohra/realwaste (card says CC BY 4.0; UCI says CC BY 4.0; IEEE DataPort says CC BY-NC-SA 4.0). The UCI zip download repeatedly stalled, hence the mirror. Used only to measure, never redistributed.
