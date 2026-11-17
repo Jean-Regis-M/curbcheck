@@ -1,0 +1,92 @@
+{
+  "city": "Washington, DC",
+  "program": "DPW single-stream curbside",
+  "sources": [
+    {
+      "url": "https://zerowaste.dc.gov/page/recycle-residents",
+      "retrieved": "2026-11-17"
+    }
+  ],
+  "rules": {
+    "aluminum_can": {
+      "verdict": "accept",
+      "note": "Steel and aluminum bottles, cans, containers; clean and empty",
+      "source": 0
+    },
+    "steel_can": {
+      "verdict": "accept",
+      "note": "Steel and aluminum bottles, cans, containers; no paint cans",
+      "source": 0
+    },
+    "glass_bottle_jar": {
+      "verdict": "accept",
+      "note": "Glass bottles and jars; no ceramics",
+      "source": 0
+    },
+    "plastic_bottle": {
+      "verdict": "accept",
+      "note": "Plastic bottles and lids; clean and empty",
+      "source": 0
+    },
+    "plastic_tub": {
+      "verdict": "accept",
+      "note": "Plastic cups and containers; clean and empty",
+      "source": 0
+    },
+    "plastic_bag_film": {
+      "verdict": "reject",
+      "note": "Plastic bags, wraps and film of any kind are not accepted",
+      "source": 0
+    },
+    "cardboard_box": {
+      "verdict": "accept",
+      "note": "Flattened cardboard; empty and flatten boxes",
+      "source": 0
+    },
+    "pizza_box_greasy": {
+      "verdict": "conditional",
+      "note": "Page does not state a rule for greasy pizza boxes",
+      "source": 0
+    },
+    "paper_clean": {
+      "verdict": "accept",
+      "note": "Newspaper, magazines, junk mail, office paper; no tissues",
+      "source": 0
+    },
+    "paper_cup": {
+      "verdict": "conditional",
+      "note": "Page lists paper 'cups and containers' without describing coatings",
+      "source": 0
+    },
+    "milk_carton": {
+      "verdict": "accept",
+      "note": "Milk, juice and soup cartons are accepted",
+      "source": 0
+    },
+    "foam": {
+      "verdict": "reject",
+      "note": "No foam polystyrene",
+      "source": 0
+    },
+    "aluminum_foil": {
+      "verdict": "conditional",
+      "note": "Page lists aluminum containers but not foil specifically",
+      "source": 0
+    },
+    "food_waste": {
+      "verdict": "reject",
+      "note": "Not a recyclable; keep out of the recycling bin",
+      "source": 0
+    },
+    "battery": {
+      "verdict": "reject",
+      "note": "Batteries and electronics are kept out of recycling",
+      "source": 0
+    },
+    "other_trash": {
+      "verdict": "reject",
+      "note": "Not accepted",
+      "source": 0
+    }
+  }
+}
