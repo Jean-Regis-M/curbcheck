@@ -46,7 +46,13 @@ def main():
         ans, conf = run_methods(P, classes, city)["B_verdict_mass"]
         cov, far, miss = metrics(ans[te], conf[te], truth[te], thr)
         cov_all, far_all, miss_all = metrics(ans[te], np.ones(te.sum()), truth[te], 0.0)
-        out["test"][cid] = {"coverage": float(cov), "false_accept_rate": float(far), "missed_recyclable_rate": float(miss),
+        answered = (conf[te] >= thr) & (ans[te] != None)
+        nonacc = truth[te] != "accept"
+        acc_ans = answered & (ans[te] == "accept")
+        counts = {"test_items": int(te.sum()), "non_accept_items": int(nonacc.sum()), "answered": int(answered.sum()),
+                  "answered_accept": int(acc_ans.sum()), "false_accepts": int((acc_ans & nonacc).sum()),
+                  "accept_precision": float(1 - (acc_ans & nonacc).sum() / max(acc_ans.sum(), 1))}
+        out["test"][cid] = {"counts": counts, "coverage": float(cov), "false_accept_rate": float(far), "missed_recyclable_rate": float(miss),
                             "no_abstention": {"coverage": float(cov_all), "false_accept_rate": float(far_all),
                                               "missed_recyclable_rate": float(miss_all)}}
     (ROOT / f"eval/fixed_threshold{SUFFIX}.json").write_text(json.dumps(out, indent=2), encoding="utf-8")

@@ -18,20 +18,20 @@ A wrong ``recycle'' answer can contaminate a whole collection load, and what cou
 CurbCheck identifies an item from a photo, looks it up in a city-specific rules table whose entries cite an official page,
 and answers \emph{accept}, \emph{reject} or \emph{not sure}. It abstains unless the probability mass of one city verdict
 clears a threshold chosen on validation data. On held-out litter photos abstention reduces the false-accept rate from
-13.8\% to 3.3\% at 70\% coverage (Seattle). On an unseen dataset the shipped model accepts 5.8\% of non-recyclables and
-wrongly rejects 9.1\% of recyclables. We report these results, a hypothesis that failed, and a second model that was
+15.8\% to 3.3\% at 69\% coverage (Seattle; 10\% to 16\% down to 0.7\% to 3.4\% across seven cities). On an unseen dataset the shipped model accepts 1.5\% to 9.5\% of non-recyclables, depending on the city, and
+wrongly rejects 8.1\% of recyclables. We report these results, a hypothesis that failed, an encoder bug found by an independent review, and a second model that was
 less safe on unseen data. The system is a research prototype and is not ready for deployment.
 \end{abstract}
 
 \section{Problem}
 Recycling rules are set locally. Seattle's guidance sends food-soiled pizza boxes to compost and bags and foam to garbage;
-Washington DC lists milk cartons and rejects foam; New York City accepts all metal including foil and rejects soft plastics.
+Washington DC lists milk cartons and rejects foam; New York City accepts all metal including foil and rejects soft plastics; Austin accepts coated paper cups while Minneapolis rejects them.
 A national yes/no answer is therefore wrong for some users. The costlier error is a false accept: a non-recyclable item
 that enters the recycling stream. We treat that as the primary risk.
 
 \section{Method}
-\paragraph{Rules.} Each city has a JSON table over a 16-item taxonomy. Every rule has a verdict (accept, reject, conditional),
-a note and an index into a list of sources (URL and retrieval date, 2026-11-17). A rule is \emph{conditional} when the
+\paragraph{Rules.} Seven cities (Seattle, Washington DC, New York City, Austin, Minneapolis, Boston, San Francisco) each have a JSON table over a 16-item taxonomy. Every rule has a verdict (accept, reject, conditional),
+a note, an index into a list of sources (URL and retrieval date, 2026-11-17) and, where the page speaks, a verbatim quote that scripts/verify\_rules.py re-checks against the live page. A rule is \emph{conditional} when the
 official page does not cover the item; conditional items are never answered automatically. Tables are validated for
 completeness and citation by pydantic and covered by tests.
 
@@ -60,26 +60,26 @@ a \emph{missed recyclable} is a reject for an accepted item. Dataset licences an
 \section{Results}
 \begin{table}[ht]
 \centering
-\caption{Held-out TACO test, Seattle (v1). Threshold chosen on validation only.}
+\caption{Held-out TACO test, Seattle (v1, QuickGELU encoder). Threshold chosen on validation only.}
 \begin{tabular}{lrr}
 \toprule
 & False-accept rate & Coverage\\
 \midrule
-Forced yes/no & 13.8\% & 100\%\\
-Abstaining & 3.3\% & 69.6\%\\
+Forced yes/no & 15.8\% & 100\%\\
+Abstaining & 3.3\% (5 of 152) & 69.0\%\\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[ht]
 \centering
-\caption{Unseen TrashNet (Seattle). 95\% bootstrap intervals in brackets; only 137 non-recyclable images.}
+\caption{Unseen TrashNet (Seattle). 95\% bootstrap intervals in brackets; only 137 non-recyclable images, so these are 5 and 21 events. Across the seven cities v1 ranges from 1.5\% (New York) to 9.5\% (Austin, San Francisco).}
 \begin{tabular}{lrrrr}
 \toprule
 Head & False accept & Forced false accept & Missed recyclable & Coverage\\
 \midrule
-v1 (shipped) & 5.8\% [2.2, 9.4] & 20.4\% & 9.1\% & 70\%\\
-v2 (+RealWaste) & 12.4\% [7.1, 17.6] & 51.8\% & 0.2\% & 77\%\\
+v1 (shipped) & 3.6\% [0.7, 7.2] & 16.8\% & 8.1\% & 65\%\\
+v2 (+RealWaste) & 15.3\% [9.4, 21.7] & 63.5\% & 0.2\% & 80\%\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -88,7 +88,7 @@ v2 (+RealWaste) & 12.4\% [7.1, 17.6] & 51.8\% & 0.2\% & 77\%\\
 performed about the same with the trained head and the verdict method was worse with zero-shot features (Figure~\ref{fig:curve}).
 
 \paragraph{A better-looking model that was worse.} Adding RealWaste material labels (v2) cut missed recyclables on held-out
-RealWaste photos from 29.8\% to 2.2\%, but that gain reflects adaptation to RealWaste. On unseen TrashNet v2 was
+RealWaste photos from 30.9\% to 2.2\%, but that gain reflects adaptation to RealWaste. On unseen TrashNet v2 was
 less safe, so v1 is the default and both are in the repository.
 
 \begin{figure}[ht]
@@ -99,9 +99,9 @@ less safe, so v1 is the default and both are in the repository.
 
 \section{Limitations}
 Test sets are small and intervals wide. Training data is outdoor litter and landfill photos, not household items.
-Batteries and greasy pizza boxes had too few examples to learn. Three cities only; where a city page is silent we say
+Batteries, greasy pizza boxes and food waste had too few examples to learn, so the model cannot recognise them; the interface says so on every answer. Seven cities only; where a city page is silent we say
 ``conditional'', which reflects the page and not necessarily the city's actual rule. Labels for the second dataset are weak
-and material-level. Missed-recyclable rates of 9\% to 30\% are too high for deployment. No real-world contamination reduction
+and material-level. Missed-recyclable rates of 8\% to 35\% are too high for deployment. No real-world contamination reduction
 was measured and none is claimed.
 
 \section{Next steps}

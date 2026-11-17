@@ -71,3 +71,28 @@ def test_rejects_bad_input(client):
     assert post(client, data=b"not an image").status_code == 422
     assert post(client, data=b"0" * (5 * 1024 * 1024 + 10)).status_code == 413
     assert client.post("/api/check", data={"city": "seattle"}).status_code == 422
+
+
+def test_oversized_declared_body_is_rejected_before_parsing(client):
+    r = client.post("/api/check", content=b"x", headers={"content-length": str(50 * 1024 * 1024),
+                                                         "content-type": "multipart/form-data; boundary=x"})
+    assert r.status_code == 413
+
+
+def test_pixel_bomb_is_rejected_from_the_header(client):
+    big = io.BytesIO()
+    Image.new("L", (6000, 5000)).save(big, "PNG")  # 30 megapixels, tiny when compressed
+    assert len(big.getvalue()) < 1024 * 1024
+    assert post(client, data=big.getvalue()).status_code == 413
+
+
+def test_rate_limit_applies_per_client(client):
+    api._hits.clear()
+    codes = [post(client).status_code for _ in range(api.RATE_LIMIT + 2)]
+    assert codes[:api.RATE_LIMIT] == [200] * api.RATE_LIMIT and codes[-1] == 429
+    api._hits.clear()
+
+
+def test_answer_lists_what_the_model_cannot_recognise(client):
+    api._hits.clear()
+    assert "batteries" in post(client).json()["not_recognised"]

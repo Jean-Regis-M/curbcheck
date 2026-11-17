@@ -17,12 +17,12 @@ from PIL import Image
 
 from curbcheck.decision import decide
 from curbcheck.model import ClipHeadClassifier
-from curbcheck.rules import load_city
+from curbcheck.rules import list_cities, load_city
 
 ACCEPT = {"Cardboard", "Glass", "Metal", "Paper"}
 NOT_ACCEPT = {"Food Organics", "Miscellaneous Trash", "Textile Trash", "Vegetation"}
 PER_CLASS = 150
-CITIES = ["seattle", "washington_dc", "new_york"]
+CITIES = list_cities()
 
 
 def main():

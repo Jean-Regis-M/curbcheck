@@ -13,7 +13,7 @@ CROPS = ROOT / "data" / "raw" / "taco" / "crops"
 
 def main():
     rows = json.loads((ROOT / "data/raw/taco/crops.json").read_text("utf-8"))
-    model, _, pre = open_clip.create_model_and_transforms("ViT-B-32", pretrained="openai")
+    model, _, pre = open_clip.create_model_and_transforms("ViT-B-32-quickgelu", pretrained="openai")
     model.eval()
     feats = []
     with torch.no_grad():

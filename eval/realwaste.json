@@ -1,56 +1,124 @@
 {
-  "threshold": 0.7115167379379272,
+  "threshold": 0.7350513935089111,
   "per_class_sampled": 150,
   "n": 1200,
   "cities": {
-    "seattle": {
-      "coverage": 0.7325,
-      "false_accept_rate": 0.011666666666666667,
+    "austin": {
+      "coverage": 0.7458333333333333,
+      "false_accept_rate": 0.023333333333333334,
       "far_ci95": [
-        0.004897762530787192,
-        0.02147076071243488
+        0.012139833185896627,
+        0.03490662040747458
       ],
-      "no_abstention_false_accept_rate": 0.051666666666666666,
-      "missed_recyclable_rate": 0.3016666666666667,
-      "no_abstention_missed_recyclable_rate": 0.5116666666666667,
+      "no_abstention_false_accept_rate": 0.056666666666666664,
+      "missed_recyclable_rate": 0.3283333333333333,
+      "no_abstention_missed_recyclable_rate": 0.52,
       "false_accept_by_class": {
         "Food Organics": 0.0,
-        "Miscellaneous Trash": 0.04666666666666667,
-        "Textile Trash": 0.0,
+        "Miscellaneous Trash": 0.06666666666666667,
+        "Textile Trash": 0.02666666666666667,
         "Vegetation": 0.0
       }
     },
-    "washington_dc": {
-      "coverage": 0.7233333333333334,
-      "false_accept_rate": 0.01,
+    "boston": {
+      "coverage": 0.7125,
+      "false_accept_rate": 0.015,
       "far_ci95": [
-        0.0031530859036756143,
-        0.018283347315436235
+        0.005760057264777741,
+        0.025059163641253185
       ],
       "no_abstention_false_accept_rate": 0.051666666666666666,
-      "missed_recyclable_rate": 0.3016666666666667,
-      "no_abstention_missed_recyclable_rate": 0.535,
+      "missed_recyclable_rate": 0.3283333333333333,
+      "no_abstention_missed_recyclable_rate": 0.5516666666666666,
       "false_accept_by_class": {
         "Food Organics": 0.0,
-        "Miscellaneous Trash": 0.04,
-        "Textile Trash": 0.0,
+        "Miscellaneous Trash": 0.04666666666666667,
+        "Textile Trash": 0.013333333333333334,
+        "Vegetation": 0.0
+      }
+    },
+    "minneapolis": {
+      "coverage": 0.7408333333333333,
+      "false_accept_rate": 0.016666666666666666,
+      "far_ci95": [
+        0.0068021622997428725,
+        0.02815927476280938
+      ],
+      "no_abstention_false_accept_rate": 0.04666666666666667,
+      "missed_recyclable_rate": 0.3516666666666667,
+      "no_abstention_missed_recyclable_rate": 0.5616666666666666,
+      "false_accept_by_class": {
+        "Food Organics": 0.0,
+        "Miscellaneous Trash": 0.04666666666666667,
+        "Textile Trash": 0.02,
         "Vegetation": 0.0
       }
     },
     "new_york": {
-      "coverage": 0.6891666666666667,
-      "false_accept_rate": 0.008333333333333333,
+      "coverage": 0.6816666666666666,
+      "false_accept_rate": 0.01,
       "far_ci95": [
-        0.0016763768506964352,
-        0.01661272119712033
+        0.0032615291262135925,
+        0.018011014287610032
       ],
       "no_abstention_false_accept_rate": 0.043333333333333335,
-      "missed_recyclable_rate": 0.3016666666666667,
-      "no_abstention_missed_recyclable_rate": 0.5666666666666667,
+      "missed_recyclable_rate": 0.3283333333333333,
+      "no_abstention_missed_recyclable_rate": 0.5983333333333334,
       "false_accept_by_class": {
         "Food Organics": 0.0,
-        "Miscellaneous Trash": 0.03333333333333333,
-        "Textile Trash": 0.0,
+        "Miscellaneous Trash": 0.02666666666666667,
+        "Textile Trash": 0.013333333333333334,
+        "Vegetation": 0.0
+      }
+    },
+    "san_francisco": {
+      "coverage": 0.7458333333333333,
+      "false_accept_rate": 0.023333333333333334,
+      "far_ci95": [
+        0.011575508360929418,
+        0.035900608957875536
+      ],
+      "no_abstention_false_accept_rate": 0.056666666666666664,
+      "missed_recyclable_rate": 0.3283333333333333,
+      "no_abstention_missed_recyclable_rate": 0.52,
+      "false_accept_by_class": {
+        "Food Organics": 0.0,
+        "Miscellaneous Trash": 0.06666666666666667,
+        "Textile Trash": 0.02666666666666667,
+        "Vegetation": 0.0
+      }
+    },
+    "seattle": {
+      "coverage": 0.7125,
+      "false_accept_rate": 0.015,
+      "far_ci95": [
+        0.005118639921722113,
+        0.026228681459746925
+      ],
+      "no_abstention_false_accept_rate": 0.051666666666666666,
+      "missed_recyclable_rate": 0.3283333333333333,
+      "no_abstention_missed_recyclable_rate": 0.5516666666666666,
+      "false_accept_by_class": {
+        "Food Organics": 0.0,
+        "Miscellaneous Trash": 0.04666666666666667,
+        "Textile Trash": 0.013333333333333334,
+        "Vegetation": 0.0
+      }
+    },
+    "washington_dc": {
+      "coverage": 0.7058333333333333,
+      "false_accept_rate": 0.015,
+      "far_ci95": [
+        0.005016316977206567,
+        0.02586683551528555
+      ],
+      "no_abstention_false_accept_rate": 0.05,
+      "missed_recyclable_rate": 0.3283333333333333,
+      "no_abstention_missed_recyclable_rate": 0.5766666666666667,
+      "false_accept_by_class": {
+        "Food Organics": 0.0,
+        "Miscellaneous Trash": 0.04666666666666667,
+        "Textile Trash": 0.013333333333333334,
         "Vegetation": 0.0
       }
     }

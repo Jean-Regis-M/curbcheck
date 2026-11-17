@@ -1,0 +1,108 @@
+{
+ "city": "Boston, MA",
+ "program": "Boston curbside single-stream recycling",
+ "sources": [
+  {
+   "url": "https://www.boston.gov/departments/public-works/recycling-boston",
+   "retrieved": "2026-11-17"
+  }
+ ],
+ "rules": {
+  "aluminum_can": {
+   "verdict": "accept",
+   "note": "Soda and beer cans accepted; empty, clean, dry",
+   "source": 0,
+   "quote": "Soda and beer cans, soup and vegetable cans, foils"
+  },
+  "steel_can": {
+   "verdict": "accept",
+   "note": "Soup and vegetable cans accepted; empty, clean, dry",
+   "source": 0,
+   "quote": "Soda and beer cans, soup and vegetable cans, foils"
+  },
+  "glass_bottle_jar": {
+   "verdict": "accept",
+   "note": "Glass bottles and jars accepted; no Pyrex or window glass",
+   "source": 0,
+   "quote": "Beer bottles, other beverage bottles, pickle jars"
+  },
+  "plastic_bottle": {
+   "verdict": "accept",
+   "note": "Plastic bottles and jugs accepted; no black plastic",
+   "source": 0,
+   "quote": "Plastic drink bottles, milk jugs, yogurt cups, tubs and lids, and shampoo bottles."
+  },
+  "plastic_tub": {
+   "verdict": "accept",
+   "note": "Yogurt cups, tubs and lids accepted; no black plastic",
+   "source": 0,
+   "quote": "Plastic drink bottles, milk jugs, yogurt cups, tubs and lids, and shampoo bottles."
+  },
+  "plastic_bag_film": {
+   "verdict": "reject",
+   "note": "Plastic bags cannot be recycled; return to stores",
+   "source": 0,
+   "quote": "Plastic shopping bags and black or white trash bags cannot be recycled."
+  },
+  "cardboard_box": {
+   "verdict": "accept",
+   "note": "Shipping and cereal boxes accepted; flat, clean, dry",
+   "source": 0,
+   "quote": "Shipping boxes, cereal boxes, egg cartons, paper towel and toilet paper rolls."
+  },
+  "pizza_box_greasy": {
+   "verdict": "conditional",
+   "note": "Page silent on pizza boxes; says cardboard clean and dry, no waxy coatings",
+   "source": 0,
+   "quote": "Make sure everything is clean and dry. No waxy coatings, please!"
+  },
+  "paper_clean": {
+   "verdict": "accept",
+   "note": "Office paper, newspaper, magazines accepted; clean and dry",
+   "source": 0,
+   "quote": "Office paper, newspaper, paper bags, magazines, junk mail"
+  },
+  "paper_cup": {
+   "verdict": "conditional",
+   "note": "Page does not mention paper coffee cups",
+   "source": 0,
+   "quote": ""
+  },
+  "milk_carton": {
+   "verdict": "conditional",
+   "note": "Page does not mention milk or juice cartons (milk jugs only)",
+   "source": 0,
+   "quote": ""
+  },
+  "foam": {
+   "verdict": "reject",
+   "note": "Styrofoam not accepted; ends up as trash",
+   "source": 0,
+   "quote": "Styrofoam breaks apart into very very small pieces that can not be sorted by equipment."
+  },
+  "aluminum_foil": {
+   "verdict": "accept",
+   "note": "Foil accepted; ball it up and keep clean",
+   "source": 0,
+   "quote": "Ball up your clean foil."
+  },
+  "food_waste": {
+   "verdict": "reject",
+   "note": "Food waste and liquids not accepted in bin",
+   "source": 0,
+   "quote": "They reduce the recyclability of other items."
+  },
+  "battery": {
+   "verdict": "reject",
+   "note": "Batteries do not belong in recycling bin",
+   "source": 0,
+   "quote": "Please do not put any rechargeable batteries in the trash or recycling."
+  },
+  "other_trash": {
+   "verdict": "reject",
+   "note": "Tanglers, small items, black plastic etc. go in trash",
+   "source": 0,
+   "quote": "Place your unwanted cords, ropes, hoses, clothing hangers, and other tanglers in the trash."
+  }
+ }
+}

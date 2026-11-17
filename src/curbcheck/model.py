@@ -28,7 +28,7 @@ class ClipHeadClassifier:
         self.classes = [str(c) for c in h["classes"]]
         self.threshold = float(h["threshold"])
         self._torch = torch
-        self._model, _, self._pre = open_clip.create_model_and_transforms("ViT-B-32", pretrained="openai")
+        self._model, _, self._pre = open_clip.create_model_and_transforms("ViT-B-32-quickgelu", pretrained="openai")
         self._model.eval()
 
     def predict(self, image: Image.Image) -> dict[str, float]:

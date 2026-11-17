@@ -1,7 +1,7 @@
 {
-  "threshold_v2": 0.9122041463851929,
-  "threshold_v1": 0.7115167379379272,
-  "temperature": 0.7682293748952737,
+  "threshold_v2": 0.9141126275062561,
+  "threshold_v1": 0.7350513935089111,
+  "temperature": 0.7541383532899915,
   "classes": [
     "aluminum_can",
     "aluminum_foil",
@@ -22,192 +22,432 @@
   "n_val": 1267,
   "taco_test": {
     "v1": {
-      "seattle": {
-        "coverage": 0.696078431372549,
-        "false_accept_rate": 0.03289473684210526,
-        "missed_recyclable_rate": 0.1038961038961039,
-        "forced_false_accept_rate": 0.13815789473684212,
-        "forced_missed_recyclable_rate": 0.2792207792207792,
+      "austin": {
+        "coverage": 0.7222222222222222,
+        "false_accept_rate": 0.007352941176470588,
+        "missed_recyclable_rate": 0.09411764705882353,
+        "forced_false_accept_rate": 0.10294117647058823,
+        "forced_missed_recyclable_rate": 0.2529411764705882,
         "far_ci95": [
-          0.006663406827880513,
-          0.06144464635169135
+          0.0,
+          0.024114401858304282
         ],
         "missed_ci95": [
-          0.05636936339522547,
-          0.15559826705399174
+          0.055101993865030674,
+          0.1443351363533919
         ]
       },
-      "washington_dc": {
-        "coverage": 0.6862745098039216,
-        "false_accept_rate": 0.03205128205128205,
-        "missed_recyclable_rate": 0.11333333333333333,
-        "forced_false_accept_rate": 0.12179487179487179,
-        "forced_missed_recyclable_rate": 0.28,
+      "boston": {
+        "coverage": 0.6895424836601307,
+        "false_accept_rate": 0.03289473684210526,
+        "missed_recyclable_rate": 0.09740259740259741,
+        "forced_false_accept_rate": 0.15789473684210525,
+        "forced_missed_recyclable_rate": 0.2532467532467532,
         "far_ci95": [
-          0.0068717524799244215,
-          0.06502016129032256
+          0.01223065988328595,
+          0.061029320669006765
         ],
         "missed_ci95": [
-          0.058793152235427276,
-          0.16845238095238088
+          0.052964912280701756,
+          0.1491915422885572
+        ]
+      },
+      "minneapolis": {
+        "coverage": 0.7091503267973857,
+        "false_accept_rate": 0.03424657534246575,
+        "missed_recyclable_rate": 0.09375,
+        "forced_false_accept_rate": 0.1232876712328767,
+        "forced_missed_recyclable_rate": 0.2625,
+        "far_ci95": [
+          0.007601214574898785,
+          0.06398601398601395
+        ],
+        "missed_ci95": [
+          0.05109840751327072,
+          0.1434927360774818
         ]
       },
       "new_york": {
-        "coverage": 0.6862745098039216,
-        "false_accept_rate": 0.03289473684210526,
-        "missed_recyclable_rate": 0.09740259740259741,
-        "forced_false_accept_rate": 0.11842105263157894,
-        "forced_missed_recyclable_rate": 0.2922077922077922,
+        "coverage": 0.6830065359477124,
+        "false_accept_rate": 0.02631578947368421,
+        "missed_recyclable_rate": 0.07792207792207792,
+        "forced_false_accept_rate": 0.125,
+        "forced_missed_recyclable_rate": 0.2597402597402597,
         "far_ci95": [
-          0.006731292517006803,
-          0.06625916626813323
+          0.0066206140350877195,
+          0.055046305046305005
         ],
         "missed_ci95": [
-          0.048963612116593634,
-          0.1489169034090909
+          0.03790283954840917,
+          0.12396367521367511
+        ]
+      },
+      "san_francisco": {
+        "coverage": 0.7222222222222222,
+        "false_accept_rate": 0.007352941176470588,
+        "missed_recyclable_rate": 0.09411764705882353,
+        "forced_false_accept_rate": 0.10294117647058823,
+        "forced_missed_recyclable_rate": 0.2529411764705882,
+        "far_ci95": [
+          0.0,
+          0.024114401858304282
+        ],
+        "missed_ci95": [
+          0.055101993865030674,
+          0.1443351363533919
+        ]
+      },
+      "seattle": {
+        "coverage": 0.6895424836601307,
+        "false_accept_rate": 0.03289473684210526,
+        "missed_recyclable_rate": 0.09740259740259741,
+        "forced_false_accept_rate": 0.15789473684210525,
+        "forced_missed_recyclable_rate": 0.2532467532467532,
+        "far_ci95": [
+          0.01223065988328595,
+          0.061029320669006765
+        ],
+        "missed_ci95": [
+          0.052964912280701756,
+          0.1491915422885572
+        ]
+      },
+      "washington_dc": {
+        "coverage": 0.6764705882352942,
+        "false_accept_rate": 0.019230769230769232,
+        "missed_recyclable_rate": 0.09333333333333334,
+        "forced_false_accept_rate": 0.1282051282051282,
+        "forced_missed_recyclable_rate": 0.24666666666666667,
+        "far_ci95": [
+          0.002595628415300549,
+          0.043795620437956206
+        ],
+        "missed_ci95": [
+          0.05,
+          0.1456058823529411
         ]
       }
     },
     "v2": {
-      "seattle": {
-        "coverage": 0.39215686274509803,
-        "false_accept_rate": 0.019736842105263157,
-        "missed_recyclable_rate": 0.01948051948051948,
-        "forced_false_accept_rate": 0.17105263157894737,
-        "forced_missed_recyclable_rate": 0.2597402597402597,
+      "austin": {
+        "coverage": 0.42483660130718953,
+        "false_accept_rate": 0.014705882352941176,
+        "missed_recyclable_rate": 0.01764705882352941,
+        "forced_false_accept_rate": 0.11764705882352941,
+        "forced_missed_recyclable_rate": 0.22941176470588234,
         "far_ci95": [
           0.0,
-          0.04405981722514536
+          0.03970078740157479
         ],
         "missed_ci95": [
           0.0,
-          0.044444444444444446
+          0.037966284074605394
         ]
       },
-      "washington_dc": {
-        "coverage": 0.39215686274509803,
-        "false_accept_rate": 0.019230769230769232,
-        "missed_recyclable_rate": 0.02,
-        "forced_false_accept_rate": 0.14743589743589744,
-        "forced_missed_recyclable_rate": 0.26,
+      "boston": {
+        "coverage": 0.3954248366013072,
+        "false_accept_rate": 0.019736842105263157,
+        "missed_recyclable_rate": 0.01948051948051948,
+        "forced_false_accept_rate": 0.18421052631578946,
+        "forced_missed_recyclable_rate": 0.24025974025974026,
         "far_ci95": [
           0.0,
-          0.041666666666666664
+          0.04143382352941175
         ],
         "missed_ci95": [
           0.0,
-          0.04383693045563546
+          0.0435460992907801
+        ]
+      },
+      "minneapolis": {
+        "coverage": 0.4150326797385621,
+        "false_accept_rate": 0.0136986301369863,
+        "missed_recyclable_rate": 0.01875,
+        "forced_false_accept_rate": 0.1506849315068493,
+        "forced_missed_recyclable_rate": 0.25,
+        "far_ci95": [
+          0.0,
+          0.0364963503649635
+        ],
+        "missed_ci95": [
+          0.0,
+          0.041492041680980155
         ]
       },
       "new_york": {
-        "coverage": 0.38562091503267976,
-        "false_accept_rate": 0.019736842105263157,
-        "missed_recyclable_rate": 0.012987012987012988,
-        "forced_false_accept_rate": 0.1513157894736842,
-        "forced_missed_recyclable_rate": 0.2532467532467532,
+        "coverage": 0.3888888888888889,
+        "false_accept_rate": 0.013157894736842105,
+        "missed_recyclable_rate": 0.01948051948051948,
+        "forced_false_accept_rate": 0.15789473684210525,
+        "forced_missed_recyclable_rate": 0.24025974025974026,
         "far_ci95": [
           0.0,
-          0.04362092391304347
+          0.03546099290780142
         ],
         "missed_ci95": [
           0.0,
-          0.032397125377137084
+          0.04332968407882389
+        ]
+      },
+      "san_francisco": {
+        "coverage": 0.42483660130718953,
+        "false_accept_rate": 0.014705882352941176,
+        "missed_recyclable_rate": 0.01764705882352941,
+        "forced_false_accept_rate": 0.11029411764705882,
+        "forced_missed_recyclable_rate": 0.22941176470588234,
+        "far_ci95": [
+          0.0,
+          0.03970078740157479
+        ],
+        "missed_ci95": [
+          0.0,
+          0.037966284074605394
+        ]
+      },
+      "seattle": {
+        "coverage": 0.3954248366013072,
+        "false_accept_rate": 0.019736842105263157,
+        "missed_recyclable_rate": 0.01948051948051948,
+        "forced_false_accept_rate": 0.18421052631578946,
+        "forced_missed_recyclable_rate": 0.24025974025974026,
+        "far_ci95": [
+          0.0,
+          0.04143382352941175
+        ],
+        "missed_ci95": [
+          0.0,
+          0.0435460992907801
+        ]
+      },
+      "washington_dc": {
+        "coverage": 0.3888888888888889,
+        "false_accept_rate": 0.01282051282051282,
+        "missed_recyclable_rate": 0.02,
+        "forced_false_accept_rate": 0.14743589743589744,
+        "forced_missed_recyclable_rate": 0.24666666666666667,
+        "far_ci95": [
+          0.0,
+          0.03352996254681647
+        ],
+        "missed_ci95": [
+          0.0,
+          0.04463459950454162
         ]
       }
     }
   },
   "realwaste_test": {
     "v1": {
-      "seattle": {
-        "coverage": 0.7,
-        "false_accept_rate": 0.014423076923076924,
-        "missed_recyclable_rate": 0.2977941176470588,
-        "forced_false_accept_rate": 0.07692307692307693,
-        "forced_missed_recyclable_rate": 0.49816176470588236,
+      "austin": {
+        "coverage": 0.71875,
+        "false_accept_rate": 0.02403846153846154,
+        "missed_recyclable_rate": 0.3088235294117647,
+        "forced_false_accept_rate": 0.0889423076923077,
+        "forced_missed_recyclable_rate": 0.4963235294117647,
         "far_ci95": [
-          0.004853808404470287,
-          0.025469403065051972
+          0.010023869346733669,
+          0.04010468816055892
         ],
         "missed_ci95": [
-          0.2607058438277105,
-          0.3382053111652229
+          0.26868861264579497,
+          0.35214692218350746
         ]
       },
-      "washington_dc": {
-        "coverage": 0.6916666666666667,
+      "boston": {
+        "coverage": 0.68125,
         "false_accept_rate": 0.009615384615384616,
-        "missed_recyclable_rate": 0.2977941176470588,
-        "forced_false_accept_rate": 0.07692307692307693,
-        "forced_missed_recyclable_rate": 0.5275735294117647,
+        "missed_recyclable_rate": 0.3088235294117647,
+        "forced_false_accept_rate": 0.07211538461538461,
+        "forced_missed_recyclable_rate": 0.5257352941176471,
         "far_ci95": [
-          0.0023797373613662653,
-          0.01856884448081312
+          0.0023526773850651075,
+          0.019117059300453345
         ],
         "missed_ci95": [
-          0.2607058438277105,
-          0.3382053111652229
+          0.26868861264579497,
+          0.35214692218350746
+        ]
+      },
+      "minneapolis": {
+        "coverage": 0.71875,
+        "false_accept_rate": 0.01201923076923077,
+        "missed_recyclable_rate": 0.3474264705882353,
+        "forced_false_accept_rate": 0.0625,
+        "forced_missed_recyclable_rate": 0.5349264705882353,
+        "far_ci95": [
+          0.0024961968652193974,
+          0.02375592417061611
+        ],
+        "missed_ci95": [
+          0.3022289788142529,
+          0.38832024682340616
         ]
       },
       "new_york": {
-        "coverage": 0.659375,
-        "false_accept_rate": 0.004807692307692308,
-        "missed_recyclable_rate": 0.2977941176470588,
-        "forced_false_accept_rate": 0.06009615384615385,
-        "forced_missed_recyclable_rate": 0.5349264705882353,
+        "coverage": 0.64375,
+        "false_accept_rate": 0.007211538461538462,
+        "missed_recyclable_rate": 0.3088235294117647,
+        "forced_false_accept_rate": 0.055288461538461536,
+        "forced_missed_recyclable_rate": 0.5606617647058824,
         "far_ci95": [
           0.0,
-          0.011577001393205442
+          0.014688803394218321
         ],
         "missed_ci95": [
-          0.2607058438277105,
-          0.3382053111652229
+          0.26868861264579497,
+          0.35214692218350746
+        ]
+      },
+      "san_francisco": {
+        "coverage": 0.71875,
+        "false_accept_rate": 0.02403846153846154,
+        "missed_recyclable_rate": 0.3088235294117647,
+        "forced_false_accept_rate": 0.0889423076923077,
+        "forced_missed_recyclable_rate": 0.4963235294117647,
+        "far_ci95": [
+          0.010023869346733669,
+          0.04010468816055892
+        ],
+        "missed_ci95": [
+          0.26868861264579497,
+          0.35214692218350746
+        ]
+      },
+      "seattle": {
+        "coverage": 0.68125,
+        "false_accept_rate": 0.009615384615384616,
+        "missed_recyclable_rate": 0.3088235294117647,
+        "forced_false_accept_rate": 0.07211538461538461,
+        "forced_missed_recyclable_rate": 0.5257352941176471,
+        "far_ci95": [
+          0.0023526773850651075,
+          0.019117059300453345
+        ],
+        "missed_ci95": [
+          0.26868861264579497,
+          0.35214692218350746
+        ]
+      },
+      "washington_dc": {
+        "coverage": 0.671875,
+        "false_accept_rate": 0.009615384615384616,
+        "missed_recyclable_rate": 0.3088235294117647,
+        "forced_false_accept_rate": 0.06971153846153846,
+        "forced_missed_recyclable_rate": 0.5588235294117647,
+        "far_ci95": [
+          0.0023526773850651075,
+          0.019117059300453345
+        ],
+        "missed_ci95": [
+          0.26868861264579497,
+          0.35214692218350746
         ]
       }
     },
     "v2": {
-      "seattle": {
-        "coverage": 0.8229166666666666,
-        "false_accept_rate": 0.016826923076923076,
-        "missed_recyclable_rate": 0.022058823529411766,
-        "forced_false_accept_rate": 0.06009615384615385,
-        "forced_missed_recyclable_rate": 0.06066176470588235,
+      "austin": {
+        "coverage": 0.7270833333333333,
+        "false_accept_rate": 0.02403846153846154,
+        "missed_recyclable_rate": 0.016544117647058824,
+        "forced_false_accept_rate": 0.09615384615384616,
+        "forced_missed_recyclable_rate": 0.05698529411764706,
         "far_ci95": [
-          0.006999362765922682,
-          0.030308823529411753
+          0.011944289009683903,
+          0.03832570307390451
         ],
         "missed_ci95": [
-          0.010751759200675738,
-          0.034522627077256104
+          0.007211253862416653,
+          0.02659841410698557
         ]
       },
-      "washington_dc": {
-        "coverage": 0.7635416666666667,
-        "false_accept_rate": 0.016826923076923076,
+      "boston": {
+        "coverage": 0.8479166666666667,
+        "false_accept_rate": 0.021634615384615384,
         "missed_recyclable_rate": 0.022058823529411766,
-        "forced_false_accept_rate": 0.057692307692307696,
-        "forced_missed_recyclable_rate": 0.10477941176470588,
+        "forced_false_accept_rate": 0.0673076923076923,
+        "forced_missed_recyclable_rate": 0.058823529411764705,
         "far_ci95": [
-          0.006999362765922682,
-          0.030308823529411753
+          0.00996203521048126,
+          0.035763703417472634
         ],
         "missed_ci95": [
-          0.010751759200675738,
-          0.034522627077256104
+          0.010809003282243743,
+          0.0343319134351743
+        ]
+      },
+      "minneapolis": {
+        "coverage": 0.7260416666666667,
+        "false_accept_rate": 0.021634615384615384,
+        "missed_recyclable_rate": 0.016544117647058824,
+        "forced_false_accept_rate": 0.09375,
+        "forced_missed_recyclable_rate": 0.05698529411764706,
+        "far_ci95": [
+          0.00996203521048126,
+          0.035763703417472634
+        ],
+        "missed_ci95": [
+          0.007211253862416653,
+          0.02659841410698557
         ]
       },
       "new_york": {
-        "coverage": 0.8239583333333333,
-        "false_accept_rate": 0.016826923076923076,
+        "coverage": 0.8479166666666667,
+        "false_accept_rate": 0.021634615384615384,
         "missed_recyclable_rate": 0.022058823529411766,
-        "forced_false_accept_rate": 0.06009615384615385,
-        "forced_missed_recyclable_rate": 0.06066176470588235,
+        "forced_false_accept_rate": 0.0673076923076923,
+        "forced_missed_recyclable_rate": 0.058823529411764705,
         "far_ci95": [
-          0.006999362765922682,
-          0.030308823529411753
+          0.00996203521048126,
+          0.035763703417472634
         ],
         "missed_ci95": [
-          0.010751759200675738,
-          0.034522627077256104
+          0.010809003282243743,
+          0.0343319134351743
+        ]
+      },
+      "san_francisco": {
+        "coverage": 0.85,
+        "false_accept_rate": 0.02403846153846154,
+        "missed_recyclable_rate": 0.022058823529411766,
+        "forced_false_accept_rate": 0.0673076923076923,
+        "forced_missed_recyclable_rate": 0.058823529411764705,
+        "far_ci95": [
+          0.011944289009683903,
+          0.03832570307390451
+        ],
+        "missed_ci95": [
+          0.010809003282243743,
+          0.0343319134351743
+        ]
+      },
+      "seattle": {
+        "coverage": 0.8479166666666667,
+        "false_accept_rate": 0.021634615384615384,
+        "missed_recyclable_rate": 0.022058823529411766,
+        "forced_false_accept_rate": 0.0673076923076923,
+        "forced_missed_recyclable_rate": 0.058823529411764705,
+        "far_ci95": [
+          0.00996203521048126,
+          0.035763703417472634
+        ],
+        "missed_ci95": [
+          0.010809003282243743,
+          0.0343319134351743
+        ]
+      },
+      "washington_dc": {
+        "coverage": 0.78125,
+        "false_accept_rate": 0.021634615384615384,
+        "missed_recyclable_rate": 0.022058823529411766,
+        "forced_false_accept_rate": 0.06490384615384616,
+        "forced_missed_recyclable_rate": 0.10477941176470588,
+        "far_ci95": [
+          0.00996203521048126,
+          0.035763703417472634
+        ],
+        "missed_ci95": [
+          0.010809003282243743,
+          0.0343319134351743
         ]
       }
     }

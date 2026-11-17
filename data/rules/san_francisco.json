@@ -1,0 +1,112 @@
+{
+  "city": "San Francisco, CA",
+  "program": "Recology SF blue bin recycling",
+  "sources": [
+    {
+      "url": "https://www.recology.com/recology-san-francisco/what-goes-where/",
+      "retrieved": "2026-11-17"
+    },
+    {
+      "url": "https://www.sfenvironment.org/sfrecycles/item/household-batteries",
+      "retrieved": "2026-11-17"
+    }
+  ],
+  "rules": {
+    "aluminum_can": {
+      "verdict": "accept",
+      "note": "Aluminum cans listed as acceptable metal; keep free of liquids/food",
+      "source": 0,
+      "quote": "Aluminum cans Aluminum foil and trays (ball foil up to softball size)"
+    },
+    "steel_can": {
+      "verdict": "accept",
+      "note": "Steel (tin) cans listed as acceptable metal",
+      "source": 0,
+      "quote": "Steel (tin) cans"
+    },
+    "glass_bottle_jar": {
+      "verdict": "accept",
+      "note": "Glass bottles and jars accepted, no liquids or food",
+      "source": 0,
+      "quote": "Glass bottles and jars only"
+    },
+    "plastic_bottle": {
+      "verdict": "accept",
+      "note": "Plastic bottles accepted, leave caps on",
+      "source": 0,
+      "quote": "Bottles (leave caps on)"
+    },
+    "plastic_tub": {
+      "verdict": "accept",
+      "note": "Tubs, lids, containers and clamshells accepted if empty",
+      "source": 0,
+      "quote": "Tubs and lids (i.e., yogurt containers and Tupperware)"
+    },
+    "plastic_bag_film": {
+      "verdict": "reject",
+      "note": "Plastic bags and film go in the trash",
+      "source": 0,
+      "quote": "Plastic bags and plastic film"
+    },
+    "cardboard_box": {
+      "verdict": "accept",
+      "note": "Non-waxed cardboard accepted",
+      "source": 0,
+      "quote": "Cardboard (non-waxed)"
+    },
+    "pizza_box_greasy": {
+      "verdict": "reject",
+      "note": "Greasy pizza boxes are soiled paper, not recyclable",
+      "source": 0,
+      "quote": "Soiled paper (paper plates, napkins, tissues, towels, take-out boxes, and greasy pizza boxes)"
+    },
+    "paper_clean": {
+      "verdict": "accept",
+      "note": "Clean, dry, unsoiled paper accepted",
+      "source": 0,
+      "quote": "Paper (clean, dry and unsoiled):"
+    },
+    "paper_cup": {
+      "verdict": "accept",
+      "note": "Empty coffee cups accepted under paper",
+      "source": 0,
+      "quote": "Empty coffee cups"
+    },
+    "milk_carton": {
+      "verdict": "accept",
+      "note": "Paper milk, juice and beverage cartons accepted",
+      "source": 0,
+      "quote": "Paper milk, juice, and other beverage cartons"
+    },
+    "foam": {
+      "verdict": "reject",
+      "note": "Plastic cups and plates only; no styrofoam in the blue bin",
+      "source": 0,
+      "quote": "cups and plates (plastic only, no styrofoam)"
+    },
+    "aluminum_foil": {
+      "verdict": "accept",
+      "note": "Foil and trays accepted; ball foil up to softball size",
+      "source": 0,
+      "quote": "Aluminum foil and trays (ball foil up to softball size)"
+    },
+    "food_waste": {
+      "verdict": "reject",
+      "note": "Food scraps go in the green compost cart",
+      "source": 0,
+      "quote": "We accept food scraps, soiled paper, and plants in the green composting cart."
+    },
+    "battery": {
+      "verdict": "reject",
+      "note": "Household batteries: special handling, not in any bin",
+      "source": 1,
+      "quote": "Special handling. Don't put in any bin."
+    },
+    "other_trash": {
+      "verdict": "reject",
+      "note": "Non-recyclable items belong in trash, not blue bin",
+      "source": 0,
+      "quote": "A few things, once they are used, are actually trash."
+    }
+  }
+}

@@ -12,10 +12,10 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from curbcheck.decision import decide
 from curbcheck.model import ClipHeadClassifier
-from curbcheck.rules import load_city
+from curbcheck.rules import list_cities, load_city
 
 CLASSES = {"cardboard": "accept", "glass": "accept", "metal": "accept", "paper": "accept", "trash": "other"}
-CITIES = ["seattle", "washington_dc", "new_york"]
+CITIES = list_cities()
 
 
 def main():
@@ -43,12 +43,15 @@ def main():
             n = len(truth)
             allx = np.arange(n)
             bs = [rng.integers(0, n, n) for _ in range(300)]
-            res[cid] = {"coverage": float((ans != "not_sure").mean()),
+            fa = (ans == "accept") & non
+            res[cid] = {"counts": {"non_accept_items": int(non.sum()), "false_accepts": int(fa.sum()), "answered_accept": int((ans == "accept").sum()),
+                                   "accept_precision": float(1 - fa.sum() / max((ans == "accept").sum(), 1))},
+                        "coverage": float((ans != "not_sure").mean()),
                         "false_accept_rate": float(far(ans, allx)), "far_ci95": [float(np.percentile([far(ans, i) for i in bs], q)) for q in (2.5, 97.5)],
                         "missed_recyclable_rate": float(miss(ans, allx)), "missed_ci95": [float(np.percentile([miss(ans, i) for i in bs], q)) for q in (2.5, 97.5)],
                         "forced_false_accept_rate": float(far(forced, allx)), "forced_missed_recyclable_rate": float(miss(forced, allx))}
         out["heads"][name] = res
-        print(name, {c: {k: round(v, 3) for k, v in r.items() if not k.endswith("ci95")} for c, r in res.items()}, flush=True)
+        print(name, {c: {k: round(v, 3) for k, v in r.items() if not k.endswith("ci95") and not isinstance(v, dict)} for c, r in res.items()}, flush=True)
     (ROOT / "eval/trashnet.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
 
 

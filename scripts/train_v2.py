@@ -14,9 +14,9 @@ from evaluate import fit_temperature, load, metrics, run_methods, split
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from curbcheck.rules import load_city
+from curbcheck.rules import list_cities, load_city
 
-CITIES = ["seattle", "washington_dc", "new_york"]
+CITIES = list_cities()
 RW_ITEM = {"Cardboard": "cardboard_box", "Paper": "paper_clean", "Glass": "glass_bottle_jar",
            "Food Organics": "food_waste", "Vegetation": "other_trash", "Textile Trash": "other_trash",
            "Miscellaneous Trash": "other_trash"}  # Metal resolved below; Plastic excluded

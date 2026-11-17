@@ -18,7 +18,7 @@ def main():
     for shard in sorted((ROOT / "data/raw/realwaste").glob("p*.parquet")):
         recs += pq.read_table(shard, columns=["image"]).column("image").to_pylist()
     labels = [re.sub(r"_\d+\.\w+$", "", r["path"]) for r in recs]
-    model, _, pre = open_clip.create_model_and_transforms("ViT-B-32", pretrained="openai")
+    model, _, pre = open_clip.create_model_and_transforms("ViT-B-32-quickgelu", pretrained="openai")
     model.eval()
     feats = []
     with torch.no_grad():

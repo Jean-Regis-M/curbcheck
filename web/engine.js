@@ -58,6 +58,7 @@ export async function check(file, cityId) {
     city: rules.city, verdict, p_accept: r(mass.accept), p_reject: r(mass.reject), p_conditional: r(mass.conditional),
     threshold: r(head.threshold),
     top_items: top.map(([c, v]) => ({ item: c, label: head.labels[c], p: r(v), rule: rules.rules[c].verdict, note: rules.rules[c].note })),
+    not_recognised: ["batteries", "greasy or food-soiled pizza boxes and paper", "food waste"],
     source_url: rules.sources[rules.rules[top[0][0]].source].url,
     disclaimer: "Runs entirely in your browser; the photo never leaves your device. Model trained on outdoor litter photos; abstains when unsure. Check your city's official page.",
   };

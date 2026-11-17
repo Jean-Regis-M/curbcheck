@@ -16,12 +16,12 @@ from sklearn.linear_model import LogisticRegression
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from curbcheck.rules import load_city
+from curbcheck.rules import list_cities, load_city
 from curbcheck.taxonomy import ITEMS
 
 MIN_CROPS = 25
 SEED = 0
-CITIES = ["seattle", "washington_dc"]
+CITIES = list_cities()
 TARGETS = [0.5, 0.7, 0.9]
 
 
@@ -51,7 +51,7 @@ def fit_temperature(logits, y):
 
 
 def zero_shot_logits(X, classes):
-    model, _, _ = open_clip.create_model_and_transforms("ViT-B-32", pretrained="openai")
+    model, _, _ = open_clip.create_model_and_transforms("ViT-B-32-quickgelu", pretrained="openai")
     tok = open_clip.get_tokenizer("ViT-B-32")
     with torch.no_grad():
         t = model.encode_text(tok([f"a photo of {ITEMS[c].lower()}, litter" for c in classes]))
@@ -143,8 +143,9 @@ def plot(P, classes, y, te, imgs):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    fig, axes = plt.subplots(1, len(CITIES), figsize=(9, 3.6), sharey=True)
-    for ax, cid in zip(axes, CITIES):
+    shown = [c for c in ("seattle", "washington_dc", "austin", "boston") if c in CITIES]
+    fig, axes = plt.subplots(1, len(shown), figsize=(12, 3.6), sharey=True)
+    for ax, cid in zip(axes, shown):
         city = load_city(cid)
         truth = np.array([city.rules[classes[k]].verdict for k in y])
         for mname, (ans, conf) in run_methods(P, classes, city).items():

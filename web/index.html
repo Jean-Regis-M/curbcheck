@@ -91,6 +91,11 @@ $("drop").onclick=()=>$("file").click();$("drop").onkeydown=e=>{if(e.key==="Ente
 $("file").onchange=e=>pick(e.target.files[0]);
 $("drop").ondragover=e=>{e.preventDefault();$("drop").classList.add("over")};$("drop").ondragleave=()=>$("drop").classList.remove("over");
 $("drop").ondrop=e=>{e.preventDefault();$("drop").classList.remove("over");pick(e.dataTransfer.files[0])};
+function notes(j){
+ let h="";
+ if(j.verdict==="accept")h+=`<p class="small"><b>Before you toss it:</b> empty, clean and dry. Greasy or food-soiled items are not recyclable in most cities.</p>`;
+ h+=`<p class="small"><b>Not recognised by this model:</b> ${esc((j.not_recognised||[]).join(", "))}. Check the city page for these.</p>`;
+ return h}
 function render(j,others){
  const pa=j.p_accept*100,pr=j.p_reject*100,pc=j.p_conditional*100;
  const why=j.verdict==="not_sure"?"Not confident enough, or this city's rule for the item is conditional. Check the official page.":"";
@@ -99,7 +104,7 @@ function render(j,others){
  <div class="bar" role="img" aria-label="accept ${pa.toFixed(0)}%, reject ${pr.toFixed(0)}%, conditional ${pc.toFixed(0)}%"><span class="b-a" style="width:${pa}%"></span><span class="b-c" style="width:${pc}%"></span><span class="b-r" style="width:${pr}%"></span></div>
  <div class="legend">Probability by city rule: accept ${pa.toFixed(0)}% · conditional ${pc.toFixed(0)}% · reject ${pr.toFixed(0)}%. Answers only at ≥ ${(j.threshold*100).toFixed(0)}%.</div>
  <table>${j.top_items.map(t=>`<tr><td>${esc(t.label)}<br><span class="small">${esc(t.note)}</span></td><td>${(t.p*100).toFixed(0)}%</td><td><span class="pill ${t.rule==="accept"?"accept":t.rule==="reject"?"reject":"not_sure"}">${esc(t.rule)}</span></td></tr>`).join("")}</table>${cmp}
- <p class="small">Rule source: <a href="${esc(j.source_url)}" target="_blank" rel="noopener">${esc(j.source_url)}</a></p><p class="small">${esc(j.disclaimer)}</p>`}
+ <p class="small">Rule source: <a href="${esc(j.source_url)}" target="_blank" rel="noopener">${esc(j.source_url)}</a></p><p class="small">${esc(j.disclaimer)}</p>${notes(j)}`}
 init();
 </script>
 </body>
