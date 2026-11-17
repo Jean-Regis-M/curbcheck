@@ -1,0 +1,108 @@
+{
+ "city": "Austin, TX",
+ "program": "Austin Resource Recovery blue cart",
+ "sources": [
+  {
+   "url": "https://www.austintexas.gov/recycling",
+   "retrieved": "2026-11-17"
+  }
+ ],
+ "rules": {
+  "aluminum_can": {
+   "verdict": "accept",
+   "note": "Metal accepted in blue cart; beverage cans not named separately",
+   "source": 0,
+   "quote": "Place mixed paper, hard plastic (no bags), metal and glass directly in your blue recycling cart"
+  },
+  "steel_can": {
+   "verdict": "accept",
+   "note": "Steel and tin cans accepted",
+   "source": 0,
+   "quote": "Steel and tin cans"
+  },
+  "glass_bottle_jar": {
+   "verdict": "accept",
+   "note": "Glass bottles and jars with caps accepted; labels can stay",
+   "source": 0,
+   "quote": "Bottles and bottle caps (labels can be left on containers)"
+  },
+  "plastic_bottle": {
+   "verdict": "accept",
+   "note": "Beverage bottles accepted as hard plastic",
+   "source": 0,
+   "quote": "Beverage bottles"
+  },
+  "plastic_tub": {
+   "verdict": "accept",
+   "note": "Jars and tubs accepted as hard plastic",
+   "source": 0,
+   "quote": "Hard plastic (no bags)"
+  },
+  "plastic_bag_film": {
+   "verdict": "reject",
+   "note": "Bags, film and wrap not accepted; take to retailer or drop-off",
+   "source": 0,
+   "quote": "Plastic bags, trash bags, plastic film and wrap"
+  },
+  "cardboard_box": {
+   "verdict": "accept",
+   "note": "Cardboard boxes accepted, broken down to about 2x2 ft",
+   "source": 0,
+   "quote": "All cardboard boxes should be broken down into roughly 2'x2' squares."
+  },
+  "pizza_box_greasy": {
+   "verdict": "conditional",
+   "note": "Page does not mention pizza boxes",
+   "source": 0,
+   "quote": ""
+  },
+  "paper_clean": {
+   "verdict": "accept",
+   "note": "Newspapers and other paper accepted",
+   "source": 0,
+   "quote": "Catalogs and magazines"
+  },
+  "paper_cup": {
+   "verdict": "accept",
+   "note": "Coated paper products incl. coffee cups accepted",
+   "source": 0,
+   "quote": "Coated paper products (cups, plates and takeout food containers)"
+  },
+  "milk_carton": {
+   "verdict": "accept",
+   "note": "Food and beverage cartons (aseptic and gable top) accepted",
+   "source": 0,
+   "quote": "Food and beverage cartons (aseptic and gable top)"
+  },
+  "foam": {
+   "verdict": "reject",
+   "note": "Styrofoam not accepted; take to Recycle and Reuse Center",
+   "source": 0,
+   "quote": "Styrofoam What do I do with it? Drop these items off at the Recycle and Reuse Center"
+  },
+  "aluminum_foil": {
+   "verdict": "accept",
+   "note": "Foil baking pans accepted; foil must be balled 2 inches or larger",
+   "source": 0,
+   "quote": "Aluminum foil baking pans"
+  },
+  "food_waste": {
+   "verdict": "conditional",
+   "note": "Page does not mention food waste",
+   "source": 0,
+   "quote": ""
+  },
+  "battery": {
+   "verdict": "reject",
+   "note": "Batteries kept out; use household hazardous waste pickup or drop-off",
+   "source": 0,
+   "quote": "Austin Resource Recovery curbside customers can schedule up to three collections of household hazardous waste items including batteries a year from their home."
+  },
+  "other_trash": {
+   "verdict": "reject",
+   "note": "Medical waste, textiles, wood, hoses etc. not accepted",
+   "source": 0,
+   "quote": "Medical waste (e.g. syringes and sharp containers)"
+  }
+ }
+}

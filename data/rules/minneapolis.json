@@ -1,0 +1,108 @@
+{
+ "city": "Minneapolis, MN",
+ "program": "One-Sort recycling cart",
+ "sources": [
+  {
+   "url": "https://www.minneapolismn.gov/resident-services/garbage-recycling-cleanup/recycling/accepted-recycling/",
+   "retrieved": "2026-11-17"
+  }
+ ],
+ "rules": {
+  "aluminum_can": {
+   "verdict": "accept",
+   "note": "Food and beverage cans accepted",
+   "source": 0,
+   "quote": "Food and beverage cans"
+  },
+  "steel_can": {
+   "verdict": "accept",
+   "note": "Food and beverage cans accepted",
+   "source": 0,
+   "quote": "Food and beverage cans"
+  },
+  "glass_bottle_jar": {
+   "verdict": "accept",
+   "note": "Food and beverage glass bottles and jars accepted",
+   "source": 0,
+   "quote": "Food and beverage bottles and jars"
+  },
+  "plastic_bottle": {
+   "verdict": "accept",
+   "note": "#1, #2, #5 bottles and jugs accepted with caps on",
+   "source": 0,
+   "quote": "Water, soda and juice bottles"
+  },
+  "plastic_tub": {
+   "verdict": "accept",
+   "note": "#1, #2, #5 cups, tubs and takeout containers accepted",
+   "source": 0,
+   "quote": "Produce, deli and takeout containers"
+  },
+  "plastic_bag_film": {
+   "verdict": "reject",
+   "note": "Bags and film go to garbage or drop-off, not the cart",
+   "source": 0,
+   "quote": "Plastic bags should go in the garbage or brought to a plastic bag drop-off location."
+  },
+  "cardboard_box": {
+   "verdict": "accept",
+   "note": "Cardboard up to 3x3 ft accepted, flattened",
+   "source": 0,
+   "quote": "Cardboard (no more than 3 feet by 3 feet in size)"
+  },
+  "pizza_box_greasy": {
+   "verdict": "conditional",
+   "note": "Page does not mention pizza boxes",
+   "source": 0,
+   "quote": ""
+  },
+  "paper_clean": {
+   "verdict": "accept",
+   "note": "Newspapers and other clean paper accepted",
+   "source": 0,
+   "quote": "Newspapers and inserts"
+  },
+  "paper_cup": {
+   "verdict": "reject",
+   "note": "Coffee cups and paper cups not recyclable",
+   "source": 0,
+   "quote": "Ice cream tubs or coffee cups"
+  },
+  "milk_carton": {
+   "verdict": "accept",
+   "note": "Milk and juice cartons accepted",
+   "source": 0,
+   "quote": "Milk cartons Juice boxes"
+  },
+  "foam": {
+   "verdict": "reject",
+   "note": "Styrofoam not accepted",
+   "source": 0,
+   "quote": "Plastic foam (commonly referred to as Styrofoam)"
+  },
+  "aluminum_foil": {
+   "verdict": "accept",
+   "note": "Aluminum foil and trays accepted",
+   "source": 0,
+   "quote": "Aluminum foil and trays"
+  },
+  "food_waste": {
+   "verdict": "conditional",
+   "note": "Page does not mention food waste",
+   "source": 0,
+   "quote": ""
+  },
+  "battery": {
+   "verdict": "reject",
+   "note": "Electronics and batteries not accepted in carts",
+   "source": 0,
+   "quote": "Electronics and batteries"
+  },
+  "other_trash": {
+   "verdict": "reject",
+   "note": "Other listed items not accepted in carts",
+   "source": 0,
+   "quote": "More items not accepted in recycling carts"
+  }
+ }
+}
