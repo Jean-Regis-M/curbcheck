@@ -1,0 +1,26 @@
+{
+  "threshold_chosen_on_val": 0.7115167379379272,
+  "temperature": 0.780141066632543,
+  "test": {
+    "seattle": {
+      "coverage": 0.696078431372549,
+      "false_accept_rate": 0.03289473684210526,
+      "missed_recyclable_rate": 0.1038961038961039,
+      "no_abstention": {
+        "coverage": 1.0,
+        "false_accept_rate": 0.13815789473684212,
+        "missed_recyclable_rate": 0.2792207792207792
+      }
+    },
+    "washington_dc": {
+      "coverage": 0.6862745098039216,
+      "false_accept_rate": 0.03205128205128205,
+      "missed_recyclable_rate": 0.11333333333333333,
+      "no_abstention": {
+        "coverage": 1.0,
+        "false_accept_rate": 0.12179487179487179,
+        "missed_recyclable_rate": 0.28
+      }
+    }
+  }
+}

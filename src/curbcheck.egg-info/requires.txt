@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pydantic>=2
+pillow
+numpy
+python-multipart
+
+[dev]
+pytest
+ruff
+httpx
