@@ -13,3 +13,5 @@ models/*.pt
 dist/
 *.log
 private/
+
+*.egg-info/
