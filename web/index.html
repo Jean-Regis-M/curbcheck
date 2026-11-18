@@ -253,7 +253,7 @@ footer p{margin:0;font-size:14.5px;max-width:420px}.legal{grid-column:1/-1;borde
 </div></footer>
 
 <script>
-const $=id=>document.getElementById(id);let file=null,cities=[],engine=null,api=false;
+const $=id=>document.getElementById(id);let file=null,cities=[],engine=null,api=false,ready=false;
 const LABEL={accept:"Recycle it",reject:"Not recyclable here",not_sure:"Not sure"};
 const SHORT={accept:"Recycle it",reject:"Not recyclable",not_sure:"Not sure"};
 const SAMPLES=[["glass20","Glass bottle"],["cardboard30","Cardboard"],["metal10","Metal"],["paper40","Paper"],["trash12","Trash"]];
@@ -269,17 +269,19 @@ async function init(){
  $("heroimg").src=base+"img/hero.jpg";
  $("samples").insertAdjacentHTML("beforeend",SAMPLES.map(([n,t])=>`<img src="${base}samples/${n}.jpg" alt="${t}" title="${t}" tabindex="0" data-n="${n}">`).join(""));
  $("samples").onclick=async e=>{const n=e.target.dataset&&e.target.dataset.n;if(!n)return;const b=await (await fetch(base+"samples/"+n+".jpg")).blob();pick(new File([b],n+".jpg",{type:"image/jpeg"}))};
- if(api){cities=await (await fetch("api/cities")).json();$("mode").textContent="Server model"}
+ cities=await (await fetch(api?"api/cities":"cities.json")).json();
+ $("city").innerHTML=cities.map(c=>`<option value="${c.id}">${esc(c.city)}</option>`).join("");if(cities.some(c=>c.id==="seattle"))$("city").value="seattle";showProgram();$("city").onchange=showProgram;drawCities();
+ if(api){$("mode").textContent="Server model";ready=true}
  else{
   $("mode").textContent="In-browser model";$("status").textContent="Loading the image model (about 90 MB, cached after the first visit)…";$("prog").style.display="block";
   engine=await import("./engine.js");
-  try{await engine.load(p=>{$("prog").firstChild.style.width=Math.round(p.progress||0)+"%"});cities=await engine.listCities();$("status").textContent="Model ready. Your photo never leaves this device.";$("prog").style.display="none"}
+  try{await engine.load(p=>{$("prog").firstChild.style.width=Math.round(p.progress||0)+"%"});ready=true;$("status").textContent="Model ready. Your photo never leaves this device.";$("prog").style.display="none"}
   catch(e){$("status").textContent="";$("err").textContent="Could not load the model: "+e.message+". Check your connection and reload.";return}
  }
- $("city").innerHTML=cities.map(c=>`<option value="${c.id}">${esc(c.city)}</option>`).join("");if(cities.some(c=>c.id==="seattle"))$("city").value="seattle";showProgram();$("city").onchange=showProgram;$("go").disabled=!file;drawCities();
+ $("go").disabled=!file;
  if(file)run();
 }
-function pick(f){if(!f)return;file=f;$("preview").src=URL.createObjectURL(f);$("preview").style.display="block";$("hint").style.display="none";$("go").disabled=!cities.length;$("err").textContent="";if(cities.length)run()}
+function pick(f){if(!f)return;file=f;$("preview").src=URL.createObjectURL(f);$("preview").style.display="block";$("hint").style.display="none";$("go").disabled=!ready;$("err").textContent="";if(ready)run()}
 async function apiCheck(f,city){const fd=new FormData();fd.append("image",f);fd.append("city",city);const r=await fetch("api/check",{method:"POST",body:fd});const j=await r.json();if(!r.ok)throw new Error(j.detail||"Request failed");return j}
 const check=(f,c)=>api?apiCheck(f,c):engine.check(f,c);
 async function run(){
