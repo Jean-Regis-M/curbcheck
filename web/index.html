@@ -158,6 +158,7 @@ footer .wrap{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px}
 @media(max-width:820px){footer .wrap{grid-template-columns:1fr}}
 footer .fh{color:#fff;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin:0 0 12px}footer a{display:block;color:#cfe2d6;text-decoration:none;padding:4px 0}footer a:hover{color:var(--lime)}
 footer p{margin:0;font-size:14.5px;max-width:420px}.legal{grid-column:1/-1;border-top:1px solid rgba(255,255,255,.12);padding-top:22px;font-size:13px;color:#93ad9d}
+.atlaswrap{overflow-x:auto;margin:14px 0}.atlas{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}.atlas th,.atlas td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:center}.atlas th:first-child,.atlas td:first-child{text-align:left;position:sticky;left:0;background:var(--bg,var(--card));font-weight:600}.atlas td span{display:inline-block;min-width:74px}.atlas tr:hover td{background:var(--card)}.sr{position:absolute;left:-9999px}
 </style>
 </head>
 <body>
@@ -243,6 +244,12 @@ footer p{margin:0;font-size:14.5px;max-width:420px}.legal{grid-column:1/-1;borde
 <div class="card"><h3>It stays safe by saying "not sure" a lot</h3><p>On photos from datasets it never saw, it wrongly rejects almost no recyclables, but it answers only about a quarter to two thirds of them. That caution is not a finished product, and the settings were tuned after seeing those tests.</p></div>
 </div></div></section>
 
+<section class="block" id="rules-atlas"><div class="wrap">
+<div class="head"><span class="eyebrow">Rules atlas</span><h2>Same item, seven cities.</h2><p id="atlasLead">Read straight from each city's published rules. No model involved. Hover or focus a cell for the rule's note and quote.</p></div>
+<label class="small"><input type="checkbox" id="onlyDiff" checked> Show only items where cities disagree</label>
+<div class="atlaswrap"><table class="atlas" id="atlas"><caption class="sr">Recycling verdict per item and city</caption></table></div>
+<p class="small">Green: the city's page accepts it. Red: it says no. Amber: the page is silent, so CurbCheck never answers it automatically.</p>
+</div></section>
 <section class="block alt" id="cities"><div class="wrap">
 <div class="head"><span class="eyebrow">Coverage</span><h2>Seven cities, each rule traceable.</h2><p>Every rule links to the official page it came from and the date it was read. A script re-checks the quotes against the live pages.</p></div>
 <div class="cgrid" id="cgrid"></div></div></section>
@@ -281,6 +288,15 @@ async function loadEvidence(base){
  if(d.latency){const pt=d.latency.pytorch_cpu_per_photo.median_ms,bt=d.latency.browser_per_photo_model_loaded;$("st-speed").textContent=Math.round(pt)+" ms";$("st-speed-t").textContent="per photo on a laptop CPU with PyTorch"+(bt?"; about "+(bt.median_ms/1000).toFixed(1)+" s in your browser":"")}
  else{$("st-speed").textContent="CPU only";$("st-speed-t").textContent="no GPU, and no server at all in the hosted demo"}
 }
+
+const ITEMS={aluminum_can:"Aluminum can",steel_can:"Steel or tin can",glass_bottle_jar:"Glass bottle or jar",plastic_bottle:"Plastic bottle",plastic_tub:"Plastic tub",plastic_bag_film:"Plastic bag or film",cardboard_box:"Cardboard box",pizza_box_greasy:"Greasy pizza box",paper_clean:"Clean paper",paper_cup:"Paper cup",milk_carton:"Milk carton",foam:"Foam",aluminum_foil:"Aluminum foil",food_waste:"Food waste",battery:"Battery",other_trash:"Other trash"};
+let atlasData=null;
+async function loadAtlas(){try{atlasData=await Promise.all(cities.map(async c=>({c,r:(await (await fetch((api?"api/rules/":"rules/")+c.id+".json")).json()).rules})));drawAtlas();$("onlyDiff").onchange=drawAtlas}catch(e){$("atlas").closest("section").hidden=true}}
+function drawAtlas(){const only=$("onlyDiff").checked;const T={accept:["Recycle","accept"],reject:["No","reject"],conditional:["Page silent","silent"]};
+const rows=Object.keys(ITEMS).filter(k=>!only||new Set(atlasData.map(d=>(d.r[k]||{}).verdict)).size>1);
+const dis=Object.keys(ITEMS).filter(k=>new Set(atlasData.map(d=>(d.r[k]||{}).verdict)).size>1).length;
+$("atlasLead").textContent=`For ${dis} of ${Object.keys(ITEMS).length} common items, at least two of the seven cities differ (a city whose page is silent counts as different). Read straight from each city's published rules, no model involved. Hover or focus a cell for the rule's note.`;
+$("atlas").innerHTML=`<caption class="sr">Recycling verdict per item and city</caption><thead><tr><th scope="col">Item</th>${atlasData.map(d=>`<th scope="col">${esc(d.c.city.replace(/^Washington.*/,"Washington DC").replace(/,.*/,""))}</th>`).join("")}</tr></thead><tbody>`+rows.map(k=>`<tr><th scope="row">${ITEMS[k]}</th>${atlasData.map(d=>{const r=d.r[k]||{},t=T[r.verdict]||["?","silent"];return `<td tabindex="0" title="${esc(r.note||"")}"><span class="pill ${t[1]}">${t[0]}</span></td>`}).join("")}</tr>`).join("")+"</tbody>"}
 function drawCities(){$("cgrid").innerHTML=cities.map(c=>`<div class="card"><h3>${esc(c.city)}</h3><p>${esc(c.program)}<br>Rules read ${esc(c.sources[0].retrieved)}</p><a href="${esc(c.sources[0].url)}" target="_blank" rel="noopener">Official source page &rarr;</a></div>`).join("")}
 function showProgram(){const c=cities.find(x=>x.id==$("city").value);$("program").textContent=c?c.program+" · rules read "+c.sources[0].retrieved:""}
 async function init(){
@@ -291,7 +307,7 @@ async function init(){
  $("samples").insertAdjacentHTML("beforeend",SAMPLES.map(([n,t])=>`<img src="${base}samples/${n}.jpg" alt="${t}" title="${t}" tabindex="0" data-n="${n}">`).join(""));
  $("samples").onclick=async e=>{const n=e.target.dataset&&e.target.dataset.n;if(!n)return;const b=await (await fetch(base+"samples/"+n+".jpg")).blob();pick(new File([b],n+".jpg",{type:"image/jpeg"}))};
  cities=await (await fetch(api?"api/cities":"cities.json")).json();
- $("city").innerHTML=cities.map(c=>`<option value="${c.id}">${esc(c.city)}</option>`).join("");if(cities.some(c=>c.id==="seattle"))$("city").value="seattle";showProgram();$("city").onchange=showProgram;drawCities();
+ $("city").innerHTML=cities.map(c=>`<option value="${c.id}">${esc(c.city)}</option>`).join("");if(cities.some(c=>c.id==="seattle"))$("city").value="seattle";showProgram();$("city").onchange=showProgram;drawCities();loadAtlas();
  if(api){$("mode").textContent="Server model";ready=true}
  else{
   $("mode").textContent="In-browser model";$("status").textContent="Loading the image model (about 90 MB, cached after the first visit)…";$("prog").style.display="block";

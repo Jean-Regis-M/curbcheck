@@ -244,7 +244,7 @@ flowchart LR
   E -- no --> G[not sure]
 ```
 
-**Rules.** Each city is a JSON file over a 16-item taxonomy. A rule is `accept`, `reject` or `conditional`. *Conditional* means the city's page does not cover the item; the system never auto-answers it. Tables are validated by pydantic: every item must be covered and every rule must cite a source; a test requires every `accept` rule to carry a verbatim quote. ([`data/rules/`](data/rules), [`src/curbcheck/rules.py`](src/curbcheck/rules.py))
+**Rules.** Each city is a JSON file over a 16-item taxonomy. A rule is `accept`, `reject` or `conditional`. *Conditional* means the city's page does not cover the item; the system never auto-answers it. Tables are validated by pydantic: every item must be covered and every rule must cite a source; a test requires every `accept` rule to carry a verbatim quote. ([`data/rules/`](data/rules), [`src/curbcheck/rules.py`](src/curbcheck/rules.py)) The hosted page also shows a **rules atlas**: all 16 items by all seven cities, read straight from these files with no model involved (for 6 of the 16 items at least two cities differ).
 
 ```json
 "milk_carton": { "verdict": "accept",
