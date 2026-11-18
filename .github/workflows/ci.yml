@@ -15,3 +15,5 @@ jobs:
         run: ruff check .
       - name: Tests
         run: pytest -q
+      - name: README numbers match the evaluation files
+        run: python scripts/check_claims.py

@@ -28,7 +28,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "Segoe UI",
 a{color:inherit}a:focus-visible,button:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--lime);outline-offset:3px;border-radius:8px}
 .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
 h1,h2,h3{line-height:1.08;letter-spacing:-.035em;margin:0}
-.eyebrow{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--emerald)}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accept)}
 /* nav */
 nav{position:sticky;top:0;z-index:20;background:rgba(11,42,30,.92);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08)}
 nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
@@ -120,7 +120,7 @@ button.primary:hover:not(:disabled){background:var(--forest2)}button.primary:dis
 .legend{font-size:13.5px;color:var(--mute)}
 .items{width:100%;border-collapse:collapse;font-size:15px;margin:14px 0 4px}
 .items td{padding:10px 6px;border-top:1px solid var(--line);vertical-align:top}.items td:nth-child(2){font-weight:800;white-space:nowrap}
-h4{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:22px 0 10px}
+.h4{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:22px 0 10px}
 .cities{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
 .cities div{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14.5px;font-weight:600}
 .callout{border-left:5px solid var(--unsure);background:var(--unsure-bg);border-radius:10px;padding:12px 16px;font-size:14.5px;margin-top:14px}
@@ -156,7 +156,7 @@ h4{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
 footer{background:var(--forest);color:#cfe2d6;padding:56px 0 40px}
 footer .wrap{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px}
 @media(max-width:820px){footer .wrap{grid-template-columns:1fr}}
-footer h5{color:#fff;font-size:14px;letter-spacing:.08em;text-transform:uppercase;margin:0 0 12px}footer a{display:block;color:#cfe2d6;text-decoration:none;padding:4px 0}footer a:hover{color:var(--lime)}
+footer .fh{color:#fff;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin:0 0 12px}footer a{display:block;color:#cfe2d6;text-decoration:none;padding:4px 0}footer a:hover{color:var(--lime)}
 footer p{margin:0;font-size:14.5px;max-width:420px}.legal{grid-column:1/-1;border-top:1px solid rgba(255,255,255,.12);padding-top:22px;font-size:13px;color:#93ad9d}
 </style>
 </head>
@@ -178,7 +178,7 @@ footer p{margin:0;font-size:14.5px;max-width:420px}.legal{grid-column:1/-1;borde
 <span class="chip a">Recycle it</span><span class="chip u">Not sure</span><span class="chip r">Not recyclable</span></div>
 </div></header>
 
-<div class="stats"><div class="wrap">
+<main id="main"><div class="stats"><div class="wrap">
 <div class="stat"><b>7</b><span>US cities, every rule cited to the city's own page</span></div>
 <div class="stat"><b>96/112</b><span>rules carry a verbatim quote that a script re-checks</span></div>
 <div class="stat"><b>72–93%</b><span>fewer false "recycle it" answers on held-out photos</span></div>
@@ -246,10 +246,12 @@ footer p{margin:0;font-size:14.5px;max-width:420px}.legal{grid-column:1/-1;borde
 <div class="head"><span class="eyebrow">Coverage</span><h2>Seven cities, each rule traceable.</h2><p>Every rule links to the official page it came from and the date it was read. A script re-checks the quotes against the live pages.</p></div>
 <div class="cgrid" id="cgrid"></div></div></section>
 
+</main>
+
 <footer><div class="wrap">
 <div><a class="logo" href="#top" style="padding:0" aria-label="CurbCheck home"><svg viewBox="0 0 64 64" aria-hidden="true" style="width:34px;height:34px"><use href="#mark"/></svg><span class="wm">Curb<b>Check</b></span></a><p style="margin-top:14px">Rules-grounded curbside recycling checks with calibrated abstention. Built for Arbiter Hacks V1, Theme Track: Rethinking Waste, by Jean Francois Regis Mukiza.</p></div>
-<div><h5>Project</h5><a href="https://github.com/Jean-Regis-M/curbcheck" target="_blank" rel="noopener">Source and results on GitHub</a><a href="https://github.com/Jean-Regis-M/curbcheck/blob/main/docs/report/report.pdf" target="_blank" rel="noopener">Technical report (PDF)</a><a href="https://youtu.be/UxmwYp9BlHo" target="_blank" rel="noopener">Demo video</a></div>
-<div><h5>Data</h5><a href="https://github.com/pedropro/TACO" target="_blank" rel="noopener">TACO (training)</a><a href="https://github.com/garythung/trashnet" target="_blank" rel="noopener">TrashNet (samples, unseen test)</a><a href="https://github.com/Jean-Regis-M/curbcheck/blob/main/docs/DATA.md" target="_blank" rel="noopener">Licences and known problems</a></div>
+<div><p class="fh">Project</p><a href="https://github.com/Jean-Regis-M/curbcheck" target="_blank" rel="noopener">Source and results on GitHub</a><a href="https://github.com/Jean-Regis-M/curbcheck/blob/main/docs/report/report.pdf" target="_blank" rel="noopener">Technical report (PDF)</a><a href="https://youtu.be/UxmwYp9BlHo" target="_blank" rel="noopener">Demo video</a></div>
+<div><p class="fh">Data</p><a href="https://github.com/pedropro/TACO" target="_blank" rel="noopener">TACO (training)</a><a href="https://github.com/garythung/trashnet" target="_blank" rel="noopener">TrashNet (samples, unseen test)</a><a href="https://github.com/Jean-Regis-M/curbcheck/blob/main/docs/DATA.md" target="_blank" rel="noopener">Licences and known problems</a></div>
 <div class="legal">Research prototype. Not a substitute for your city's official guidance. Sample photos: TrashNet (Thung &amp; Yang, MIT licence). Code: MIT.</div>
 </div></footer>
 
@@ -300,15 +302,30 @@ function notes(j){
  if(j.verdict==="accept")h+=`<div class="callout g"><b>Before you toss it:</b> empty, clean and dry. Greasy or food-soiled items are not recyclable in most cities.</div>`;
  h+=`<div class="callout"><b>Not recognised by this model:</b> ${esc((j.not_recognised||[]).join(", "))}. Check the city page for these.</div>`;
  return h}
+const REPO="https://github.com/Jean-Regis-M/curbcheck/issues/new";
+function feedback(j){
+ const top=j.top_items[0];
+ const body=encodeURIComponent(`**City:** ${j.city}
+**What the tool said:** ${LABEL[j.verdict]}
+**Top item it saw:** ${top.label} (${(top.p*100).toFixed(0)}%)
+**Model used:** ${api?"server":"in-browser"}
+
+**What the item really is:**
+
+**What the city's own page says (link):**
+
+(Please do not attach photos that show people or street addresses.)`);
+ const t1=encodeURIComponent("Wrong answer: "+j.city+" / "+top.label), t2=encodeURIComponent("Rule out of date: "+j.city+" / "+top.label);
+ return `<p class="small fb">Does this look wrong? <a href="${REPO}?title=${t1}&labels=wrong-answer&body=${body}" target="_blank" rel="noopener">Report a wrong answer</a> · <a href="${REPO}?title=${t2}&labels=rules" target="_blank" rel="noopener">Report an out-of-date rule</a>. No photo is sent.</p>`}
 function render(j,others){
  const pa=j.p_accept*100,pr=j.p_reject*100,pc=j.p_conditional*100;
  const why={accept:"This city's page accepts it, and the model is confident.",reject:"This city's page does not accept it, and the model is confident.",not_sure:"The model is not confident enough, or this city's rule for the item is conditional. Check the official page."}[j.verdict];
- const cmp=others.length?`<h4>Same photo, other cities</h4><div class="cities">${others.map(([c,o])=>`<div>${esc(c.city.replace(", DC"," DC").split(",")[0])}<span class="pill ${o.verdict}">${SHORT[o.verdict]}</span></div>`).join("")}</div>`:"";
+ const cmp=others.length?`<p class="h4">Same photo, other cities</p><div class="cities">${others.map(([c,o])=>`<div>${esc(c.city.replace(", DC"," DC").split(",")[0])}<span class="pill ${o.verdict}">${SHORT[o.verdict]}</span></div>`).join("")}</div>`:"";
  $("result").innerHTML=`<div class="vhead ${j.verdict}"><div class="city">${esc(j.city)}</div><p class="verdict ${j.verdict}">${LABEL[j.verdict]}</p><p class="why">${why}</p></div>
  <div class="bar" role="img" aria-label="accept ${pa.toFixed(0)}%, reject ${pr.toFixed(0)}%, conditional ${pc.toFixed(0)}%"><span class="b-a" style="width:${pa}%"></span><span class="b-c" style="width:${pc}%"></span><span class="b-r" style="width:${pr}%"></span></div>
  <div class="legend">By this city's rules: accept ${pa.toFixed(0)}% · conditional ${pc.toFixed(0)}% · reject ${pr.toFixed(0)}%. It answers only at ${(j.threshold*100).toFixed(0)}% or more.</div>
- <h4>What the model thinks it sees</h4><table class="items">${j.top_items.map(t=>`<tr><td>${esc(t.label)}<br><span class="small">${esc(t.note)}</span></td><td>${(t.p*100).toFixed(0)}%</td><td><span class="pill ${t.rule==="accept"?"accept":t.rule==="reject"?"reject":"not_sure"}">${esc(t.rule)}</span></td></tr>`).join("")}</table>${cmp}
- ${notes(j)}<p class="src">Rule source: <a href="${esc(j.source_url)}" target="_blank" rel="noopener">${esc(j.source_url)}</a></p><p class="small">${esc(j.disclaimer)}</p>`}
+ <p class="h4">What the model thinks it sees</p><table class="items">${j.top_items.map(t=>`<tr><td>${esc(t.label)}<br><span class="small">${esc(t.note)}</span></td><td>${(t.p*100).toFixed(0)}%</td><td><span class="pill ${t.rule==="accept"?"accept":t.rule==="reject"?"reject":"not_sure"}">${esc(t.rule)}</span></td></tr>`).join("")}</table>${cmp}
+ ${notes(j)}<p class="src">Rule source: <a href="${esc(j.source_url)}" target="_blank" rel="noopener">${esc(j.source_url)}</a></p><p class="small">${esc(j.disclaimer)}</p>${feedback(j)}`}
 init();
 </script>
 </body>
