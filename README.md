@@ -44,7 +44,7 @@ The second rule is the product. On held-out photos it cuts false accepts by 72% 
 
 | | |
 |---|---|
-| ![Home](docs/img/01-home.png) **Pick a city, add a photo.** Nothing is uploaded when you use the hosted demo. | ![Accept](docs/img/02-accept-seattle.png) **A confident answer.** A glass bottle in Seattle: recycle it, with the matching rule and its source link. |
+| ![Home](docs/img/01-home.png) **The landing page** a visitor sees first. Nothing is uploaded when you use the hosted demo. | ![Accept](docs/img/02-accept-seattle.png) **A confident answer.** A glass bottle in Seattle: recycle it, with the matching rule and its source link. |
 | ![Not sure](docs/img/03-not-sure-seattle.png) **A deliberate "not sure".** A dented can splits the model across several items (52% accept), below the 74% bar, so it declines. | ![Reject](docs/img/04-reject-seattle.png) **A clear no.** Trash is not recyclable in Seattle. |
 | ![Seattle carton](docs/img/05-carton-seattle.png) **Same photo, Seattle.** The page does not name cartons, so the rule is *conditional*: "not sure". | ![DC carton](docs/img/06-carton-washington-dc.png) **Same photo, Washington DC.** DC lists cartons: "recycle it". |
 
