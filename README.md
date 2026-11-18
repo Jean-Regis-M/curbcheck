@@ -4,13 +4,13 @@
 
 [![CI](https://github.com/Jean-Regis-M/curbcheck/actions/workflows/ci.yml/badge.svg)](https://github.com/Jean-Regis-M/curbcheck/actions/workflows/ci.yml)
 [![Live demo](https://img.shields.io/badge/live%20demo-GitHub%20Pages-1f7a4d)](https://jean-regis-m.github.io/curbcheck/)
-[![Video](https://img.shields.io/badge/demo%20video-2%3A24-b3402f)](https://youtu.be/UxmwYp9BlHo)
+[![Video](https://img.shields.io/badge/demo%20video-2%3A37-b3402f)](https://youtu.be/4KJUWuS6Kpw)
 [![License: MIT](https://img.shields.io/badge/license-MIT-lightgrey)](LICENSE)
 
 **A recycling checker that knows your city's rules, and says "not sure" instead of guessing.**
 
 [Try it in your browser](https://jean-regis-m.github.io/curbcheck/) ·
-[Watch the 2 minute 24 second demo](https://youtu.be/UxmwYp9BlHo) ·
+[Watch the 2 minute 37 second demo](https://youtu.be/4KJUWuS6Kpw) ·
 [Read the technical report (PDF)](docs/report/report.pdf)
 
 *Arbiter Hacks V1, Theme Track: Rethinking Waste*
@@ -281,7 +281,7 @@ The Theme Track rubric from the [Devpost rules](https://arbiter-hacks-v1.devpost
 - **What blocks real deployment, plainly.** (1) Item-level labelled household photos. The shipped model is safe partly because it declines most hard photos, which is not yet a good product. (2) Batteries and greasy paper are not recognised, and greasy pizza boxes can pass as cardboard. (3) Keeping rules current. (4) Image dataset licences are unresolved (see [Data](#data-and-licences)).
 
 ### Presentation and demo clarity (20)
-- A 2 minute 24 second [video](https://youtu.be/UxmwYp9BlHo) recorded from the real running app after the review fixes, including a "not sure" case and the measured trade-offs. The narration is a synthetic voice.
+- A 2 minute 37 second [video](https://youtu.be/4KJUWuS6Kpw) recorded from the hosted page (browser model) with the shipped model, including a "not sure" case, a city change and the measured trade-offs. The narration is a synthetic voice.
 - A live demo a judge can try in one click, with sample photos.
 - This README, a [3 page report](docs/report/report.pdf), and every claim linked to its evidence file.
 
