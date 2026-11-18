@@ -10,10 +10,10 @@ RAW = ROOT / "data/raw"
 OUT = ROOT / "docs/img"
 CASES = [
     ("02-accept-seattle", RAW / "trashnet/dataset-resized/glass/glass20.jpg", "seattle"),
-    ("03-not-sure-seattle", RAW / "trashnet/dataset-resized/metal/metal10.jpg", "seattle"),
-    ("04-reject-seattle", RAW / "trashnet/dataset-resized/trash/trash12.jpg", "seattle"),
-    ("05-carton-seattle", RAW / "taco/crops/35.jpg", "seattle"),
-    ("06-carton-washington-dc", RAW / "taco/crops/35.jpg", "washington_dc"),
+    ("03-not-sure-seattle", RAW / "trashnet/dataset-resized/cardboard/cardboard30.jpg", "seattle"),
+    ("04-reject-seattle", RAW / "trashnet/dataset-resized/trash/trash7.jpg", "seattle"),
+    ("05-glass-seattle", RAW / "trashnet/dataset-resized/glass/glass122.jpg", "seattle"),
+    ("06-glass-austin", RAW / "trashnet/dataset-resized/glass/glass122.jpg", "austin"),
 ]
 
 
@@ -34,6 +34,18 @@ def main():
             page.wait_for_timeout(300)
             page.locator("#app").screenshot(path=OUT / f"{name}.png")
             print(name, page.inner_text("#result .verdict"))
+        # hero image for the landing page: the answer panel for the same glass photo in Austin
+        from PIL import Image
+        page.select_option("#city", "austin")
+        page.set_input_files("#file", str(RAW / "trashnet/dataset-resized/glass/glass122.jpg"))
+        page.wait_for_function("document.querySelector('#result .verdict')", timeout=60000)
+        page.wait_for_timeout(400)
+        page.add_style_tag(content="#result p.small[style*='0 0 6px']{display:none}")  # keep the hero compact
+        page.locator("#result").screenshot(path=OUT / "_hero_raw.png")
+        im = Image.open(OUT / "_hero_raw.png").convert("RGB")
+        im = im.resize((1100, int(im.height * 1100 / im.width)), Image.LANCZOS).crop((0, 0, 1100, 1180))
+        im.save(ROOT / "web/img/hero.jpg", quality=88, optimize=True)
+        (OUT / "_hero_raw.png").unlink()
         b.close()
 
 

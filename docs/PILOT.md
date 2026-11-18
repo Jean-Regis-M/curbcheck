@@ -32,6 +32,14 @@ needs **no assumed baseline contamination rate**. A Monte Carlo simulation of 4,
 
 CV is not known for any real programme; the first step of a pilot is to estimate it from baseline audits and re-run the script.
 
+## Ready to run
+The analysis is already written and tested, so a pilot's data can be turned into an answer the day the audits finish:
+fill [`pilot_audit_template.csv`](pilot_audit_template.csv) (one row per unit and period: `unit_id, arm, period, contaminant_kg, total_kg`) and run
+`python scripts/analyze_pilot.py audits.csv`. It reports the relative reduction in contamination by weight with a 95% interval, adjusting
+for each unit's own baseline. [`tests/test_pilot_analysis.py`](../tests/test_pilot_analysis.py) checks it on simulated pilots with a known effect:
+it recovers a 30% reduction, its 95% interval covers the truth between 90% and 99% of the time over 200 simulated pilots, and it
+flags no effect when there is none about as rarely as the nominal 5%.
+
 ## What would change the plan
 - If uptake is low, the intervention is the outreach, not the model.
 - If the tool's "not sure" rate is high for a city's common items, add rules and labelled photos for those items first.

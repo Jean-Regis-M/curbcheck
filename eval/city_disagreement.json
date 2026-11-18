@@ -1,0 +1,18 @@
+{
+  "cities": 7,
+  "TACO_test": {
+    "photos": 306,
+    "cities_not_all_agree": 0.0457516339869281,
+    "accept_in_one_reject_in_another": 0.006535947712418301
+  },
+  "TrashNet": {
+    "photos": 2527,
+    "cities_not_all_agree": 0.06964780371982587,
+    "accept_in_one_reject_in_another": 0.0
+  },
+  "RealWaste": {
+    "photos": 4752,
+    "cities_not_all_agree": 0.18771043771043772,
+    "accept_in_one_reject_in_another": 0.0
+  }
+}

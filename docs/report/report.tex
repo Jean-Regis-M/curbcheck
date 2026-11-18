@@ -17,10 +17,7 @@
 A wrong ``recycle'' answer can contaminate a whole collection load, and what counts as recyclable differs by city.
 CurbCheck identifies an item from a photo, looks it up in a city-specific rules table whose entries cite an official page,
 and answers \emph{accept}, \emph{reject} or \emph{not sure}. It abstains unless the probability mass of one city verdict
-clears a threshold chosen on validation data. On held-out litter photos abstention reduces the false-accept rate from
-15.8\% to 3.3\% at 69\% coverage (Seattle; 10\% to 16\% down to 0.7\% to 3.4\% across seven cities). On an unseen dataset the shipped model accepts 1.5\% to 9.5\% of non-recyclables, depending on the city, and
-wrongly rejects 8.1\% of recyclables. We report these results, a hypothesis that failed, an encoder bug found by an independent review, and a second model that was
-less safe on unseen data. The system is a research prototype and is not ready for deployment.
+clears a threshold chosen on validation data. On photos from two datasets it has never seen, the shipped model wrongly accepts 1.8\% to 6.6\% of non-recyclable items (seven cities) and wrongly rejects about 0\% of recyclable ones, but it answers only 61\% to 69\% of studio photos and 24\% to 31\% of landfill photos. The first (TACO-only) model wrongly rejected 8\% to 33\% of recyclables on those datasets. The operating point was chosen after seeing those two tests, so the figures are optimistic. We also report a hypothesis that failed, an encoder bug found by a separate AI-agent review, and a model that was less safe on unseen data. The system is a research prototype and is not ready for deployment.
 \end{abstract}
 
 \section{Problem}
@@ -35,61 +32,48 @@ a note, an index into a list of sources (URL and retrieval date, 2026-11-17) and
 official page does not cover the item; conditional items are never answered automatically. Tables are validated for
 completeness and citation by pydantic and covered by tests.
 
-\paragraph{Classifier.} Images are encoded with OpenCLIP ViT-B/32 (OpenAI weights) on CPU. A logistic-regression head is
-trained on 13 item classes from TACO crops (items with at least 25 crops). Logits are temperature-scaled on a validation split.
+\paragraph{Classifier.} Images are encoded with OpenCLIP ViT-B/32 (OpenAI weights, QuickGELU) on CPU. A logistic-regression head over 14 item classes is
+trained on three datasets (TACO crops, TrashNet and RealWaste with weak material-level labels) and blended with CLIP zero-shot text similarity. Logits are temperature-scaled on a validation split. The hosted demo runs an int8 browser port with its own head trained on browser-computed features.
 
 \paragraph{Decision.} Item probabilities are summed by the city's verdict for each item. The system answers accept or reject
-only if that verdict's mass reaches a threshold chosen on validation data (target 70\% coverage); otherwise it answers
+only if that verdict's mass reaches a threshold chosen on validation data (target about 55\% coverage); otherwise it answers
 \emph{not sure}. Figure~\ref{fig:ui} shows the same photo producing different answers in two cities.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=.48\linewidth]{../img/05-carton-seattle.png}\hfill
-\includegraphics[width=.48\linewidth]{../img/06-carton-washington-dc.png}
-\caption{The same carton photo in Seattle (``not sure'': the page does not name cartons) and Washington DC (``recycle it'').
-Screenshots of the running application.}\label{fig:ui}
+\includegraphics[width=.48\linewidth]{../img/05-glass-seattle.png}\hfill
+\includegraphics[width=.48\linewidth]{../img/06-glass-austin.png}
+\caption{The same glass photo in Seattle (``not sure'': the model is split between items Seattle treats differently) and Austin (``recycle it''). Screenshots of the running application.}\label{fig:ui}
 \end{figure}
 
 \section{Data and protocol}
 TACO (1{,}563 usable crops after dropping classes under 25 examples and 330 annotations with orientation mismatch) is split by
-source photo into train, validation and test (306 test crops). TrashNet (2{,}045 images, MIT licence) is used as an unseen test:
-cardboard, glass, metal and paper count as accept; the 137 ``trash'' images count as non-accept; plastic is excluded because its
-verdict depends on the item. A \emph{false accept} is an accept when the city's rule for the true item is not accept;
+source photo into train, validation and test (306 test crops). TrashNet (MIT licence) and RealWaste are used both for training and, in leave-one-dataset-out runs, as unseen tests: the model is trained without that dataset and scored on all its non-plastic photos with material-level truth (cardboard, glass, metal, paper count as accept; trash, vegetation, textile and similar count as non-accept; plastic is excluded because its verdict depends on the item). A \emph{false accept} is an accept when the city's rule for the true item is not accept;
 a \emph{missed recyclable} is a reject for an accepted item. Dataset licences and unresolved conflicts are in \texttt{docs/DATA.md}.
 
 \section{Results}
 \begin{table}[ht]
 \centering
-\caption{Held-out TACO test, Seattle (v1, QuickGELU encoder). Threshold chosen on validation only.}
-\begin{tabular}{lrr}
+\caption{Unseen datasets, Seattle (leave-one-dataset-out; \texttt{eval/v3.json}). Operating point tuned after seeing these tests.}
+\begin{tabular}{llrrrr}
 \toprule
-& False-accept rate & Coverage\\
+Test set & Model & False accept & Forced & Missed recyclable & Answered\\
 \midrule
-Forced yes/no & 15.8\% & 100\%\\
-Abstaining & 3.3\% (5 of 152) & 69.0\%\\
+TrashNet & shipped & 2.9\% & 61.3\% & 0.00\% & 65.5\%\\
+TrashNet & TACO-only & 3.6\% & & 8.1\% & 65.4\%\\
+RealWaste & shipped & 2.7\% & 35.4\% & 0.00\% & 29.7\%\\
+RealWaste & TACO-only & 1.1\% & & 29.7\% & 69.8\%\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\begin{table}[ht]
-\centering
-\caption{Unseen TrashNet (Seattle). 95\% bootstrap intervals in brackets; only 137 non-recyclable images, so these are 5 and 21 events. Across the seven cities v1 ranges from 1.5\% (New York) to 9.5\% (Austin, San Francisco).}
-\begin{tabular}{lrrrr}
-\toprule
-Head & False accept & Forced false accept & Missed recyclable & Coverage\\
-\midrule
-v1 (shipped) & 3.6\% [0.7, 7.2] & 16.8\% & 8.1\% & 65\%\\
-v2 (+RealWaste) & 15.3\% [9.4, 21.7] & 63.5\% & 0.2\% & 80\%\\
-\bottomrule
-\end{tabular}
-\end{table}
+On the held-out TACO test (Seattle) the earlier model cut false accepts from 15.8\% to 3.3\% at 69\% coverage; the shipped model answers only 19.6\% of those litter crops (0.0\% false accepts).
+The browser model is slightly worse on TrashNet (4.4\% to 10.9\% false accepts across cities). Median speed is 166 ms per photo in PyTorch on a laptop CPU and 0.6 s in the browser.
 
 \paragraph{What did not work.} We expected abstaining on city-verdict mass to beat abstaining on item confidence. The two
 performed about the same with the trained head and the verdict method was worse with zero-shot features (Figure~\ref{fig:curve}).
 
-\paragraph{A better-looking model that was worse.} Adding RealWaste material labels (v2) cut missed recyclables on held-out
-RealWaste photos from 30.9\% to 2.2\%, but that gain reflects adaptation to RealWaste. On unseen TrashNet v2 was
-less safe, so v1 is the default and both are in the repository.
+\paragraph{Models that looked better and were not.} Adding RealWaste labels alone (v2) cut missed recyclables on held-out RealWaste photos from 30.9\% to 2.2\%, but on unseen TrashNet it wrongly accepted 14\% to 19\%. Training on all three datasets at the original answer target cut missed recyclables to about 0\% but raised false accepts to 9\% to 17\%; a stricter target with the zero-shot blend gave the shipped model, at the cost of answering far less often.
 
 \begin{figure}[ht]
 \centering
@@ -101,7 +85,7 @@ less safe, so v1 is the default and both are in the repository.
 Test sets are small and intervals wide. Training data is outdoor litter and landfill photos, not household items.
 Batteries, greasy pizza boxes and food waste had too few examples to learn, so the model cannot recognise them; the interface says so on every answer. Seven cities only; where a city page is silent we say
 ``conditional'', which reflects the page and not necessarily the city's actual rule. Labels for the second dataset are weak
-and material-level. Missed-recyclable rates of 8\% to 35\% are too high for deployment. No real-world contamination reduction
+and material-level. The shipped model avoids missed recyclables largely by saying ``not sure'' often; greasy pizza boxes can pass as clean cardboard. No real-world contamination reduction
 was measured and none is claimed.
 
 \section{Next steps}

@@ -1,5 +1,6 @@
 // In-browser engine for the static demo: CLIP ViT-B/32 (int8 ONNX) via transformers.js + the shipped linear head + city rules.
 // Mirrors src/curbcheck/decision.py. No image ever leaves the browser.
+import { decide, headProbs } from "./decision.js";
 import { AutoProcessor, CLIPVisionModelWithProjection, RawImage, env }
   from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1/+esm";
 
@@ -38,20 +39,12 @@ export async function embed(file) {
   return v;
 }
 
-function softmax(z) { const m = Math.max(...z), e = z.map(x => Math.exp(x - m)), s = e.reduce((a, b) => a + b, 0); return e.map(x => x / s); }
-
-export async function probs(file) {
-  const f = await embed(file);
-  const z = head.W.map((row, i) => (row.reduce((a, w, j) => a + w * f[j], 0) + head.b[i]) / head.T);
-  return softmax(z);
-}
+export async function probs(file) { return headProbs(head, await embed(file)); }
 
 export async function check(file, cityId) {
   const p = await probs(file);
   const rules = rulesCache[cityId] ||= await json(`rules/${cityId}.json`);
-  const mass = { accept: 0, reject: 0, conditional: 0 };
-  head.classes.forEach((c, i) => { mass[rules.rules[c].verdict] += p[i]; });
-  const verdict = mass.accept >= head.threshold ? "accept" : mass.reject >= head.threshold ? "reject" : "not_sure";
+  const { verdict, mass } = decide(p, head.classes, rules, head.threshold);
   const top = head.classes.map((c, i) => [c, p[i]]).sort((a, b) => b[1] - a[1]).slice(0, 3);
   const r = x => Math.round(x * 10000) / 10000;
   return {

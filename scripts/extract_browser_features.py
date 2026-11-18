@@ -13,22 +13,33 @@ from playwright.sync_api import sync_playwright
 ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data/raw"
 which, out = sys.argv[1], sys.argv[2]
-if which == "taco":
+if which == "realwaste":
+    import io
+    import re
+
+    import pyarrow.parquet as pq
+    recs = []
+    for shard in sorted((RAW / "realwaste").glob("p*.parquet")):
+        recs += pq.read_table(shard, columns=["image"]).column("image").to_pylist()
+    labels = [re.sub(r"_\d+\.\w+$", "", r["path"]) for r in recs]
+    files = [io.BytesIO(r["bytes"]) for r in recs]
+    names = labels
+elif which == "taco":
     files = [RAW / "taco/crops" / r["crop"] for r in json.loads((RAW / "taco/crops.json").read_text("utf-8"))]
 else:
-    files = sorted(p for c in ("cardboard", "glass", "metal", "paper", "trash") for p in (RAW / "trashnet/dataset-resized" / c).glob("*.jpg"))
+    files = sorted(p for c in ("cardboard", "glass", "metal", "paper", "plastic", "trash") for p in (RAW / "trashnet/dataset-resized" / c).glob("*.jpg"))
 feats = []
 with sync_playwright() as p:
     b = p.chromium.launch()
     pg = b.new_page()
-    pg.goto("http://localhost:8002/")
+    pg.goto("http://localhost:8003/")
     pg.wait_for_function("document.querySelector('#status').textContent.startsWith('Model ready')", timeout=600000)
     t = time.time()
     for i, f in enumerate(files):
-        d = base64.b64encode(f.read_bytes()).decode()
+        d = base64.b64encode(f.getvalue() if hasattr(f, "getvalue") else f.read_bytes()).decode()
         feats.append(pg.evaluate("async d=>{const b=Uint8Array.from(atob(d),c=>c.charCodeAt(0));return await engine.embed(new File([b],'x.jpg',{type:'image/jpeg'}))}", d))
-        if i % 200 == 0:
+        if i % 50 == 0:
             print(i, len(files), round(time.time() - t), "s", flush=True)
     b.close()
-Path(out).write_text(json.dumps({"files": [str(f) for f in files], "feats": feats}), encoding="utf-8")
+Path(out).write_text(json.dumps({"files": [str(f) for f in (names if which == "realwaste" else files)], "feats": feats}), encoding="utf-8")
 print("done", len(feats))

@@ -25,6 +25,9 @@ class ClipHeadClassifier:
 
         h = np.load(head_path, allow_pickle=False)
         self.W, self.b, self.T = h["W"], h["b"], float(h["T"])
+        # optional zero-shot blend: CLIP text embeddings of the item prompts, weighted by zs_scale
+        self.zs_text = h["zs_text"] if "zs_text" in h.files else None
+        self.zs_scale = float(h["zs_scale"]) if "zs_scale" in h.files else 0.0
         self.classes = [str(c) for c in h["classes"]]
         self.threshold = float(h["threshold"])
         self._torch = torch
@@ -35,5 +38,8 @@ class ClipHeadClassifier:
         with self._torch.no_grad():
             f = self._model.encode_image(self._pre(image.convert("RGB")).unsqueeze(0))
             f = (f / f.norm(dim=-1, keepdim=True)).numpy()[0]
-        p = softmax((self.W @ f + self.b) / self.T)
+        z = self.W @ f + self.b
+        if self.zs_text is not None:
+            z = z + self.zs_scale * (self.zs_text @ f)
+        p = softmax(z / self.T)
         return {c: float(v) for c, v in zip(self.classes, p)}

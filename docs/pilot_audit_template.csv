@@ -1,0 +1,5 @@
+unit_id,arm,period,contaminant_kg,total_kg
+route-01,tool,baseline,,
+route-01,tool,followup,,
+route-02,control,baseline,,
+route-02,control,followup,,

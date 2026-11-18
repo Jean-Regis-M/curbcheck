@@ -1,0 +1,19 @@
+{
+  "machine": {
+    "cpu": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
+    "system": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "pytorch_cpu_per_photo": {
+    "images": 100,
+    "median_ms": 166.4431499999921,
+    "p95_ms": 295.40623000000886,
+    "max_ms": 484.1332999999963,
+    "threads": 4
+  },
+  "browser_per_photo_model_loaded": {
+    "photos": 12,
+    "median_ms": 572.5015499999984,
+    "p95_ms": 1040.6398249999993
+  }
+}

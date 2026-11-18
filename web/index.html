@@ -180,9 +180,9 @@ footer p{margin:0;font-size:14.5px;max-width:420px}.legal{grid-column:1/-1;borde
 
 <main id="main"><div class="stats"><div class="wrap">
 <div class="stat"><b>7</b><span>US cities, every rule cited to the city's own page</span></div>
-<div class="stat"><b>96/112</b><span>rules carry a verbatim quote that a script re-checks</span></div>
-<div class="stat"><b>72–93%</b><span>fewer false "recycle it" answers on held-out photos</span></div>
-<div class="stat"><b>92 ms</b><span>per photo on a laptop CPU, no GPU, no server needed</span></div>
+<div class="stat"><b id="st-rules">83/112</b><span id="st-rules-t">rules re-checked by a script against the live city pages (13 more by hand)</span></div>
+<div class="stat"><b id="st-missed">&lt;0.1%</b><span id="st-missed-t">of recyclable items wrongly rejected on two datasets the model never saw</span></div>
+<div class="stat"><b id="st-speed">fast</b><span id="st-speed-t">per photo on a laptop CPU, no GPU</span></div>
 </div><div class="fwrap"><p class="fine">Laboratory results on small public datasets, not measured real-world impact. <a href="#evidence">See the evidence and its limits</a>.</p></div></div>
 
 <section class="block" id="problem"><div class="wrap">
@@ -223,15 +223,16 @@ footer p{margin:0;font-size:14.5px;max-width:420px}.legal{grid-column:1/-1;borde
 </div></div></section>
 
 <section class="block alt" id="evidence"><div class="wrap">
-<div class="head"><span class="eyebrow">Evidence</span><h2>Staying quiet when unsure cuts false accepts by 72–93%.</h2>
-<p>Held-out test of 306 item photos, split so the same photo never appears in training and testing. Each bar is the share of non-recyclable items wrongly told "recycle it".</p></div>
+<div class="head"><span class="eyebrow">Evidence</span><h2>Saying "not sure" does most of the safety work.</h2>
+<p id="ev-p">Photos from a dataset the model never saw (TrashNet). Each bar is the share of non-recyclable items wrongly told "recycle it".</p></div>
 <div class="ev">
 <div class="card"><div class="key"><span class="f">Forced yes or no</span><span class="a">With "not sure" allowed</span></div><div class="chart" id="chart"></div>
-<p class="small" style="margin:18px 0 0">Answered about 70% of questions. One to five false-accept events per city, so treat the percentages as indicative. Source: <a href="https://github.com/Jean-Regis-M/curbcheck/blob/main/eval/fixed_threshold.json" target="_blank" rel="noopener">eval/fixed_threshold.json</a></p></div>
+<p class="small" id="ev-note" style="margin:18px 0 0"></p></div>
 <div class="facts">
-<div class="card"><div class="bignum">≥ 94.8%</div><p><b>Accept precision.</b> Of the items it told people to recycle, at least this share really are accepted, in every city.</p></div>
-<div class="card"><div class="bignum">1.5–9.5%</div><p><b>On a dataset it never saw</b> (TrashNet): non-recyclables wrongly accepted, depending on the city.</p></div>
-<div class="callout"><b>An independent reviewer scored the first version about 62 out of 100.</b> We fixed what it found and re-ran every number, including an encoder bug we had missed.</div>
+<div class="card"><div class="bignum" id="ev-missed">–</div><p id="ev-missed-t"></p></div>
+<div class="card"><div class="bignum" id="ev-far">–</div><p id="ev-far-t"></p></div>
+<div class="callout"><b>The price of being careful:</b> <span id="ev-price"></span></div>
+<div class="callout g"><b>A separate AI reviewer agent scored the first version about 62 out of 100 and the next about 71.</b> We fixed what it found and re-ran every number.</div>
 </div></div></div></section>
 
 <section class="block" id="honest"><div class="wrap">
@@ -239,7 +240,7 @@ footer p{margin:0;font-size:14.5px;max-width:420px}.legal{grid-column:1/-1;borde
 <div class="honest">
 <div class="card"><h3>No real-world impact is claimed</h3><p>These are laboratory results on small public datasets. A real test would audit bins by weight before and after. That has not been run.</p></div>
 <div class="card"><h3>It cannot recognise some items</h3><p>Batteries, greasy or food-soiled paper, and food waste had too few examples to learn. The answer says so every time.</p></div>
-<div class="card"><h3>It still wrongly rejects recyclables</h3><p>Between 8% and 35% of genuinely recyclable items are told "not recyclable", depending on the dataset. That is too high to deploy.</p></div>
+<div class="card"><h3>It stays safe by saying "not sure" a lot</h3><p>On photos from datasets it never saw, it wrongly rejects almost no recyclables, but it answers only about a quarter to two thirds of them. That caution is not a finished product, and the settings were tuned after seeing those tests.</p></div>
 </div></div></section>
 
 <section class="block alt" id="cities"><div class="wrap">
@@ -259,16 +260,33 @@ footer p{margin:0;font-size:14.5px;max-width:420px}.legal{grid-column:1/-1;borde
 const $=id=>document.getElementById(id);let file=null,cities=[],engine=null,api=false,ready=false;
 const LABEL={accept:"Recycle it",reject:"Not recyclable here",not_sure:"Not sure"};
 const SHORT={accept:"Recycle it",reject:"Not recyclable",not_sure:"Not sure"};
-const SAMPLES=[["glass20","Glass bottle"],["cardboard30","Cardboard"],["metal10","Metal"],["paper40","Paper"],["trash12","Trash"]];
-const EVID=[["Austin",10.3,0.7],["San Francisco",10.3,0.7],["New York",12.5,2.6],["Minneapolis",12.3,3.4],["Washington DC",12.8,1.9],["Seattle",15.8,3.3],["Boston",15.8,3.3]];
+const SAMPLES=[["glass20","Glass bottle"],["glass122","Glass (answers differ by city)"],["cardboard30","Cardboard"],["metal10","Metal"],["paper40","Paper"],["trash7","Trash"]];
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-function drawChart(){const mx=18;$("chart").innerHTML=EVID.map(([n,f,a])=>`<div class="crow"><span>${n}</span><div class="cbars"><div class="cb f"><i style="width:${f/mx*100}%"></i><em>${f}%</em></div><div class="cb a"><i style="width:${a/mx*100}%"></i><em>${a}%</em></div></div></div>`).join("")}
+const P=x=>(x*100).toFixed(1)+"%",R=(v,f=P)=>f(Math.min(...v))+" to "+f(Math.max(...v));
+async function loadEvidence(base){
+ let d;try{const r=await fetch(base+"evidence.json");if(!r.ok)throw 0;d=await r.json()}catch(e){$("ev-note").textContent="Evidence numbers are generated at build time; run scripts/build_site.py.";return}
+ const t=d.datasets.TrashNet,w=d.datasets.RealWaste,g=(rows,k)=>rows.map(x=>x[k]);
+ const mx=Math.max(...g(t,"forced"))*100*1.05;
+ $("chart").innerHTML=t.slice().sort((a,b)=>a.forced-b.forced).map(x=>`<div class="crow"><span>${x.city}</span><div class="cbars"><div class="cb f"><i style="width:${x.forced*100/mx*100}%"></i><em>${P(x.forced)}</em></div><div class="cb a"><i style="width:${Math.max(x.shipped*100/mx*100,.5)}%"></i><em>${P(x.shipped)}</em></div></div></div>`).join("");
+ const worst=Math.max(...g(t,"missed"),...g(w,"missed")),old=[...g(t,"v1_missed"),...g(w,"v1_missed")];
+ $("ev-missed").textContent=worst<0.001?"<0.1%":P(worst);
+ $("ev-missed-t").innerHTML="<b>Recyclable items wrongly rejected</b> on photos from two datasets the model never saw. The earlier model got "+R(old,x=>(x*100).toFixed(0)+"%")+" wrong.";
+ $("ev-far").textContent=R(g(t,"shipped"),x=>(x*100).toFixed(1)).replace(" to ","–")+"%";
+ $("ev-far-t").innerHTML="<b>Non-recyclables wrongly accepted</b> on TrashNet, depending on the city ("+R(g(w,"shipped"),x=>(x*100).toFixed(1)).replace(" to ","–")+"% on RealWaste).";
+ $("ev-price").textContent="it answers "+R(g(t,"coverage"),x=>(x*100).toFixed(0)).replace(" to ","–")+"% of TrashNet photos and "+R(g(w,"coverage"),x=>(x*100).toFixed(0)).replace(" to ","–")+"% of RealWaste photos; the earlier model answered "+R(g(w,"v1_coverage"),x=>(x*100).toFixed(0)).replace(" to ","–")+"% of RealWaste photos but wrongly rejected about 30% of the recyclable ones. Everything else is \"not sure\".";
+ $("ev-note").innerHTML="Numbers for the "+(d.model==="browser"?"in-browser model that this page runs":"PyTorch model")+", read from the evaluation files at build time. These are laboratory results, not measured real-world impact. <a href=\"https://github.com/Jean-Regis-M/curbcheck#the-evidence-including-what-went-wrong\" target=\"_blank\" rel=\"noopener\">Full tables and limits</a>.";
+ $("st-rules").textContent=d.rules.audited_by_script+"/"+d.rules.total;
+ $("st-rules-t").textContent="rules re-checked by a script against the live city pages ("+(d.rules.quoted-d.rules.audited_by_script)+" more by hand)";
+ $("st-missed").textContent=worst<0.001?"<0.1%":P(worst);
+ if(d.latency){const pt=d.latency.pytorch_cpu_per_photo.median_ms,bt=d.latency.browser_per_photo_model_loaded;$("st-speed").textContent=Math.round(pt)+" ms";$("st-speed-t").textContent="per photo on a laptop CPU with PyTorch"+(bt?"; about "+(bt.median_ms/1000).toFixed(1)+" s in your browser":"")}
+ else{$("st-speed").textContent="CPU only";$("st-speed-t").textContent="no GPU, and no server at all in the hosted demo"}
+}
 function drawCities(){$("cgrid").innerHTML=cities.map(c=>`<div class="card"><h3>${esc(c.city)}</h3><p>${esc(c.program)}<br>Rules read ${esc(c.sources[0].retrieved)}</p><a href="${esc(c.sources[0].url)}" target="_blank" rel="noopener">Official source page &rarr;</a></div>`).join("")}
 function showProgram(){const c=cities.find(x=>x.id==$("city").value);$("program").textContent=c?c.program+" · rules read "+c.sources[0].retrieved:""}
 async function init(){
- drawChart();
  try{const r=await fetch("api/health");api=r.ok&&(await r.json()).status==="ok"}catch(e){}
  const base=api?"static/":"";
+ loadEvidence(base);
  $("heroimg").src=base+"img/hero.jpg";
  $("samples").insertAdjacentHTML("beforeend",SAMPLES.map(([n,t])=>`<img src="${base}samples/${n}.jpg" alt="${t}" title="${t}" tabindex="0" data-n="${n}">`).join(""));
  $("samples").onclick=async e=>{const n=e.target.dataset&&e.target.dataset.n;if(!n)return;const b=await (await fetch(base+"samples/"+n+".jpg")).blob();pick(new File([b],n+".jpg",{type:"image/jpeg"}))};
@@ -290,7 +308,7 @@ const check=(f,c)=>api?apiCheck(f,c):engine.check(f,c);
 async function run(){
  $("go").disabled=true;$("go").textContent="Checking…";$("err").textContent="";
  try{const sel=$("city").value;const main=await check(file,sel);const others=main.all_cities?cities.filter(c=>c.id!==sel).map(c=>[c,{verdict:main.all_cities[c.id]}]):await Promise.all(cities.filter(c=>c.id!==sel).map(async c=>[c,await check(file,c.id)]));render(main,others)}
- catch(e){$("err").textContent=e.message}
+ catch(e){$("err").textContent=/decode|image/i.test(e.message)?"That file is not a readable image. Please use a JPEG, PNG or WebP photo.":e.message}
  finally{$("go").disabled=false;$("go").textContent="Check this item"}}
 $("go").onclick=run;
 $("drop").onclick=()=>$("file").click();$("drop").onkeydown=e=>{if(e.key==="Enter"||e.key===" ")$("file").click()};
@@ -299,7 +317,7 @@ $("drop").ondragover=e=>{e.preventDefault();$("drop").classList.add("over")};$("
 $("drop").ondrop=e=>{e.preventDefault();$("drop").classList.remove("over");pick(e.dataTransfer.files[0])};
 function notes(j){
  let h="";
- if(j.verdict==="accept")h+=`<div class="callout g"><b>Before you toss it:</b> empty, clean and dry. Greasy or food-soiled items are not recyclable in most cities.</div>`;
+ if(j.verdict==="accept")h+=`<div class="callout g"><b>Before you toss it:</b> empty, clean and dry. Greasy or food-soiled items are not recyclable in most cities.${["cardboard_box","paper_clean"].includes(j.top_items[0].item)?" <b>A greasy pizza box can look like clean cardboard to this model.</b> If it is greasy or stained with food, do not recycle it.":""}</div>`;
  h+=`<div class="callout"><b>Not recognised by this model:</b> ${esc((j.not_recognised||[]).join(", "))}. Check the city page for these.</div>`;
  return h}
 const REPO="https://github.com/Jean-Regis-M/curbcheck/issues/new";
@@ -324,7 +342,7 @@ function render(j,others){
  $("result").innerHTML=`<div class="vhead ${j.verdict}"><div class="city">${esc(j.city)}</div><p class="verdict ${j.verdict}">${LABEL[j.verdict]}</p><p class="why">${why}</p></div>
  <div class="bar" role="img" aria-label="accept ${pa.toFixed(0)}%, reject ${pr.toFixed(0)}%, conditional ${pc.toFixed(0)}%"><span class="b-a" style="width:${pa}%"></span><span class="b-c" style="width:${pc}%"></span><span class="b-r" style="width:${pr}%"></span></div>
  <div class="legend">By this city's rules: accept ${pa.toFixed(0)}% · conditional ${pc.toFixed(0)}% · reject ${pr.toFixed(0)}%. It answers only at ${(j.threshold*100).toFixed(0)}% or more.</div>
- <p class="h4">What the model thinks it sees</p><table class="items">${j.top_items.map(t=>`<tr><td>${esc(t.label)}<br><span class="small">${esc(t.note)}</span></td><td>${(t.p*100).toFixed(0)}%</td><td><span class="pill ${t.rule==="accept"?"accept":t.rule==="reject"?"reject":"not_sure"}">${esc(t.rule)}</span></td></tr>`).join("")}</table>${cmp}
+ <p class="h4">The model's closest guesses</p><p class="small" style="margin:0 0 6px">The verdict adds up the probability of every item this city accepts or rejects. It is not a single identification, so the top guess can be wrong while the verdict is right.</p><table class="items">${j.top_items.map(t=>`<tr><td>${esc(t.label)}<br><span class="small">${esc(t.note)}</span></td><td>${(t.p*100).toFixed(0)}%</td><td><span class="pill ${t.rule==="accept"?"accept":t.rule==="reject"?"reject":"not_sure"}">${esc(t.rule)}</span></td></tr>`).join("")}</table>${cmp}
  ${notes(j)}<p class="src">Rule source: <a href="${esc(j.source_url)}" target="_blank" rel="noopener">${esc(j.source_url)}</a></p><p class="small">${esc(j.disclaimer)}</p>${feedback(j)}`}
 init();
 </script>

@@ -23,7 +23,7 @@ flowchart LR
 | Taxonomy | `src/curbcheck/taxonomy.py` | 16 items shared by the classifier and every city table. |
 | Rules | `src/curbcheck/rules.py`, `data/rules/` | pydantic-validated; every item covered; every rule cites a source; verbatim quote where the page speaks. |
 | Decision | `src/curbcheck/decision.py` | Sums item probabilities per city verdict; answers only if one verdict reaches the validation-chosen threshold. |
-| Model | `src/curbcheck/model.py` | OpenCLIP ViT-B-32-quickgelu (OpenAI weights) plus a linear head; about 90 ms per image on a laptop CPU. |
+| Model | `src/curbcheck/model.py` | OpenCLIP ViT-B-32-quickgelu (OpenAI weights) plus a linear head over 14 classes trained on three datasets, with a zero-shot text blend; median 166 ms per image on a laptop CPU ([`eval/latency.json`](../eval/latency.json)). |
 | API | `src/curbcheck/api.py` | Upload validation, early body-size rejection, per-client rate limit, inference in a worker thread. |
 | Browser engine | `web/engine.js` | Same decision logic in JavaScript, with a head trained on browser-computed features. |
 | Rule audit | `scripts/verify_rules.py` | Re-fetches each cited page and checks each quote is still present. |

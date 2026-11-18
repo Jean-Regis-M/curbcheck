@@ -50,12 +50,17 @@ def fit_temperature(logits, y):
     return float(minimize_scalar(nll, bounds=(0.05, 20), method="bounded").x)
 
 
-def zero_shot_logits(X, classes):
+def zero_shot_text(classes):
+    """Normalised CLIP text embeddings of the item prompts (one row per class)."""
     model, _, _ = open_clip.create_model_and_transforms("ViT-B-32-quickgelu", pretrained="openai")
     tok = open_clip.get_tokenizer("ViT-B-32")
     with torch.no_grad():
         t = model.encode_text(tok([f"a photo of {ITEMS[c].lower()}, litter" for c in classes]))
-        t = (t / t.norm(dim=-1, keepdim=True)).numpy()
+        return (t / t.norm(dim=-1, keepdim=True)).numpy()
+
+
+def zero_shot_logits(X, classes, text=None):
+    t = zero_shot_text(classes) if text is None else text
     return 100.0 * X @ t.T
 
 

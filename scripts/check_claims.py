@@ -1,6 +1,7 @@
 """Fail if a headline number in README.md no longer matches the evaluation JSON it came from.
 Offline, stdlib only; runs in CI. Usage: python scripts/check_claims.py"""
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -41,11 +42,19 @@ def main():
         lo, hi = r["far_ci95"]
         need(f"| {name} | {r['false_accept_rate']*100:.1f}% ({k['false_accepts']} of {k['non_accept_items']}) | {lo*100:.1f} to {hi*100:.1f} | "
              f"{r['forced_false_accept_rate']*100:.1f}% | {r['missed_recyclable_rate']*100:.1f}% | {r['coverage']*100:.0f}% |", f"TrashNet {cid}")
+    n_tests = sum(len(re.findall(r"^def test_", f.read_text("utf-8"), re.MULTILINE)) for f in (ROOT / "tests").glob("test_*.py"))
+    need(f"{n_tests} automated tests", "test count")
+    need(f"| [`tests/`](tests) | {n_tests} tests |", "test count in repository map")
     rows, risk, cv = crossval_rows()
     for r in rows + risk:
         need(r, "cross-validation")
     need(f"{cv['ece_before_temperature']['mean']*100:.1f}%", "ECE before")
     need(f"{cv['ece_after_temperature']['mean']*100:.1f}%", "ECE after")
+    sys.path.insert(0, str(ROOT / "scripts"))
+    from readme_blocks import render
+    checked += 1
+    if render(readme) != readme:
+        bad.append("README generated blocks are stale: run python scripts/readme_blocks.py")
     if bad:
         print("\n".join(bad))
         sys.exit(1)

@@ -1,0 +1,112 @@
+{
+  "threshold": 0.9821928070457739,
+  "note": "tiny sets, a smoke test and not evidence",
+  "items": {
+    "battery": {
+      "crops": 2,
+      "verdicts_over_all_city_answers": {
+        "not_sure": 14
+      },
+      "share_wrongly_accepted": 0.0,
+      "per_city": {
+        "austin": {
+          "not_sure": 2
+        },
+        "boston": {
+          "not_sure": 2
+        },
+        "minneapolis": {
+          "not_sure": 2
+        },
+        "new_york": {
+          "not_sure": 2
+        },
+        "san_francisco": {
+          "not_sure": 2
+        },
+        "seattle": {
+          "not_sure": 2
+        },
+        "washington_dc": {
+          "not_sure": 2
+        }
+      }
+    },
+    "pizza_box_greasy": {
+      "crops": 3,
+      "verdicts_over_all_city_answers": {
+        "accept": 7,
+        "not_sure": 7,
+        "reject": 7
+      },
+      "share_wrongly_accepted": 0.3333333333333333,
+      "per_city": {
+        "austin": {
+          "accept": 1,
+          "not_sure": 1,
+          "reject": 1
+        },
+        "boston": {
+          "accept": 1,
+          "not_sure": 1,
+          "reject": 1
+        },
+        "minneapolis": {
+          "accept": 1,
+          "not_sure": 1,
+          "reject": 1
+        },
+        "new_york": {
+          "accept": 1,
+          "not_sure": 1,
+          "reject": 1
+        },
+        "san_francisco": {
+          "accept": 1,
+          "not_sure": 1,
+          "reject": 1
+        },
+        "seattle": {
+          "accept": 1,
+          "not_sure": 1,
+          "reject": 1
+        },
+        "washington_dc": {
+          "accept": 1,
+          "not_sure": 1,
+          "reject": 1
+        }
+      }
+    },
+    "food_waste": {
+      "crops": 5,
+      "verdicts_over_all_city_answers": {
+        "not_sure": 35
+      },
+      "share_wrongly_accepted": 0.0,
+      "per_city": {
+        "austin": {
+          "not_sure": 5
+        },
+        "boston": {
+          "not_sure": 5
+        },
+        "minneapolis": {
+          "not_sure": 5
+        },
+        "new_york": {
+          "not_sure": 5
+        },
+        "san_francisco": {
+          "not_sure": 5
+        },
+        "seattle": {
+          "not_sure": 5
+        },
+        "washington_dc": {
+          "not_sure": 5
+        }
+      }
+    }
+  }
+}

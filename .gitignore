@@ -23,3 +23,4 @@ private/
 *.out
 *.synctex.gz
 _site/
+models/cand_*.npz

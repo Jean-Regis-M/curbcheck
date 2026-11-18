@@ -1,0 +1,1456 @@
+{
+  "classes": [
+    "aluminum_can",
+    "aluminum_foil",
+    "cardboard_box",
+    "foam",
+    "food_waste",
+    "glass_bottle_jar",
+    "milk_carton",
+    "other_trash",
+    "paper_clean",
+    "paper_cup",
+    "plastic_bag_film",
+    "plastic_bottle",
+    "plastic_tub",
+    "steel_can"
+  ],
+  "lambdas": [
+    2.0
+  ],
+  "A_train_TACO_RealWaste_test_TrashNet": {
+    "zs2.0|None|cov0.5": {
+      "threshold": 0.9840029665556898,
+      "cities": {
+        "austin": {
+          "coverage": 0.6092909535452323,
+          "false_accept_rate": 0.0364963503649635,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.6496350364963503,
+          "forced_missed_recyclable_rate": 0.015723270440251572
+        },
+        "boston": {
+          "coverage": 0.5745721271393643,
+          "false_accept_rate": 0.0072992700729927005,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.6131386861313869,
+          "forced_missed_recyclable_rate": 0.01729559748427673
+        },
+        "minneapolis": {
+          "coverage": 0.5911980440097799,
+          "false_accept_rate": 0.021897810218978103,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.6423357664233577,
+          "forced_missed_recyclable_rate": 0.015723270440251572
+        },
+        "new_york": {
+          "coverage": 0.5232273838630807,
+          "false_accept_rate": 0.0072992700729927005,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.6204379562043796,
+          "forced_missed_recyclable_rate": 0.01729559748427673
+        },
+        "san_francisco": {
+          "coverage": 0.6092909535452323,
+          "false_accept_rate": 0.0364963503649635,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.6204379562043796,
+          "forced_missed_recyclable_rate": 0.016771488469601678
+        },
+        "seattle": {
+          "coverage": 0.5745721271393643,
+          "false_accept_rate": 0.0072992700729927005,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.6131386861313869,
+          "forced_missed_recyclable_rate": 0.01729559748427673
+        },
+        "washington_dc": {
+          "coverage": 0.5496332518337408,
+          "false_accept_rate": 0.014598540145985401,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.583941605839416,
+          "forced_missed_recyclable_rate": 0.04716981132075472
+        }
+      }
+    },
+    "zs2.0|None|cov0.55": {
+      "threshold": 0.9735528500422003,
+      "cities": {
+        "austin": {
+          "coverage": 0.6885085574572127,
+          "false_accept_rate": 0.06569343065693431,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.6496350364963503,
+          "forced_missed_recyclable_rate": 0.015723270440251572
+        },
+        "boston": {
+          "coverage": 0.6547677261613692,
+          "false_accept_rate": 0.029197080291970802,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.6131386861313869,
+          "forced_missed_recyclable_rate": 0.01729559748427673
+        },
+        "minneapolis": {
+          "coverage": 0.6728606356968215,
+          "false_accept_rate": 0.029197080291970802,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.6423357664233577,
+          "forced_missed_recyclable_rate": 0.015723270440251572
+        },
+        "new_york": {
+          "coverage": 0.6132029339853301,
+          "false_accept_rate": 0.029197080291970802,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.6204379562043796,
+          "forced_missed_recyclable_rate": 0.01729559748427673
+        },
+        "san_francisco": {
+          "coverage": 0.6885085574572127,
+          "false_accept_rate": 0.06569343065693431,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.6204379562043796,
+          "forced_missed_recyclable_rate": 0.016771488469601678
+        },
+        "seattle": {
+          "coverage": 0.6547677261613692,
+          "false_accept_rate": 0.029197080291970802,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.6131386861313869,
+          "forced_missed_recyclable_rate": 0.01729559748427673
+        },
+        "washington_dc": {
+          "coverage": 0.6259168704156479,
+          "false_accept_rate": 0.021897810218978103,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.583941605839416,
+          "forced_missed_recyclable_rate": 0.04716981132075472
+        }
+      }
+    },
+    "zs2.0|None|cov0.6": {
+      "threshold": 0.9562012157334057,
+      "cities": {
+        "austin": {
+          "coverage": 0.7515892420537897,
+          "false_accept_rate": 0.12408759124087591,
+          "missed_recyclable_rate": 0.0015723270440251573,
+          "forced_false_accept_rate": 0.6496350364963503,
+          "forced_missed_recyclable_rate": 0.015723270440251572
+        },
+        "boston": {
+          "coverage": 0.7242053789731051,
+          "false_accept_rate": 0.06569343065693431,
+          "missed_recyclable_rate": 0.0015723270440251573,
+          "forced_false_accept_rate": 0.6131386861313869,
+          "forced_missed_recyclable_rate": 0.01729559748427673
+        },
+        "minneapolis": {
+          "coverage": 0.7408312958435208,
+          "false_accept_rate": 0.08029197080291971,
+          "missed_recyclable_rate": 0.0015723270440251573,
+          "forced_false_accept_rate": 0.6423357664233577,
+          "forced_missed_recyclable_rate": 0.015723270440251572
+        },
+        "new_york": {
+          "coverage": 0.7007334963325184,
+          "false_accept_rate": 0.072992700729927,
+          "missed_recyclable_rate": 0.0015723270440251573,
+          "forced_false_accept_rate": 0.6204379562043796,
+          "forced_missed_recyclable_rate": 0.01729559748427673
+        },
+        "san_francisco": {
+          "coverage": 0.7520782396088019,
+          "false_accept_rate": 0.12408759124087591,
+          "missed_recyclable_rate": 0.0015723270440251573,
+          "forced_false_accept_rate": 0.6204379562043796,
+          "forced_missed_recyclable_rate": 0.016771488469601678
+        },
+        "seattle": {
+          "coverage": 0.7242053789731051,
+          "false_accept_rate": 0.06569343065693431,
+          "missed_recyclable_rate": 0.0015723270440251573,
+          "forced_false_accept_rate": 0.6131386861313869,
+          "forced_missed_recyclable_rate": 0.01729559748427673
+        },
+        "washington_dc": {
+          "coverage": 0.702200488997555,
+          "false_accept_rate": 0.058394160583941604,
+          "missed_recyclable_rate": 0.0015723270440251573,
+          "forced_false_accept_rate": 0.583941605839416,
+          "forced_missed_recyclable_rate": 0.04716981132075472
+        }
+      }
+    },
+    "zs2.0|None|cov0.65": {
+      "threshold": 0.9332058802774703,
+      "cities": {
+        "austin": {
+          "coverage": 0.8039119804400978,
+          "false_accept_rate": 0.15328467153284672,
+          "missed_recyclable_rate": 0.0015723270440251573,
+          "forced_false_accept_rate": 0.6496350364963503,
+          "forced_missed_recyclable_rate": 0.015723270440251572
+        },
+        "boston": {
+          "coverage": 0.7784841075794621,
+          "false_accept_rate": 0.10948905109489052,
+          "missed_recyclable_rate": 0.0015723270440251573,
+          "forced_false_accept_rate": 0.6131386861313869,
+          "forced_missed_recyclable_rate": 0.01729559748427673
+        },
+        "minneapolis": {
+          "coverage": 0.7951100244498778,
+          "false_accept_rate": 0.12408759124087591,
+          "missed_recyclable_rate": 0.0015723270440251573,
+          "forced_false_accept_rate": 0.6423357664233577,
+          "forced_missed_recyclable_rate": 0.015723270440251572
+        },
+        "new_york": {
+          "coverage": 0.7618581907090465,
+          "false_accept_rate": 0.08759124087591241,
+          "missed_recyclable_rate": 0.0015723270440251573,
+          "forced_false_accept_rate": 0.6204379562043796,
+          "forced_missed_recyclable_rate": 0.01729559748427673
+        },
+        "san_francisco": {
+          "coverage": 0.8048899755501222,
+          "false_accept_rate": 0.15328467153284672,
+          "missed_recyclable_rate": 0.0015723270440251573,
+          "forced_false_accept_rate": 0.6204379562043796,
+          "forced_missed_recyclable_rate": 0.016771488469601678
+        },
+        "seattle": {
+          "coverage": 0.7784841075794621,
+          "false_accept_rate": 0.10948905109489052,
+          "missed_recyclable_rate": 0.0015723270440251573,
+          "forced_false_accept_rate": 0.6131386861313869,
+          "forced_missed_recyclable_rate": 0.01729559748427673
+        },
+        "washington_dc": {
+          "coverage": 0.7559902200488997,
+          "false_accept_rate": 0.10948905109489052,
+          "missed_recyclable_rate": 0.0015723270440251573,
+          "forced_false_accept_rate": 0.583941605839416,
+          "forced_missed_recyclable_rate": 0.04716981132075472
+        }
+      }
+    },
+    "zs2.0|None|cov0.7": {
+      "threshold": 0.9037122998569651,
+      "cities": {
+        "austin": {
+          "coverage": 0.8425427872860636,
+          "false_accept_rate": 0.18248175182481752,
+          "missed_recyclable_rate": 0.0020964360587002098,
+          "forced_false_accept_rate": 0.6496350364963503,
+          "forced_missed_recyclable_rate": 0.015723270440251572
+        },
+        "boston": {
+          "coverage": 0.8205378973105134,
+          "false_accept_rate": 0.12408759124087591,
+          "missed_recyclable_rate": 0.0020964360587002098,
+          "forced_false_accept_rate": 0.6131386861313869,
+          "forced_missed_recyclable_rate": 0.01729559748427673
+        },
+        "minneapolis": {
+          "coverage": 0.8366748166259169,
+          "false_accept_rate": 0.15328467153284672,
+          "missed_recyclable_rate": 0.0020964360587002098,
+          "forced_false_accept_rate": 0.6423357664233577,
+          "forced_missed_recyclable_rate": 0.015723270440251572
+        },
+        "new_york": {
+          "coverage": 0.8092909535452323,
+          "false_accept_rate": 0.11678832116788321,
+          "missed_recyclable_rate": 0.0020964360587002098,
+          "forced_false_accept_rate": 0.6204379562043796,
+          "forced_missed_recyclable_rate": 0.01729559748427673
+        },
+        "san_francisco": {
+          "coverage": 0.843520782396088,
+          "false_accept_rate": 0.18248175182481752,
+          "missed_recyclable_rate": 0.0020964360587002098,
+          "forced_false_accept_rate": 0.6204379562043796,
+          "forced_missed_recyclable_rate": 0.016771488469601678
+        },
+        "seattle": {
+          "coverage": 0.8205378973105134,
+          "false_accept_rate": 0.12408759124087591,
+          "missed_recyclable_rate": 0.0020964360587002098,
+          "forced_false_accept_rate": 0.6131386861313869,
+          "forced_missed_recyclable_rate": 0.01729559748427673
+        },
+        "washington_dc": {
+          "coverage": 0.79559902200489,
+          "false_accept_rate": 0.12408759124087591,
+          "missed_recyclable_rate": 0.0020964360587002098,
+          "forced_false_accept_rate": 0.583941605839416,
+          "forced_missed_recyclable_rate": 0.04716981132075472
+        }
+      }
+    }
+  },
+  "B_train_TACO_TrashNet_test_RealWaste": {
+    "zs2.0|None|cov0.5": {
+      "threshold": 0.9890071099250375,
+      "cities": {
+        "austin": {
+          "coverage": 0.24719394413991125,
+          "false_accept_rate": 0.015060240963855422,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.3602409638554217,
+          "forced_missed_recyclable_rate": 0.06264394288346384
+        },
+        "boston": {
+          "coverage": 0.22944400939702428,
+          "false_accept_rate": 0.01144578313253012,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.3536144578313253,
+          "forced_missed_recyclable_rate": 0.06725011515430677
+        },
+        "minneapolis": {
+          "coverage": 0.23440354998694857,
+          "false_accept_rate": 0.01144578313253012,
+          "missed_recyclable_rate": 0.00046061722708429296,
+          "forced_false_accept_rate": 0.3506024096385542,
+          "forced_missed_recyclable_rate": 0.06863196683555965
+        },
+        "new_york": {
+          "coverage": 0.22109109892978335,
+          "false_accept_rate": 0.010843373493975903,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.35180722891566263,
+          "forced_missed_recyclable_rate": 0.0658682634730539
+        },
+        "san_francisco": {
+          "coverage": 0.24719394413991125,
+          "false_accept_rate": 0.015060240963855422,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.3602409638554217,
+          "forced_missed_recyclable_rate": 0.06264394288346384
+        },
+        "seattle": {
+          "coverage": 0.22944400939702428,
+          "false_accept_rate": 0.01144578313253012,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.3536144578313253,
+          "forced_missed_recyclable_rate": 0.06725011515430677
+        },
+        "washington_dc": {
+          "coverage": 0.18585225789611068,
+          "false_accept_rate": 0.009036144578313253,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.32710843373493975,
+          "forced_missed_recyclable_rate": 0.10179640718562874
+        }
+      }
+    },
+    "zs2.0|None|cov0.55": {
+      "threshold": 0.976730207480485,
+      "cities": {
+        "austin": {
+          "coverage": 0.31480031323414254,
+          "false_accept_rate": 0.02891566265060241,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.3602409638554217,
+          "forced_missed_recyclable_rate": 0.06264394288346384
+        },
+        "boston": {
+          "coverage": 0.29705037849125554,
+          "false_accept_rate": 0.02710843373493976,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.3536144578313253,
+          "forced_missed_recyclable_rate": 0.06725011515430677
+        },
+        "minneapolis": {
+          "coverage": 0.3025319759853824,
+          "false_accept_rate": 0.02710843373493976,
+          "missed_recyclable_rate": 0.00046061722708429296,
+          "forced_false_accept_rate": 0.3506024096385542,
+          "forced_missed_recyclable_rate": 0.06863196683555965
+        },
+        "new_york": {
+          "coverage": 0.29052466718872355,
+          "false_accept_rate": 0.02469879518072289,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.35180722891566263,
+          "forced_missed_recyclable_rate": 0.0658682634730539
+        },
+        "san_francisco": {
+          "coverage": 0.31480031323414254,
+          "false_accept_rate": 0.02891566265060241,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.3602409638554217,
+          "forced_missed_recyclable_rate": 0.06264394288346384
+        },
+        "seattle": {
+          "coverage": 0.29705037849125554,
+          "false_accept_rate": 0.02710843373493976,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.3536144578313253,
+          "forced_missed_recyclable_rate": 0.06725011515430677
+        },
+        "washington_dc": {
+          "coverage": 0.2427564604541895,
+          "false_accept_rate": 0.018072289156626505,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.32710843373493975,
+          "forced_missed_recyclable_rate": 0.10179640718562874
+        }
+      }
+    },
+    "zs2.0|None|cov0.6": {
+      "threshold": 0.9598301895763082,
+      "cities": {
+        "austin": {
+          "coverage": 0.3764030279300444,
+          "false_accept_rate": 0.046987951807228916,
+          "missed_recyclable_rate": 0.0009212344541685859,
+          "forced_false_accept_rate": 0.3602409638554217,
+          "forced_missed_recyclable_rate": 0.06264394288346384
+        },
+        "boston": {
+          "coverage": 0.3589141216392587,
+          "false_accept_rate": 0.04156626506024096,
+          "missed_recyclable_rate": 0.0009212344541685859,
+          "forced_false_accept_rate": 0.3536144578313253,
+          "forced_missed_recyclable_rate": 0.06725011515430677
+        },
+        "minneapolis": {
+          "coverage": 0.3636126337770817,
+          "false_accept_rate": 0.04156626506024096,
+          "missed_recyclable_rate": 0.0013818516812528789,
+          "forced_false_accept_rate": 0.3506024096385542,
+          "forced_missed_recyclable_rate": 0.06863196683555965
+        },
+        "new_york": {
+          "coverage": 0.3552597233098408,
+          "false_accept_rate": 0.04096385542168675,
+          "missed_recyclable_rate": 0.0009212344541685859,
+          "forced_false_accept_rate": 0.35180722891566263,
+          "forced_missed_recyclable_rate": 0.0658682634730539
+        },
+        "san_francisco": {
+          "coverage": 0.3764030279300444,
+          "false_accept_rate": 0.046987951807228916,
+          "missed_recyclable_rate": 0.0009212344541685859,
+          "forced_false_accept_rate": 0.3602409638554217,
+          "forced_missed_recyclable_rate": 0.06264394288346384
+        },
+        "seattle": {
+          "coverage": 0.3589141216392587,
+          "false_accept_rate": 0.04156626506024096,
+          "missed_recyclable_rate": 0.0009212344541685859,
+          "forced_false_accept_rate": 0.3536144578313253,
+          "forced_missed_recyclable_rate": 0.06725011515430677
+        },
+        "washington_dc": {
+          "coverage": 0.3007047768206735,
+          "false_accept_rate": 0.029518072289156625,
+          "missed_recyclable_rate": 0.0009212344541685859,
+          "forced_false_accept_rate": 0.32710843373493975,
+          "forced_missed_recyclable_rate": 0.10179640718562874
+        }
+      }
+    },
+    "zs2.0|None|cov0.65": {
+      "threshold": 0.9397010244212705,
+      "cities": {
+        "austin": {
+          "coverage": 0.4398329417906552,
+          "false_accept_rate": 0.06867469879518072,
+          "missed_recyclable_rate": 0.0013818516812528789,
+          "forced_false_accept_rate": 0.3602409638554217,
+          "forced_missed_recyclable_rate": 0.06264394288346384
+        },
+        "boston": {
+          "coverage": 0.424693291568781,
+          "false_accept_rate": 0.06325301204819277,
+          "missed_recyclable_rate": 0.0013818516812528789,
+          "forced_false_accept_rate": 0.3536144578313253,
+          "forced_missed_recyclable_rate": 0.06725011515430677
+        },
+        "minneapolis": {
+          "coverage": 0.4286087183503002,
+          "false_accept_rate": 0.06445783132530121,
+          "missed_recyclable_rate": 0.0023030861354214646,
+          "forced_false_accept_rate": 0.3506024096385542,
+          "forced_missed_recyclable_rate": 0.06863196683555965
+        },
+        "new_york": {
+          "coverage": 0.4197337509788567,
+          "false_accept_rate": 0.06325301204819277,
+          "missed_recyclable_rate": 0.0013818516812528789,
+          "forced_false_accept_rate": 0.35180722891566263,
+          "forced_missed_recyclable_rate": 0.0658682634730539
+        },
+        "san_francisco": {
+          "coverage": 0.4398329417906552,
+          "false_accept_rate": 0.06867469879518072,
+          "missed_recyclable_rate": 0.0013818516812528789,
+          "forced_false_accept_rate": 0.3602409638554217,
+          "forced_missed_recyclable_rate": 0.06264394288346384
+        },
+        "seattle": {
+          "coverage": 0.424693291568781,
+          "false_accept_rate": 0.06325301204819277,
+          "missed_recyclable_rate": 0.0013818516812528789,
+          "forced_false_accept_rate": 0.3536144578313253,
+          "forced_missed_recyclable_rate": 0.06725011515430677
+        },
+        "washington_dc": {
+          "coverage": 0.35682589402244846,
+          "false_accept_rate": 0.045180722891566265,
+          "missed_recyclable_rate": 0.0013818516812528789,
+          "forced_false_accept_rate": 0.32710843373493975,
+          "forced_missed_recyclable_rate": 0.10179640718562874
+        }
+      }
+    },
+    "zs2.0|None|cov0.7": {
+      "threshold": 0.9085165969216095,
+      "cities": {
+        "austin": {
+          "coverage": 0.5163142782563299,
+          "false_accept_rate": 0.09819277108433735,
+          "missed_recyclable_rate": 0.0032243205895900505,
+          "forced_false_accept_rate": 0.3602409638554217,
+          "forced_missed_recyclable_rate": 0.06264394288346384
+        },
+        "boston": {
+          "coverage": 0.4980422866092404,
+          "false_accept_rate": 0.09096385542168675,
+          "missed_recyclable_rate": 0.0032243205895900505,
+          "forced_false_accept_rate": 0.3536144578313253,
+          "forced_missed_recyclable_rate": 0.06725011515430677
+        },
+        "minneapolis": {
+          "coverage": 0.5053510832680762,
+          "false_accept_rate": 0.09216867469879518,
+          "missed_recyclable_rate": 0.004606172270842929,
+          "forced_false_accept_rate": 0.3506024096385542,
+          "forced_missed_recyclable_rate": 0.06863196683555965
+        },
+        "new_york": {
+          "coverage": 0.49517097363612633,
+          "false_accept_rate": 0.08795180722891566,
+          "missed_recyclable_rate": 0.0032243205895900505,
+          "forced_false_accept_rate": 0.35180722891566263,
+          "forced_missed_recyclable_rate": 0.0658682634730539
+        },
+        "san_francisco": {
+          "coverage": 0.5163142782563299,
+          "false_accept_rate": 0.09819277108433735,
+          "missed_recyclable_rate": 0.0032243205895900505,
+          "forced_false_accept_rate": 0.3602409638554217,
+          "forced_missed_recyclable_rate": 0.06264394288346384
+        },
+        "seattle": {
+          "coverage": 0.4980422866092404,
+          "false_accept_rate": 0.09096385542168675,
+          "missed_recyclable_rate": 0.0032243205895900505,
+          "forced_false_accept_rate": 0.3536144578313253,
+          "forced_missed_recyclable_rate": 0.06725011515430677
+        },
+        "washington_dc": {
+          "coverage": 0.42782563299399634,
+          "false_accept_rate": 0.07228915662650602,
+          "missed_recyclable_rate": 0.0032243205895900505,
+          "forced_false_accept_rate": 0.32710843373493975,
+          "forced_missed_recyclable_rate": 0.10179640718562874
+        }
+      }
+    }
+  },
+  "F_all_three_in_domain": {
+    "zs2.0|None|cov0.5": {
+      "threshold": 0.9885716404818351,
+      "temperature": 0.8732957844248896,
+      "TACO_test": {
+        "austin": {
+          "coverage": 0.18627450980392157,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.16176470588235295,
+          "forced_missed_recyclable_rate": 0.17647058823529413
+        },
+        "boston": {
+          "coverage": 0.15359477124183007,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.21710526315789475,
+          "forced_missed_recyclable_rate": 0.2012987012987013
+        },
+        "minneapolis": {
+          "coverage": 0.16339869281045752,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.19863013698630136,
+          "forced_missed_recyclable_rate": 0.2
+        },
+        "new_york": {
+          "coverage": 0.15359477124183007,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.19078947368421054,
+          "forced_missed_recyclable_rate": 0.19480519480519481
+        },
+        "san_francisco": {
+          "coverage": 0.18627450980392157,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.15441176470588236,
+          "forced_missed_recyclable_rate": 0.17647058823529413
+        },
+        "seattle": {
+          "coverage": 0.15359477124183007,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.21710526315789475,
+          "forced_missed_recyclable_rate": 0.2012987012987013
+        },
+        "washington_dc": {
+          "coverage": 0.14705882352941177,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.1987179487179487,
+          "forced_missed_recyclable_rate": 0.2
+        }
+      },
+      "TrashNet_test": {
+        "austin": {
+          "coverage": 0.688715953307393,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "boston": {
+          "coverage": 0.669260700389105,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "minneapolis": {
+          "coverage": 0.6789883268482491,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "new_york": {
+          "coverage": 0.6614785992217899,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "san_francisco": {
+          "coverage": 0.6906614785992218,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "seattle": {
+          "coverage": 0.669260700389105,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "washington_dc": {
+          "coverage": 0.6400778210116731,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.4,
+          "forced_missed_recyclable_rate": 0.03549060542797495
+        }
+      },
+      "RealWaste_test": {
+        "austin": {
+          "coverage": 0.425,
+          "false_accept_rate": 0.009615384615384616,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.11057692307692307,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "boston": {
+          "coverage": 0.546875,
+          "false_accept_rate": 0.009615384615384616,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.08173076923076923,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "minneapolis": {
+          "coverage": 0.421875,
+          "false_accept_rate": 0.009615384615384616,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.11057692307692307,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "new_york": {
+          "coverage": 0.5458333333333333,
+          "false_accept_rate": 0.009615384615384616,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.08173076923076923,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "san_francisco": {
+          "coverage": 0.5510416666666667,
+          "false_accept_rate": 0.009615384615384616,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.08173076923076923,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "seattle": {
+          "coverage": 0.546875,
+          "false_accept_rate": 0.009615384615384616,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.08173076923076923,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "washington_dc": {
+          "coverage": 0.478125,
+          "false_accept_rate": 0.009615384615384616,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.06971153846153846,
+          "forced_missed_recyclable_rate": 0.08088235294117647
+        }
+      }
+    },
+    "zs2.0|None|cov0.55": {
+      "threshold": 0.9821928070457739,
+      "temperature": 0.8732957844248896,
+      "TACO_test": {
+        "austin": {
+          "coverage": 0.2222222222222222,
+          "false_accept_rate": 0.007352941176470588,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.16176470588235295,
+          "forced_missed_recyclable_rate": 0.17647058823529413
+        },
+        "boston": {
+          "coverage": 0.19607843137254902,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.21710526315789475,
+          "forced_missed_recyclable_rate": 0.2012987012987013
+        },
+        "minneapolis": {
+          "coverage": 0.20915032679738563,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.19863013698630136,
+          "forced_missed_recyclable_rate": 0.2
+        },
+        "new_york": {
+          "coverage": 0.1895424836601307,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.19078947368421054,
+          "forced_missed_recyclable_rate": 0.19480519480519481
+        },
+        "san_francisco": {
+          "coverage": 0.2222222222222222,
+          "false_accept_rate": 0.007352941176470588,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.15441176470588236,
+          "forced_missed_recyclable_rate": 0.17647058823529413
+        },
+        "seattle": {
+          "coverage": 0.19607843137254902,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.21710526315789475,
+          "forced_missed_recyclable_rate": 0.2012987012987013
+        },
+        "washington_dc": {
+          "coverage": 0.18627450980392157,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.1987179487179487,
+          "forced_missed_recyclable_rate": 0.2
+        }
+      },
+      "TrashNet_test": {
+        "austin": {
+          "coverage": 0.745136186770428,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "boston": {
+          "coverage": 0.7373540856031129,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "minneapolis": {
+          "coverage": 0.7392996108949417,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "new_york": {
+          "coverage": 0.7315175097276264,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "san_francisco": {
+          "coverage": 0.7470817120622568,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "seattle": {
+          "coverage": 0.7373540856031129,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "washington_dc": {
+          "coverage": 0.7062256809338522,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.4,
+          "forced_missed_recyclable_rate": 0.03549060542797495
+        }
+      },
+      "RealWaste_test": {
+        "austin": {
+          "coverage": 0.49583333333333335,
+          "false_accept_rate": 0.01201923076923077,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.11057692307692307,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "boston": {
+          "coverage": 0.6239583333333333,
+          "false_accept_rate": 0.01201923076923077,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.08173076923076923,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "minneapolis": {
+          "coverage": 0.490625,
+          "false_accept_rate": 0.01201923076923077,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.11057692307692307,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "new_york": {
+          "coverage": 0.6239583333333333,
+          "false_accept_rate": 0.01201923076923077,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.08173076923076923,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "san_francisco": {
+          "coverage": 0.6354166666666666,
+          "false_accept_rate": 0.01201923076923077,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.08173076923076923,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "seattle": {
+          "coverage": 0.6239583333333333,
+          "false_accept_rate": 0.01201923076923077,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.08173076923076923,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "washington_dc": {
+          "coverage": 0.5541666666666667,
+          "false_accept_rate": 0.01201923076923077,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.06971153846153846,
+          "forced_missed_recyclable_rate": 0.08088235294117647
+        }
+      }
+    },
+    "zs2.0|None|cov0.6": {
+      "threshold": 0.9711563421426743,
+      "temperature": 0.8732957844248896,
+      "TACO_test": {
+        "austin": {
+          "coverage": 0.2777777777777778,
+          "false_accept_rate": 0.007352941176470588,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.16176470588235295,
+          "forced_missed_recyclable_rate": 0.17647058823529413
+        },
+        "boston": {
+          "coverage": 0.25163398692810457,
+          "false_accept_rate": 0.006578947368421052,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.21710526315789475,
+          "forced_missed_recyclable_rate": 0.2012987012987013
+        },
+        "minneapolis": {
+          "coverage": 0.26143790849673204,
+          "false_accept_rate": 0.00684931506849315,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.19863013698630136,
+          "forced_missed_recyclable_rate": 0.2
+        },
+        "new_york": {
+          "coverage": 0.24509803921568626,
+          "false_accept_rate": 0.013157894736842105,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.19078947368421054,
+          "forced_missed_recyclable_rate": 0.19480519480519481
+        },
+        "san_francisco": {
+          "coverage": 0.28104575163398693,
+          "false_accept_rate": 0.007352941176470588,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.15441176470588236,
+          "forced_missed_recyclable_rate": 0.17647058823529413
+        },
+        "seattle": {
+          "coverage": 0.25163398692810457,
+          "false_accept_rate": 0.006578947368421052,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.21710526315789475,
+          "forced_missed_recyclable_rate": 0.2012987012987013
+        },
+        "washington_dc": {
+          "coverage": 0.238562091503268,
+          "false_accept_rate": 0.00641025641025641,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.1987179487179487,
+          "forced_missed_recyclable_rate": 0.2
+        }
+      },
+      "TrashNet_test": {
+        "austin": {
+          "coverage": 0.7879377431906615,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "boston": {
+          "coverage": 0.7801556420233463,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "minneapolis": {
+          "coverage": 0.7801556420233463,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "new_york": {
+          "coverage": 0.7782101167315175,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "san_francisco": {
+          "coverage": 0.7898832684824902,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "seattle": {
+          "coverage": 0.7801556420233463,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "washington_dc": {
+          "coverage": 0.754863813229572,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.4,
+          "forced_missed_recyclable_rate": 0.03549060542797495
+        }
+      },
+      "RealWaste_test": {
+        "austin": {
+          "coverage": 0.5697916666666667,
+          "false_accept_rate": 0.01201923076923077,
+          "missed_recyclable_rate": 0.0055147058823529415,
+          "forced_false_accept_rate": 0.11057692307692307,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "boston": {
+          "coverage": 0.6947916666666667,
+          "false_accept_rate": 0.01201923076923077,
+          "missed_recyclable_rate": 0.007352941176470588,
+          "forced_false_accept_rate": 0.08173076923076923,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "minneapolis": {
+          "coverage": 0.56875,
+          "false_accept_rate": 0.01201923076923077,
+          "missed_recyclable_rate": 0.0055147058823529415,
+          "forced_false_accept_rate": 0.11057692307692307,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "new_york": {
+          "coverage": 0.6989583333333333,
+          "false_accept_rate": 0.01201923076923077,
+          "missed_recyclable_rate": 0.007352941176470588,
+          "forced_false_accept_rate": 0.08173076923076923,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "san_francisco": {
+          "coverage": 0.7020833333333333,
+          "false_accept_rate": 0.01201923076923077,
+          "missed_recyclable_rate": 0.007352941176470588,
+          "forced_false_accept_rate": 0.08173076923076923,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "seattle": {
+          "coverage": 0.6947916666666667,
+          "false_accept_rate": 0.01201923076923077,
+          "missed_recyclable_rate": 0.007352941176470588,
+          "forced_false_accept_rate": 0.08173076923076923,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "washington_dc": {
+          "coverage": 0.6270833333333333,
+          "false_accept_rate": 0.01201923076923077,
+          "missed_recyclable_rate": 0.007352941176470588,
+          "forced_false_accept_rate": 0.06971153846153846,
+          "forced_missed_recyclable_rate": 0.08088235294117647
+        }
+      }
+    },
+    "zs2.0|None|cov0.65": {
+      "threshold": 0.9573287944080784,
+      "temperature": 0.8732957844248896,
+      "TACO_test": {
+        "austin": {
+          "coverage": 0.3366013071895425,
+          "false_accept_rate": 0.007352941176470588,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.16176470588235295,
+          "forced_missed_recyclable_rate": 0.17647058823529413
+        },
+        "boston": {
+          "coverage": 0.30392156862745096,
+          "false_accept_rate": 0.006578947368421052,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.21710526315789475,
+          "forced_missed_recyclable_rate": 0.2012987012987013
+        },
+        "minneapolis": {
+          "coverage": 0.3235294117647059,
+          "false_accept_rate": 0.00684931506849315,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.19863013698630136,
+          "forced_missed_recyclable_rate": 0.2
+        },
+        "new_york": {
+          "coverage": 0.30392156862745096,
+          "false_accept_rate": 0.013157894736842105,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.19078947368421054,
+          "forced_missed_recyclable_rate": 0.19480519480519481
+        },
+        "san_francisco": {
+          "coverage": 0.33986928104575165,
+          "false_accept_rate": 0.007352941176470588,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.15441176470588236,
+          "forced_missed_recyclable_rate": 0.17647058823529413
+        },
+        "seattle": {
+          "coverage": 0.30392156862745096,
+          "false_accept_rate": 0.006578947368421052,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.21710526315789475,
+          "forced_missed_recyclable_rate": 0.2012987012987013
+        },
+        "washington_dc": {
+          "coverage": 0.29411764705882354,
+          "false_accept_rate": 0.00641025641025641,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.1987179487179487,
+          "forced_missed_recyclable_rate": 0.2
+        }
+      },
+      "TrashNet_test": {
+        "austin": {
+          "coverage": 0.8171206225680934,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "boston": {
+          "coverage": 0.811284046692607,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "minneapolis": {
+          "coverage": 0.8132295719844358,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "new_york": {
+          "coverage": 0.8093385214007782,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "san_francisco": {
+          "coverage": 0.8190661478599222,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "seattle": {
+          "coverage": 0.811284046692607,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "washington_dc": {
+          "coverage": 0.7898832684824902,
+          "false_accept_rate": 0.0,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.4,
+          "forced_missed_recyclable_rate": 0.03549060542797495
+        }
+      },
+      "RealWaste_test": {
+        "austin": {
+          "coverage": 0.615625,
+          "false_accept_rate": 0.014423076923076924,
+          "missed_recyclable_rate": 0.0055147058823529415,
+          "forced_false_accept_rate": 0.11057692307692307,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "boston": {
+          "coverage": 0.740625,
+          "false_accept_rate": 0.014423076923076924,
+          "missed_recyclable_rate": 0.009191176470588236,
+          "forced_false_accept_rate": 0.08173076923076923,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "minneapolis": {
+          "coverage": 0.6135416666666667,
+          "false_accept_rate": 0.014423076923076924,
+          "missed_recyclable_rate": 0.0055147058823529415,
+          "forced_false_accept_rate": 0.11057692307692307,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "new_york": {
+          "coverage": 0.7416666666666667,
+          "false_accept_rate": 0.014423076923076924,
+          "missed_recyclable_rate": 0.009191176470588236,
+          "forced_false_accept_rate": 0.08173076923076923,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "san_francisco": {
+          "coverage": 0.7447916666666666,
+          "false_accept_rate": 0.014423076923076924,
+          "missed_recyclable_rate": 0.009191176470588236,
+          "forced_false_accept_rate": 0.08173076923076923,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "seattle": {
+          "coverage": 0.740625,
+          "false_accept_rate": 0.014423076923076924,
+          "missed_recyclable_rate": 0.009191176470588236,
+          "forced_false_accept_rate": 0.08173076923076923,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "washington_dc": {
+          "coverage": 0.66875,
+          "false_accept_rate": 0.014423076923076924,
+          "missed_recyclable_rate": 0.009191176470588236,
+          "forced_false_accept_rate": 0.06971153846153846,
+          "forced_missed_recyclable_rate": 0.08088235294117647
+        }
+      }
+    },
+    "zs2.0|None|cov0.7": {
+      "threshold": 0.9322231551123271,
+      "temperature": 0.8732957844248896,
+      "TACO_test": {
+        "austin": {
+          "coverage": 0.39215686274509803,
+          "false_accept_rate": 0.014705882352941176,
+          "missed_recyclable_rate": 0.0058823529411764705,
+          "forced_false_accept_rate": 0.16176470588235295,
+          "forced_missed_recyclable_rate": 0.17647058823529413
+        },
+        "boston": {
+          "coverage": 0.3660130718954248,
+          "false_accept_rate": 0.013157894736842105,
+          "missed_recyclable_rate": 0.006493506493506494,
+          "forced_false_accept_rate": 0.21710526315789475,
+          "forced_missed_recyclable_rate": 0.2012987012987013
+        },
+        "minneapolis": {
+          "coverage": 0.39215686274509803,
+          "false_accept_rate": 0.02054794520547945,
+          "missed_recyclable_rate": 0.00625,
+          "forced_false_accept_rate": 0.19863013698630136,
+          "forced_missed_recyclable_rate": 0.2
+        },
+        "new_york": {
+          "coverage": 0.3758169934640523,
+          "false_accept_rate": 0.02631578947368421,
+          "missed_recyclable_rate": 0.006493506493506494,
+          "forced_false_accept_rate": 0.19078947368421054,
+          "forced_missed_recyclable_rate": 0.19480519480519481
+        },
+        "san_francisco": {
+          "coverage": 0.3954248366013072,
+          "false_accept_rate": 0.014705882352941176,
+          "missed_recyclable_rate": 0.0058823529411764705,
+          "forced_false_accept_rate": 0.15441176470588236,
+          "forced_missed_recyclable_rate": 0.17647058823529413
+        },
+        "seattle": {
+          "coverage": 0.3660130718954248,
+          "false_accept_rate": 0.013157894736842105,
+          "missed_recyclable_rate": 0.006493506493506494,
+          "forced_false_accept_rate": 0.21710526315789475,
+          "forced_missed_recyclable_rate": 0.2012987012987013
+        },
+        "washington_dc": {
+          "coverage": 0.35947712418300654,
+          "false_accept_rate": 0.019230769230769232,
+          "missed_recyclable_rate": 0.006666666666666667,
+          "forced_false_accept_rate": 0.1987179487179487,
+          "forced_missed_recyclable_rate": 0.2
+        }
+      },
+      "TrashNet_test": {
+        "austin": {
+          "coverage": 0.8501945525291829,
+          "false_accept_rate": 0.14285714285714285,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "boston": {
+          "coverage": 0.8463035019455253,
+          "false_accept_rate": 0.08571428571428572,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "minneapolis": {
+          "coverage": 0.8501945525291829,
+          "false_accept_rate": 0.14285714285714285,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "new_york": {
+          "coverage": 0.8463035019455253,
+          "false_accept_rate": 0.11428571428571428,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "san_francisco": {
+          "coverage": 0.8521400778210116,
+          "false_accept_rate": 0.14285714285714285,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "seattle": {
+          "coverage": 0.8463035019455253,
+          "false_accept_rate": 0.08571428571428572,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.42857142857142855,
+          "forced_missed_recyclable_rate": 0.020876826722338204
+        },
+        "washington_dc": {
+          "coverage": 0.830739299610895,
+          "false_accept_rate": 0.14285714285714285,
+          "missed_recyclable_rate": 0.0,
+          "forced_false_accept_rate": 0.4,
+          "forced_missed_recyclable_rate": 0.03549060542797495
+        }
+      },
+      "RealWaste_test": {
+        "austin": {
+          "coverage": 0.65625,
+          "false_accept_rate": 0.016826923076923076,
+          "missed_recyclable_rate": 0.009191176470588236,
+          "forced_false_accept_rate": 0.11057692307692307,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "boston": {
+          "coverage": 0.7802083333333333,
+          "false_accept_rate": 0.016826923076923076,
+          "missed_recyclable_rate": 0.014705882352941176,
+          "forced_false_accept_rate": 0.08173076923076923,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "minneapolis": {
+          "coverage": 0.65625,
+          "false_accept_rate": 0.016826923076923076,
+          "missed_recyclable_rate": 0.009191176470588236,
+          "forced_false_accept_rate": 0.11057692307692307,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "new_york": {
+          "coverage": 0.78125,
+          "false_accept_rate": 0.016826923076923076,
+          "missed_recyclable_rate": 0.014705882352941176,
+          "forced_false_accept_rate": 0.08173076923076923,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "san_francisco": {
+          "coverage": 0.78125,
+          "false_accept_rate": 0.016826923076923076,
+          "missed_recyclable_rate": 0.014705882352941176,
+          "forced_false_accept_rate": 0.08173076923076923,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "seattle": {
+          "coverage": 0.7802083333333333,
+          "false_accept_rate": 0.016826923076923076,
+          "missed_recyclable_rate": 0.014705882352941176,
+          "forced_false_accept_rate": 0.08173076923076923,
+          "forced_missed_recyclable_rate": 0.03860294117647059
+        },
+        "washington_dc": {
+          "coverage": 0.7083333333333334,
+          "false_accept_rate": 0.016826923076923076,
+          "missed_recyclable_rate": 0.014705882352941176,
+          "forced_false_accept_rate": 0.06971153846153846,
+          "forced_missed_recyclable_rate": 0.08088235294117647
+        }
+      }
+    }
+  },
+  "v1_baseline_same_sets": {
+    "TrashNet": {
+      "austin": {
+        "coverage": 0.717359413202934,
+        "false_accept_rate": 0.0948905109489051,
+        "missed_recyclable_rate": 0.08123689727463312,
+        "forced_false_accept_rate": 0.17518248175182483,
+        "forced_missed_recyclable_rate": 0.18972746331236898
+      },
+      "boston": {
+        "coverage": 0.6542787286063569,
+        "false_accept_rate": 0.0364963503649635,
+        "missed_recyclable_rate": 0.08123689727463312,
+        "forced_false_accept_rate": 0.1678832116788321,
+        "forced_missed_recyclable_rate": 0.21278825995807127
+      },
+      "minneapolis": {
+        "coverage": 0.6938875305623472,
+        "false_accept_rate": 0.051094890510948905,
+        "missed_recyclable_rate": 0.0880503144654088,
+        "forced_false_accept_rate": 0.145985401459854,
+        "forced_missed_recyclable_rate": 0.2038784067085954
+      },
+      "new_york": {
+        "coverage": 0.5550122249388753,
+        "false_accept_rate": 0.014598540145985401,
+        "missed_recyclable_rate": 0.08123689727463312,
+        "forced_false_accept_rate": 0.11678832116788321,
+        "forced_missed_recyclable_rate": 0.23846960167714884
+      },
+      "san_francisco": {
+        "coverage": 0.717359413202934,
+        "false_accept_rate": 0.0948905109489051,
+        "missed_recyclable_rate": 0.08123689727463312,
+        "forced_false_accept_rate": 0.17518248175182483,
+        "forced_missed_recyclable_rate": 0.18972746331236898
+      },
+      "seattle": {
+        "coverage": 0.6542787286063569,
+        "false_accept_rate": 0.0364963503649635,
+        "missed_recyclable_rate": 0.08123689727463312,
+        "forced_false_accept_rate": 0.1678832116788321,
+        "forced_missed_recyclable_rate": 0.21278825995807127
+      },
+      "washington_dc": {
+        "coverage": 0.6713936430317848,
+        "false_accept_rate": 0.043795620437956206,
+        "missed_recyclable_rate": 0.08123689727463312,
+        "forced_false_accept_rate": 0.16058394160583941,
+        "forced_missed_recyclable_rate": 0.20964360587002095
+      }
+    },
+    "RealWaste": {
+      "austin": {
+        "coverage": 0.7337509788566954,
+        "false_accept_rate": 0.019879518072289156,
+        "missed_recyclable_rate": 0.29709811146936893,
+        "forced_false_accept_rate": 0.06204819277108434,
+        "forced_missed_recyclable_rate": 0.47950253339474896
+      },
+      "boston": {
+        "coverage": 0.6979900809188202,
+        "false_accept_rate": 0.010843373493975903,
+        "missed_recyclable_rate": 0.29709811146936893,
+        "forced_false_accept_rate": 0.05301204819277108,
+        "forced_missed_recyclable_rate": 0.506218332565638
+      },
+      "minneapolis": {
+        "coverage": 0.7298355520751761,
+        "false_accept_rate": 0.012650602409638554,
+        "missed_recyclable_rate": 0.3256563795485951,
+        "forced_false_accept_rate": 0.046987951807228916,
+        "forced_missed_recyclable_rate": 0.5163519115614924
+      },
+      "new_york": {
+        "coverage": 0.658574784651527,
+        "false_accept_rate": 0.007228915662650603,
+        "missed_recyclable_rate": 0.29709811146936893,
+        "forced_false_accept_rate": 0.04156626506024096,
+        "forced_missed_recyclable_rate": 0.551819438046983
+      },
+      "san_francisco": {
+        "coverage": 0.7337509788566954,
+        "false_accept_rate": 0.019879518072289156,
+        "missed_recyclable_rate": 0.29709811146936893,
+        "forced_false_accept_rate": 0.06204819277108434,
+        "forced_missed_recyclable_rate": 0.47950253339474896
+      },
+      "seattle": {
+        "coverage": 0.6979900809188202,
+        "false_accept_rate": 0.010843373493975903,
+        "missed_recyclable_rate": 0.29709811146936893,
+        "forced_false_accept_rate": 0.05301204819277108,
+        "forced_missed_recyclable_rate": 0.506218332565638
+      },
+      "washington_dc": {
+        "coverage": 0.6883320281910729,
+        "false_accept_rate": 0.010843373493975903,
+        "missed_recyclable_rate": 0.29709811146936893,
+        "forced_false_accept_rate": 0.05120481927710843,
+        "forced_missed_recyclable_rate": 0.5435283279594657
+      }
+    }
+  }
+}

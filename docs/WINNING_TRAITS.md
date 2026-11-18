@@ -31,4 +31,4 @@ hackathon's judges will score. The Devpost gallery for Arbiter Hacks V1 was stil
 2. **Does the demo show behaviour, not slides?** Yes: the live page, and a video recorded from the running app.
 3. **Is the AI necessary?** Partly. The rules table does the deciding; the model only turns a photo into item probabilities. Without a model the user would have to name the item. The measured value of the learning is the false-accept reduction from abstention.
 4. **Is the target user clear?** Residents of the seven covered cities, and in time the municipal programmes that publish the rules.
-5. **Are the limits named?** Yes, in the README, on the page and in [GAPS.md](GAPS.md). Two limits are serious: missed recyclables (8% to 35%) and the unrecognised items.
+5. **Are the limits named?** Yes, in the README, on the page and in [GAPS.md](GAPS.md). Serious limits: the shipped model avoids missed recyclables mostly by declining many photos, there is no household-photo test, and some items (batteries, greasy paper) are not recognised.
