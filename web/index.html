@@ -160,6 +160,7 @@ footer .fh{color:#fff;font-size:14px;font-weight:700;letter-spacing:.08em;text-t
 footer p{margin:0;font-size:14.5px;max-width:420px}.legal{grid-column:1/-1;border-top:1px solid rgba(255,255,255,.12);padding-top:22px;font-size:13px;color:#93ad9d}
 .atlaswrap{overflow-x:auto;margin:14px 0}.atlas{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}.atlas th,.atlas td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:center}.atlas th:first-child,.atlas td:first-child{text-align:left;position:sticky;left:0;background:var(--bg,var(--card));font-weight:600}.atlas td span{display:inline-block;min-width:74px}.atlas tr:hover td{background:var(--card)}.sr{position:absolute;left:-9999px}
 .ghostbtn{margin-top:10px;width:100%;background:transparent;border:2px solid var(--accept);color:var(--accept);font:inherit;font-weight:700;padding:12px;border-radius:12px;cursor:pointer}.ghostbtn:hover{background:var(--accept-bg)}.livebox{position:relative;border-radius:14px;overflow:hidden;background:#000;margin:12px 0}#lv{display:block;width:100%;max-height:320px;object-fit:cover}.livechip{position:absolute;left:10px;bottom:10px;right:10px;padding:10px 14px;border-radius:12px;font-weight:800;font-size:18px;background:rgba(20,20,20,.78);color:#fff;transition:background .2s}.livechip.accept{background:var(--accept);color:#fff}.livechip.reject{background:var(--reject);color:#fff}.livechip.not_sure{background:var(--unsure);color:#fff}.liverow{display:flex;gap:10px}
+.livepic{width:100%;height:auto;border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow);margin-top:18px}
 </style>
 </head>
 <body>
@@ -220,6 +221,10 @@ footer p{margin:0;font-size:14.5px;max-width:420px}.legal{grid-column:1/-1;borde
 <div class="panel" id="result" aria-live="polite"><div class="placeholder"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><p><b>Your answer appears here.</b></p><p class="small" style="max-width:380px;margin:0 auto">It shows the verdict, the rule behind it, a link to the city's own page, and what every other city would say about the same photo.</p></div></div></div>
 </div></div></section>
 
+<section class="block" id="live-proof"><div class="wrap">
+<div class="head"><span class="eyebrow">Live scan</span><h2>Point a phone at it. Seven cities answer.</h2><p>Real screenshots from a phone camera on the hosted page: a sheet of paper locks as "recycle it" in every city; a phone and a rubber shoe stay "not sure" everywhere, which is the safe answer for items the model cannot place. Three scans by the builder, not an evaluation.</p></div>
+<img class="livepic" src="img/live-scan.jpg" alt="Three phone-camera screenshots of the live scan: a sheet of paper locked as recycle it in all seven cities, a phone and a rubber shoe locked as not sure in all seven cities" loading="lazy">
+</div></section>
 <section class="block" id="how"><div class="wrap">
 <div class="head"><span class="eyebrow">How it works</span><h2>A rules table, plus a model that knows when to stay quiet.</h2></div>
 <div class="steps">

@@ -246,6 +246,10 @@ flowchart LR
 
 **Rules.** Each city is a JSON file over a 16-item taxonomy. A rule is `accept`, `reject` or `conditional`. *Conditional* means the city's page does not cover the item; the system never auto-answers it. Tables are validated by pydantic: every item must be covered and every rule must cite a source; a test requires every `accept` rule to carry a verbatim quote. ([`data/rules/`](data/rules), [`src/curbcheck/rules.py`](src/curbcheck/rules.py)) The hosted page also shows a **rules atlas**: all 16 items by all seven cities, read straight from these files with no model involved (for 6 of the 16 items at least two cities differ). **Live scan** (hosted page, in your browser): point your phone camera at an item and the verdicts for all seven cities update in real time; an answer shows as "locked" only after three identical readings in a row. It is experimental and has not been separately evaluated, so treat a lock as a hint and confirm with the single-photo check. No frames are recorded or sent.
 
+![Live scan on a real phone camera: paper locks as recycle it in all seven cities; a phone and a rubber shoe stay not sure](docs/img/live-scan-real-phone.png)
+
+*Three phone-camera scans by the builder on the hosted page. These are anecdotes, not an evaluation: they show the interface working on a real camera, not how accurate it is.*
+
 ```json
 "milk_carton": { "verdict": "accept",
                  "note": "Milk, juice and soup cartons are accepted",
