@@ -159,6 +159,7 @@ footer .wrap{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px}
 footer .fh{color:#fff;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin:0 0 12px}footer a{display:block;color:#cfe2d6;text-decoration:none;padding:4px 0}footer a:hover{color:var(--lime)}
 footer p{margin:0;font-size:14.5px;max-width:420px}.legal{grid-column:1/-1;border-top:1px solid rgba(255,255,255,.12);padding-top:22px;font-size:13px;color:#93ad9d}
 .atlaswrap{overflow-x:auto;margin:14px 0}.atlas{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}.atlas th,.atlas td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:center}.atlas th:first-child,.atlas td:first-child{text-align:left;position:sticky;left:0;background:var(--bg,var(--card));font-weight:600}.atlas td span{display:inline-block;min-width:74px}.atlas tr:hover td{background:var(--card)}.sr{position:absolute;left:-9999px}
+.ghostbtn{margin-top:10px;width:100%;background:transparent;border:2px solid var(--accept);color:var(--accept);font:inherit;font-weight:700;padding:12px;border-radius:12px;cursor:pointer}.ghostbtn:hover{background:var(--accept-bg)}.livebox{position:relative;border-radius:14px;overflow:hidden;background:#000;margin:12px 0}#lv{display:block;width:100%;max-height:320px;object-fit:cover}.livechip{position:absolute;left:10px;bottom:10px;right:10px;padding:10px 14px;border-radius:12px;font-weight:800;font-size:18px;background:rgba(20,20,20,.78);color:#fff;transition:background .2s}.livechip.accept{background:var(--accept);color:#fff}.livechip.reject{background:var(--reject);color:#fff}.livechip.not_sure{background:var(--unsure);color:#fff}.liverow{display:flex;gap:10px}
 </style>
 </head>
 <body>
@@ -208,6 +209,11 @@ footer p{margin:0;font-size:14.5px;max-width:420px}.legal{grid-column:1/-1;borde
 <input id="file" type="file" accept="image/jpeg,image/png,image/webp" capture="environment" hidden>
 <div class="samples" id="samples"><span>No photo handy? Try:</span></div>
 <button class="primary" id="go" disabled>Check this item</button>
+<button class="ghostbtn" id="liveBtn" type="button" hidden>&#9679; Live scan with your camera</button>
+<div id="live" hidden><div class="livebox"><video id="lv" playsinline muted></video><div class="livechip" id="lchip" aria-live="polite">Starting camera…</div></div>
+<div class="cities" id="lcities" aria-live="off"></div>
+<div class="liverow"><button class="ghostbtn" id="lfreeze" type="button">Use this frame</button><button class="ghostbtn" id="lstop" type="button">Stop camera</button></div>
+<p class="small">Experimental. Each frame is judged on its own, on your device; nothing is recorded or sent. A frame counts as <b>locked</b> only after three identical answers in a row. This mode has not been separately evaluated: treat a lock as a hint, then use the single-photo check.</p></div>
 <p id="status"></p><div class="prog" id="prog"><i></i></div>
 <div id="err" role="alert"></div>
 </div>
@@ -297,6 +303,30 @@ const rows=Object.keys(ITEMS).filter(k=>!only||new Set(atlasData.map(d=>(d.r[k]|
 const dis=Object.keys(ITEMS).filter(k=>new Set(atlasData.map(d=>(d.r[k]||{}).verdict)).size>1).length;
 $("atlasLead").textContent=`For ${dis} of ${Object.keys(ITEMS).length} common items, at least two of the seven cities differ (a city whose page is silent counts as different). Read straight from each city's published rules, no model involved. Hover or focus a cell for the rule's note.`;
 $("atlas").innerHTML=`<caption class="sr">Recycling verdict per item and city</caption><thead><tr><th scope="col">Item</th>${atlasData.map(d=>`<th scope="col">${esc(d.c.city.replace(/^Washington.*/,"Washington DC").replace(/,.*/,""))}</th>`).join("")}</tr></thead><tbody>`+rows.map(k=>`<tr><th scope="row">${ITEMS[k]}</th>${atlasData.map(d=>{const r=d.r[k]||{},t=T[r.verdict]||["?","silent"];return `<td tabindex="0" title="${esc(r.note||"")}"><span class="pill ${t[1]}">${t[0]}</span></td>`}).join("")}</tr>`).join("")+"</tbody>"}
+
+let liveStream=null,liveOn=false,liveHist=[];
+async function liveStart(){
+ if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){$("err").textContent="This browser cannot open a camera here.";return}
+ try{liveStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment",width:{ideal:640}},audio:false})}
+ catch(e){$("err").textContent="Camera permission was not given, so live scan is off. You can still add a photo.";return}
+ const v=$("lv");v.srcObject=liveStream;await v.play();$("live").hidden=false;$("liveBtn").hidden=true;liveOn=true;liveHist=[];liveLoop()}
+function liveStop(){liveOn=false;if(liveStream){liveStream.getTracks().forEach(t=>t.stop());liveStream=null}$("lv").srcObject=null;$("live").hidden=true;if(engine)$("liveBtn").hidden=false}
+function frameFile(){const v=$("lv"),w=v.videoWidth,h=v.videoHeight;if(!w)return Promise.resolve(null);const c=document.createElement("canvas");const sz=Math.min(w,h);c.width=c.height=448;c.getContext("2d").drawImage(v,(w-sz)/2,(h-sz)/2,sz,sz,0,0,448,448);return new Promise(r=>c.toBlob(b=>r(b?new File([b],"frame.jpg",{type:"image/jpeg"}):null),"image/jpeg",0.9))}
+async function liveLoop(){
+ while(liveOn){
+  if(document.hidden){await new Promise(r=>setTimeout(r,400));continue}
+  const f=await frameFile();if(!f){await new Promise(r=>setTimeout(r,200));continue}
+  try{const sel=$("city").value;const res=await Promise.all(cities.map(async c=>[c,await engine.check(f,c.id)]));if(!liveOn)break;
+   const mine=res.find(([c])=>c.id===sel)[1];liveHist.push(mine.verdict);liveHist=liveHist.slice(-3);
+   const locked=liveHist.length===3&&liveHist.every(x=>x===liveHist[0]);const chip=$("lchip");
+   chip.className="livechip "+(locked?mine.verdict:"");chip.textContent=locked?"Locked: "+LABEL[mine.verdict]+" · "+mine.top_items[0].label:"Hold steady… closest guess: "+mine.top_items[0].label;
+   $("lcities").innerHTML=!locked?"":res.map(([c,o])=>`<div>${esc(c.city.replace(/^Washington.*/,"Washington DC").replace(/,.*/,""))}<span class="pill ${o.verdict}">${SHORT[o.verdict]}</span></div>`).join("");
+   window.__lastFrame=f;
+  }catch(e){$("lchip").textContent="Could not read this frame."}
+  await new Promise(r=>setTimeout(r,150))}}
+$("liveBtn").onclick=liveStart;$("lstop").onclick=liveStop;
+$("lfreeze").onclick=()=>{const f=window.__lastFrame;liveStop();if(f)pick(f)};
+$("city").addEventListener("change",()=>{liveHist=[]});
 function drawCities(){$("cgrid").innerHTML=cities.map(c=>`<div class="card"><h3>${esc(c.city)}</h3><p>${esc(c.program)}<br>Rules read ${esc(c.sources[0].retrieved)}</p><a href="${esc(c.sources[0].url)}" target="_blank" rel="noopener">Official source page &rarr;</a></div>`).join("")}
 function showProgram(){const c=cities.find(x=>x.id==$("city").value);$("program").textContent=c?c.program+" · rules read "+c.sources[0].retrieved:""}
 async function init(){
@@ -315,7 +345,7 @@ async function init(){
   try{await engine.load(p=>{$("prog").firstChild.style.width=Math.round(p.progress||0)+"%"});ready=true;$("status").textContent="Model ready. Your photo never leaves this device.";$("prog").style.display="none"}
   catch(e){$("status").textContent="";$("err").textContent="Could not load the model: "+e.message+". Check your connection and reload.";return}
  }
- $("go").disabled=!file;
+ $("go").disabled=!file;$("liveBtn").hidden=!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia);
  if(file)run();
 }
 function pick(f){if(!f)return;file=f;$("preview").src=URL.createObjectURL(f);$("preview").style.display="block";$("hint").style.display="none";$("go").disabled=!ready;$("err").textContent="";if(ready)run()}
